@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
-@RequestMapping(value = "/app")
+@Controller
 public class AppController
 {
 
@@ -26,11 +25,6 @@ public class AppController
         this.userRepository = userRepository;
     }
 
-    @RequestMapping("/proba")
-    public String returnHomeString(){
-        return "Welcome";
-    }
-
 
     @GetMapping("")
     public String viewHomePage()
@@ -38,24 +32,29 @@ public class AppController
         return "index";
     }
 
-    @PostMapping("/register")
+    @GetMapping("/register")
     public String showRegistrationForm(Model model)
     {
         model.addAttribute("user", new User());
 
-        return "signup_form.html";
+        return "signup_form";
     }
-//    @PostMapping("/process_register")
-//    public String processRegister(User user)
-//    {
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        String encodedPassword = passwordEncoder.encode(user.getPassword());
-//        user.setPassword(encodedPassword);
-//
-//        userRepository.save(user);
-//
-//        return "register_success";
-//    }
+
+
+
+   @PostMapping("/login")
+    public String processRegister(User user, Model model)
+    {
+        model.addAttribute("user", new User());
+        userRepository.save(user);
+
+        return "index";
+    }
+    @GetMapping("/index")
+    public String getIndexPage(Model model){
+        model.addAttribute("user", new User());
+        return "index";
+    }
     @GetMapping("/users")
     public String listUsers(Model model)
     {
