@@ -51,7 +51,8 @@ public class AppController
         return "index";
     }
     @GetMapping("/index")
-    public String getIndexPage(Model model){
+    public String getIndexPage(Model model)
+    {
         model.addAttribute("user", new User());
         return "index";
     }
