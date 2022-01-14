@@ -3,20 +3,20 @@ package com.example.firstproject.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 45)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private String userName;
 
-    @Column(nullable = false, length = 64)
+    @Column(nullable = false)
     private String password;
 
     @Column(length = 2)
