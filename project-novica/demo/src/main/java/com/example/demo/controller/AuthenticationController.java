@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -14,21 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @Controller
-public class AppController
+public class AuthenticationController
 {
 
     @Autowired
-    private UserRepository userRepository;
-
-    public AppController(UserRepository userRepository)
-    {
-        this.userRepository = userRepository;
-    }
-
+   private AuthenticationService authenticationService;
 
     @GetMapping("")
-    public String viewHomePage()
+    public String viewHomePage(Model model)
     {
+        model.addAttribute("user",new  User());
         return "index";
     }
 
@@ -40,16 +36,15 @@ public class AppController
         return "signup_form";
     }
 
-
-
-   @PostMapping("/login")
+    @PostMapping("/login")
     public String processRegister(User user, Model model)
     {
         model.addAttribute("user", new User());
-        userRepository.save(user);
+        authenticationService.save(user);
 
         return "index";
     }
+
     @GetMapping("/index")
     public String getIndexPage(Model model)
     {
@@ -59,7 +54,7 @@ public class AppController
     @GetMapping("/users")
     public String listUsers(Model model)
     {
-        List<User> listUsers = userRepository.findAll();
+        List<User> listUsers = authenticationService.getAllUsers();
         model.addAttribute("listUsers", listUsers);
 
         return "users";
