@@ -4,7 +4,7 @@ package first.project.acessingdatamysql;
 import javax.persistence.*;
 
 @Entity
-@Table (name="user")
+@Table(name = "user")
 public class User
 {
     @Id
@@ -20,7 +20,7 @@ public class User
     @Column(name = "username", nullable = false, length = 20)
     private String username;
 
-    @Column(name="age", nullable = false, length = 10)
+    @Column(name = "age", nullable = false, length = 10)
     private Integer age;
 
     public Integer getId()

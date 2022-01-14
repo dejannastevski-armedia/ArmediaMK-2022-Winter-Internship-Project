@@ -9,7 +9,6 @@ public class FirstProjectApplication
 
     public static void main(String[] args)
     {
-
         SpringApplication.run(FirstProjectApplication.class, args);
     }
 
