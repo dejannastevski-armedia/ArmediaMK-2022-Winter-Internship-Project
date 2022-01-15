@@ -12,12 +12,12 @@
     <button type="submit" class="btn btn-primary" style="display: flex">Login</button>
 </form>
 <div class="container text-center">
-<!--    <div>-->
-<!--        <form th:action="@{//}" method="post">-->
+    <!--    <div>-->
+    <!--        <form th:action="@{//}" method="post">-->
 
-<!--            <input type="submit" value="Sign Out" />-->
-<!--        </form>-->
-<!--    </div>-->
+    <!--            <input type="submit" value="Sign Out" />-->
+    <!--        </form>-->
+    <!--    </div>-->
     <div>
         <h1>List of Users</h1>
     </div>
@@ -38,6 +38,17 @@
                 <td th:text="${user.email}">E-mail</td>
                 <td th:text="${user.firstName}">First Name</td>
                 <td th:text="${user.lastName}">Last Name</td>
+
+                <td class="text-right">
+                    <form th:action="@{'/users/delete/{id}' (id=${user.getId()})}"
+                          th:method="DELETE">
+                       <button type="submit"
+                               class="btn btn-sm btn-danger delete-user">
+                           <i class="fa fa-trash">Delete</i>
+                       </button>
+                    </form>
+                </td>
+
             </tr>
             </tbody>
         </table>
