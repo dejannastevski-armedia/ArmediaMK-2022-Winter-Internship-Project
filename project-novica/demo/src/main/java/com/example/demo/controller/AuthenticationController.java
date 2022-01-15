@@ -35,29 +35,24 @@ public class AuthenticationController
     }
 
     @GetMapping("/login")
-    public String getLoginPage(Model model){
+    public String getLoginPage(Model model)
+    {
         model.addAttribute("user",new  User());
         return "login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/register")
     public String processRegister(User user, Model model)
     {
         model.addAttribute("user", new User());
         authenticationService.save(user);
 
-        return "login";
+        return "redirect:/login";
     }
-
-////    @GetMapping("/index")
-////    public String getIndexPage(Model model)
-////    {
-////        model.addAttribute("user", new User());
-////        return "index";
-////    }
-
+    
     @PostMapping("/users/delete/{id}")
-    public String deleteUser(@PathVariable Long id){
+    public String deleteUser(@PathVariable Long id)
+    {
         this.authenticationService.deleteUserById(id);
         return "redirect:/users";
     }
