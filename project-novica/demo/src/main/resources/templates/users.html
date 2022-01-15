@@ -8,15 +8,16 @@
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
+<form method="get" action="/login">
+    <button type="submit" class="btn btn-primary" style="display: flex">Login</button>
+</form>
 <div class="container text-center">
-    <div>
-        <form th:action="@{/logout}" method="post">
-            <p>
-                Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
-            </p>
-            <input type="submit" value="Sign Out" />
-        </form>
-    </div>
+<!--    <div>-->
+<!--        <form th:action="@{//}" method="post">-->
+
+<!--            <input type="submit" value="Sign Out" />-->
+<!--        </form>-->
+<!--    </div>-->
     <div>
         <h1>List of Users</h1>
     </div>

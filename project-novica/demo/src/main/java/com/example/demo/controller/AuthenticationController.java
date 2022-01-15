@@ -17,7 +17,6 @@ import java.util.List;
 @Controller
 public class AuthenticationController
 {
-
     @Autowired
    private AuthenticationService authenticationService;
 
@@ -36,6 +35,12 @@ public class AuthenticationController
         return "signup_form";
     }
 
+    @GetMapping("/login")
+    public String getLoginPage(Model model){
+        model.addAttribute("user",new  User());
+        return "index";
+    }
+
     @PostMapping("/login")
     public String processRegister(User user, Model model)
     {
@@ -45,16 +50,17 @@ public class AuthenticationController
         return "index";
     }
 
-    @GetMapping("/index")
-    public String getIndexPage(Model model)
-    {
-        model.addAttribute("user", new User());
-        return "index";
-    }
+//    @GetMapping("/index")
+//    public String getIndexPage(Model model)
+//    {
+//        model.addAttribute("user", new User());
+//        return "index";
+//    }
+
     @GetMapping("/users")
     public String listUsers(Model model)
     {
-        List<User> listUsers = authenticationService.getAllUsers();
+        List<User>listUsers=authenticationService.getAllUsers();
         model.addAttribute("listUsers", listUsers);
 
         return "users";

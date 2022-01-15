@@ -19,10 +19,4 @@ public class HelloController
         return "Hello World";
     }
 
-//    @GetMapping(path = "/hello")
-//    public ModelAndView hello(Model model) {
-//
-//
-//        return new ModelAndView("hello-world");
-//    }
 }
