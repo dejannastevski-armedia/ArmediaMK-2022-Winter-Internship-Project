@@ -18,7 +18,7 @@ import java.util.List;
 public class AuthenticationController
 {
     @Autowired
-   private AuthenticationService authenticationService;
+    private AuthenticationService authenticationService;
 
     @GetMapping("")
     public String viewHomePage(Model model)

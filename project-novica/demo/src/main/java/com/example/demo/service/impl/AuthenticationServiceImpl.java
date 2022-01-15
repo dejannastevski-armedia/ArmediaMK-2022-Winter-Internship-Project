@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-   private UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public AuthenticationServiceImpl(UserRepository userRepository){
