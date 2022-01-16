@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.User;
+import com.example.demo.model.exceptions.EmailAlreadyExistException;
 import com.example.demo.model.exceptions.InvalidargumentException;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.AuthenticationService;
@@ -117,13 +118,19 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
-    public User register(String email, String password, String firstName, String lastName) throws InvalidargumentException
-    {
-        if(email==null || email.isEmpty() || password==null || password.isEmpty()){
+    public User register(String email, String password, String firstName, String lastName) throws InvalidargumentException, EmailAlreadyExistException {
+//        if(email==null || email.isEmpty() || password==null || password.isEmpty()){
+//            //throw new InvalidargumentException();
+//        }
+//        User user = new User(email,password);
+//        return userRepository.save(user);
+        if(!checkUserName(firstName)|| !checkLastName(lastName) || !checkPassword(password))
             throw new InvalidargumentException();
-        }
-        User user = new User(email,password);
-        return userRepository.save(user);
+        if(this.userRepository.findByEmail(email).isPresent())
+            throw new EmailAlreadyExistException();
+        User user=new User(email,password,firstName,lastName);
+        return this.userRepository.save(user);
+
     }
     //    @Override
 //    public boolean checkEmail(String email) {

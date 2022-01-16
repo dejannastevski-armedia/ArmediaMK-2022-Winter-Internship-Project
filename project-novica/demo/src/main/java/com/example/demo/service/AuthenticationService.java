@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.User;
+import com.example.demo.model.exceptions.EmailAlreadyExistException;
 import com.example.demo.model.exceptions.InvalidargumentException;
 
 
@@ -30,6 +31,6 @@ public interface AuthenticationService {
 
     User login(String email, String password) throws InvalidargumentException;
 
-    User register(String email, String password, String firstName, String lastName) throws InvalidargumentException;
+    User register(String email, String password, String firstName, String lastName) throws InvalidargumentException, EmailAlreadyExistException;
 }
 

@@ -1,15 +1,14 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
+import com.example.demo.model.exceptions.EmailAlreadyExistException;
+import com.example.demo.model.exceptions.InvalidargumentException;
 import com.example.demo.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,13 +40,26 @@ public class AuthenticationController
         return "login";
     }
 
+//    @PostMapping("/register")
+//    public String processRegister(User user, Model model)
+//    {
+//        model.addAttribute("user", new User());
+//        authenticationService.save(user);
+//
+//        return "redirect:/login";
+//    }
     @PostMapping("/register")
-    public String processRegister(User user, Model model)
-    {
-        model.addAttribute("user", new User());
-        authenticationService.save(user);
-
-        return "redirect:/login";
+    public String registerUser(@RequestParam String email,
+                               @RequestParam String password,
+                               @RequestParam String firstName,
+                               @RequestParam String lastName) throws EmailAlreadyExistException, InvalidargumentException {
+        try{
+            this.authenticationService.register(email,password,firstName,lastName);
+            return "redirect:/login";
+        }
+        catch (InvalidargumentException | EmailAlreadyExistException e){
+            return "redirect:/register";
+        }
     }
     
     @PostMapping("/users/delete/{id}")
