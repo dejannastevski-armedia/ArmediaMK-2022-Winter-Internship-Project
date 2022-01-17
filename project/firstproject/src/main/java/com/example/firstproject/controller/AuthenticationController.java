@@ -1,9 +1,8 @@
 package com.example.firstproject.controller;
 
-import com.example.firstproject.models.User;
+import com.example.firstproject.model.User;
 import com.example.firstproject.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(value = "/auth")
-public class RegisterController
+public class AuthenticationController
 {
     @Autowired
     private AuthenticationService authenticationService;
@@ -27,10 +26,10 @@ public class RegisterController
     @PostMapping("/register/redirect-to-login")
     public String loginForm(User user, Model model)
     {
-        String result = authenticationService.validate(user);
+        String result = authenticationService.validateUserRegistration(user);
         if(result.length() == 0)
         {
-            User toEnter = authenticationService.encryptPassword(user);
+            User toEnter = authenticationService.createUser(user);
             authenticationService.saveUser(toEnter);
             return "login";
         }

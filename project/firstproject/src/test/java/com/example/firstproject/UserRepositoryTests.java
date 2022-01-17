@@ -2,7 +2,7 @@ package com.example.firstproject;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.example.firstproject.models.User;
+import com.example.firstproject.model.User;
 import com.example.firstproject.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

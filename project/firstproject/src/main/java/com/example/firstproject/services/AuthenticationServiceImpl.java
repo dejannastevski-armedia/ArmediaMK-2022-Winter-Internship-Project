@@ -1,17 +1,17 @@
 package com.example.firstproject.services;
 
-import com.example.firstproject.models.User;
+import com.example.firstproject.model.User;
 import com.example.firstproject.repository.UserRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class AuthenticationServiceImpl implements AuthenticationService {
+public class AuthenticationServiceImpl implements AuthenticationService
+{
     @Autowired
     private UserRepository userRepository;
 
@@ -19,7 +19,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public boolean checkEmail(String email) {
+    public boolean checkEmail(String email)
+    {
         String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern = Pattern.compile(regexPattern);
@@ -31,7 +32,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public boolean checkUserName(String userName) {
+    public boolean checkUserName(String userName)
+    {
         if(userName == null || userName.isEmpty() || userName.length() <= 2)
         {
             return false;
@@ -40,7 +42,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public boolean checkPassword(String password) {
+    public boolean checkPassword(String password)
+    {
         String regexPattern = "(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{7,}";
         Pattern pattern = Pattern.compile(regexPattern);
         Matcher matcher = pattern.matcher(password);
@@ -51,12 +54,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void saveUser(User user) {
+    public void saveUser(User user)
+    {
         userRepository.save(user);
     }
 
     @Override
-    public User encryptPassword(User user) {
+    public User createUser(User user)
+    {
         User newUser = new User();
         newUser.setUserName(user.getUserName());
         newUser.setEmail(user.getEmail());
@@ -67,7 +72,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public String validate(@NotNull User user) {
+    public String validateUserRegistration(@NotNull User user)
+    {
         StringBuilder sb = new StringBuilder();
         if (!checkUserName(user.getUserName())) {
             sb.append(" Username Not Valid!");
