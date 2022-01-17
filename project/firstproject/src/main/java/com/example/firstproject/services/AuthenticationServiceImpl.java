@@ -28,7 +28,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public boolean checkUserName(String userName) {
-        if(userName.isEmpty() || userName.length() <= 2)
+        if(userName != null || userName.isEmpty() || userName.length() <= 2)
         {
             return false;
         }

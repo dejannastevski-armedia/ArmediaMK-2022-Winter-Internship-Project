@@ -33,15 +33,15 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link" th:href="@{/register/registerPage}">Register</a>
-                <a class="nav-item nav-link" th:href="@{/login}">Login</a>
+                <a class="nav-item nav-link" th:href="@{/auth/register/registerPage}">Register</a>
+                <a class="nav-item nav-link" th:href="@{/auth/login}">Login</a>
             </div>
         </div>
     </nav>
 
     <div id="login" class="container text-center">
         <h3 style="color: white">Register Form</h3>
-        <form id="login-form" th:action="@{/register/redirect-to-login}" th:object="${user}"
+        <form id="login-form" th:action="@{/auth/register/redirect-to-login}" th:object="${user}"
               method="post" style="max-width: 600px; margin: 0 auto;">
             <div id="login-column" class="m-3">
                 <div class="form-group row">
