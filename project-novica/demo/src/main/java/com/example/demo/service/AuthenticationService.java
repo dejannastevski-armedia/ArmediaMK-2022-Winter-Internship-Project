@@ -28,7 +28,7 @@ public interface AuthenticationService {
 
     User login(String email, String password) throws InvalidArgumentException;
 
-    User register(String email, String password, String userName, Integer age) throws InvalidArgumentException, EmailAlreadyExistException;
+    List<String> register(String email, String password, String userName, Integer age) ;
 
     boolean checkEmail(String email);
 }

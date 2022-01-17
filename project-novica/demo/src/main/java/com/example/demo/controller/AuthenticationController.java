@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -45,14 +46,6 @@ public class AuthenticationController
         return "login";
     }
 
-    //    @PostMapping("/register")
-//    public String processRegister(User user, Model model)
-//    {
-//        model.addAttribute("user", new User());
-//        authenticationService.save(user);
-//
-//        return "redirect:/login";
-//    }
     @PostMapping("/register")
     public String registerUser(@RequestParam String email,
                                @RequestParam String password,
@@ -60,17 +53,15 @@ public class AuthenticationController
                                @RequestParam Integer age,
                                Model model)
     {
-
-        try{
-
-
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String encodedPassword = passwordEncoder.encode(password);
-            this.authenticationService.register(email,encodedPassword,userName,age);
+        ArrayList<String>res= (ArrayList<String>) authenticationService.register(email,password,userName,age);
+        if(res.isEmpty())
+        {
+            this.authenticationService.register(email,password,userName,age);
             return "redirect:/login";
         }
-        catch (InvalidArgumentException | EmailAlreadyExistException e){
-            model.addAttribute("error",e.getMessage());
+        else
+        {
+            model.addAttribute("error",res);
             model.addAttribute("user", new User());
             return "signup_form";
         }

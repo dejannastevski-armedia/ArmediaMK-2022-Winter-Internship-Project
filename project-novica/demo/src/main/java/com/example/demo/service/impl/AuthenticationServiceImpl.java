@@ -6,9 +6,11 @@ import com.example.demo.model.exceptions.InvalidArgumentException;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -56,17 +58,19 @@ public class AuthenticationServiceImpl implements AuthenticationService
     {
         userRepository.save(user);
     }
+
     @Override
     public List<User> getAllUsers()
-
     {
         return userRepository.findAll();
     }
+
     @Override
     public User getUserById(Long id)
     {
         return userRepository.findById(id).orElse(null);
     }
+
     @Override
     public void update(Long id, User user)
     {
@@ -97,27 +101,37 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
-    public User register(String email, String password, String userName, Integer age) throws InvalidArgumentException, EmailAlreadyExistException {
-
+    public List<String> register(String email, String password, String userName, Integer age)  {
+        List<String>lista=new ArrayList<>();
         if(!checkUserName(userName))
         {
-            throw new InvalidArgumentException("Enter valid user name");
+           // throw new InvalidArgumentException("Enter valid user name");
+            lista.add("Enter valid username ");
         }
         if(!checkPassword(password))
         {
-            throw new InvalidArgumentException("Enter valid password");
+            //throw new InvalidArgumentException("Enter valid password");
+            lista.add("Enter valid password ");
         }
         if(!checkEmail(email))
         {
-            throw new InvalidArgumentException("Enter valid email");
+            //throw new InvalidArgumentException("Enter valid email");
+            lista.add("Enter valid email");
         }
         if(this.userRepository.findByEmail(email).isPresent())
         {
-            throw new EmailAlreadyExistException("Already existing email address");
+            //throw new EmailAlreadyExistException("Already existing email address");
+            lista.add("Already existing email address ");
         }
-        User user=new User(email,password,userName, age);
-        return this.userRepository.save(user);
+        if(lista.size()==0)
+        {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String encodedPassword = passwordEncoder.encode(password);
+            User user = new User(email, password, userName, age);
+        }
+        return lista;
     }
+
     @Override
     public boolean checkEmail(String email)
     {
