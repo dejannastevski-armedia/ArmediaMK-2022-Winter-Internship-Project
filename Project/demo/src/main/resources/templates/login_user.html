@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Sign Up - CodeJava</title>
+  <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+  <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<style>
+  body {font-family: Arial, Helvetica, sans-serif;}
+  * {box-sizing: border-box}
+
+  /* Full-width input fields */
+  input[type=text], input[type=password],input[type=email] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+  }
+
+  input[type=text]:focus, input[type=password]:focus,input[type=email]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+
+  hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
+
+  /* Set a style for all buttons */
+  button {
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+  }
+
+  button:hover {
+    opacity:1;
+  }
+
+
+
+
+</style>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" th:href="@{/register}">Register</a>
+      <a class="nav-item nav-link" th:href="@{/login-user}">Login</a>
+    </div>
+  </div>
+</nav>
+<div class="container text-center">
+  <div>
+    <h1>User Registration - Sign Up</h1>
+  </div>
+  <form th:action="@{/users}" th:object="${user}"
+        method="post" style="max-width: 600px; margin: 0 auto;">
+    <div class="form-group row">
+      <label class="col-4 col-form-label">Username: </label>
+      <div class="col-8">
+        <input type="text" th:field="*{username}" class="form-control"
+               required minlength="2" maxlength="20"/>
+
+      </div>
+    </div>
+    <div class="m-3">
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label">Password: </label>
+        <div class="col-8">
+          <input type="password" th:field="*{password}" class="form-control"
+                 required minlength="6" maxlength="10" />
+
+        </div>
+      </div>
+
+
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+</html>

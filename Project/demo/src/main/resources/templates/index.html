@@ -11,16 +11,19 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
+<!--            <a class="nav-item nav-link" th:href="@{/users}">List of Users</a>-->
             <a class="nav-item nav-link" th:href="@{/register}">Register</a>
-            <a class="nav-item nav-link" th:href="@{/login}">Login</a>
+            <a class="nav-item nav-link" th:href="@{/login-user}">Login</a>
         </div>
     </div>
 </nav>
 
-<h1 style="text-align: center">Click to Register</h1>
+<h1 style="text-align: center; margin-top: 30px">Click to Register</h1>
 <div class="navbar-nav">
-    <a class="nav-item nav-link" th:href="@{/register}">Register</a>
-    <a class="nav-item nav-link" th:href="@{/login}">Login</a>
+    <button type="button" class="btn btn-secondary d-flex justify-content-center m-5"><a class="nav-item nav-link text-light h3" th:href="@{/register}">Register</a></button>
+    <button type="button" class="btn btn-secondary d-flex justify-content-center m-5"><a class="nav-item nav-link text-light h3" th:href="@{/login-user}">Login</a></button>
+
+
 </div>
 
 </body>

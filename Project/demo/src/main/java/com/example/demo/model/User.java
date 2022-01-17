@@ -3,12 +3,15 @@
     import javax.persistence.*;
 
     @Entity
-    @Table(name = "userregister")
+    @Table(name = "user")
 
     public class User {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
+
+        @Column( nullable = false, length = 45)
+        private String username;
 
         @Column(nullable = false, unique = true,length = 45)
         private String email;
@@ -16,16 +19,27 @@
         @Column(nullable = false, length = 64)
         private String password;
 
-        @Column(name = "firstName", nullable = false, length = 20)
-        private String firstName;
+        @Column(name = "age", nullable = false, length = 3)
+        private int age;
 
-        @Column(name = "lastName",nullable = false, length = 20)
-        private String lastName;
 
+        public User()
+        {
+        }
+
+        public int getAge()
+        {
+            return age;
+        }
 
         public Long getId()
         {
             return id;
+        }
+
+        public String getUsername()
+        {
+            return username;
         }
 
         public String getEmail()
@@ -38,15 +52,7 @@
             return password;
         }
 
-        public String getFirstName()
-        {
-            return firstName;
-        }
 
-        public String getLastName()
-        {
-            return lastName;
-        }
 
         public void setId(Long id)
         {
@@ -63,13 +69,13 @@
             this.password = password;
         }
 
-        public void setFirstName(String firstName)
+        public void setAge(int age)
         {
-            this.firstName = firstName;
+            this.age = age;
         }
 
-        public void setLastName(String lastName)
+        public void setUsername(String username)
         {
-            this.lastName = lastName;
+            this.username = username;
         }
     }
