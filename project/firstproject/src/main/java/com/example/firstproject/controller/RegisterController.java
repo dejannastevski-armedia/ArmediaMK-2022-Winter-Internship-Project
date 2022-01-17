@@ -16,7 +16,7 @@ public class RegisterController
     @Autowired
     private AuthenticationService authenticationService;
 
-    @GetMapping("/register/registerPage")
+    @GetMapping("/register/register-page")
     public String registerPage(Model model)
     {
         model.addAttribute("user", new User());
