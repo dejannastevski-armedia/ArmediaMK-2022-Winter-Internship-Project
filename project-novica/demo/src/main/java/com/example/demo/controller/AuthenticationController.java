@@ -4,8 +4,10 @@ import com.example.demo.model.User;
 import com.example.demo.model.exceptions.EmailAlreadyExistException;
 import com.example.demo.model.exceptions.InvalidArgumentException;
 import com.example.demo.service.AuthenticationService;
+import com.example.demo.util.PasswordHashing;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,9 @@ public class AuthenticationController
 {
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private PasswordHashing passwordHashing;
 
     @GetMapping("")
     public String viewHomePage(Model model)
@@ -58,7 +63,10 @@ public class AuthenticationController
 
         try{
 
-            this.authenticationService.register(email,password,userName,age);
+
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String encodedPassword = passwordEncoder.encode(password);
+            this.authenticationService.register(email,encodedPassword,userName,age);
             return "redirect:/login";
         }
         catch (InvalidArgumentException | EmailAlreadyExistException e){
