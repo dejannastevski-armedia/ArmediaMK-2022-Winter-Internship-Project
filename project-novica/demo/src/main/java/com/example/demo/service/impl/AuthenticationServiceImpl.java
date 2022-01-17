@@ -16,13 +16,9 @@ import java.util.List;
 public class AuthenticationServiceImpl implements AuthenticationService
 {
 
+    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    public AuthenticationServiceImpl(UserRepository userRepository)
-    {
-        this.userRepository=userRepository;
-    }
     @Override
     public boolean checkUserName(String userName)
     {
@@ -62,6 +58,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
     @Override
     public List<User> getAllUsers()
+
     {
         return userRepository.findAll();
     }
