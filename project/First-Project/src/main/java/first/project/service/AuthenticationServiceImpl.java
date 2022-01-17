@@ -61,13 +61,6 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
-    public void passwordEncode(User user)
-    {
-        String newPass = passwordHashing.passwordEncoder().encode(user.getPassword());
-        user.setPassword(newPass);
-    }
-
-    @Override
     public ArrayList<String> validateAndSave(User user)
     {
         ArrayList<String> res = new ArrayList<String>();
@@ -90,7 +83,8 @@ public class AuthenticationServiceImpl implements AuthenticationService
         }
         if (res.isEmpty())
         {
-            passwordEncode(user);
+            String newPass = passwordHashing.passwordEncoder().encode(user.getPassword());
+            user.setPassword(newPass);
             userRepo.save(user);
         }
         return res;

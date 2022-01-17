@@ -12,7 +12,5 @@ public interface AuthenticationService
 
     boolean checkPassword(String password);
 
-    void passwordEncode(User user);
-
     ArrayList<String> validateAndSave(User user);
 }
