@@ -6,10 +6,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PasswordHashing {
-
+public class PasswordHashing
+{
     @Bean
-    public PasswordEncoder encoder(){
+    public PasswordEncoder encoder()
+    {
         return new BCryptPasswordEncoder();
     }
 }

@@ -26,7 +26,8 @@ public class AuthenticationServiceImpl implements AuthenticationService
     @Override
     public boolean checkUserName(String userName)
     {
-        if(userName!=null){
+        if(userName!=null)
+        {
             return true;
         }
         return false;
@@ -82,17 +83,6 @@ public class AuthenticationServiceImpl implements AuthenticationService
         save(user1);
     }
 
-//    @Override
-//    public void update(Long id, User user) {
-//    User user1=this.getUserById(id);
-//    user1.setEmail(user.getEmail());
-//    user1.setFirstName(user.getFirstName());
-//    user1.setLastName(user.getLastName());
-//    user1.setPassword(user.getPassword());
-//
-//    this.save(user1);
-//    }
-
     @Override
     public void deleteUserById(Long id)
     {
@@ -111,18 +101,17 @@ public class AuthenticationServiceImpl implements AuthenticationService
 
     @Override
     public User register(String email, String password, String userName, Integer age) throws InvalidArgumentException, EmailAlreadyExistException {
-//        if(email==null || email.isEmpty() || password==null || password.isEmpty()){
-//            //throw new InvalidargumentException();
-//        }
-//        User user = new User(email,password);
-//        return userRepository.save(user);
-        if(!checkUserName(userName)) {
+
+        if(!checkUserName(userName))
+        {
             throw new InvalidArgumentException("Enter valid user name");
         }
-        if(!checkPassword(password)) {
+        if(!checkPassword(password))
+        {
             throw new InvalidArgumentException("Enter valid password");
         }
-        if(!checkEmail(email)) {
+        if(!checkEmail(email))
+        {
             throw new InvalidArgumentException("Enter valid email");
         }
         if(this.userRepository.findByEmail(email).isPresent())
@@ -133,8 +122,9 @@ public class AuthenticationServiceImpl implements AuthenticationService
         return this.userRepository.save(user);
     }
     @Override
-    public boolean checkEmail(String email) {
-         String regex = "^(.+)@(.+)$";
+    public boolean checkEmail(String email)
+    {
+        String regex = "^(.+)@(.+)$";
         if(email!=null && !email.isEmpty() && email.matches(regex))
         {
             return true;
