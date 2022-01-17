@@ -5,6 +5,7 @@ import com.example.demo.model.exceptions.EmailAlreadyExistException;
 import com.example.demo.model.exceptions.InvalidArgumentException;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.util.PasswordHashing;
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,7 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@Controller()
+@RequestMapping("/auth")
 public class AuthenticationController
 {
     @Autowired
@@ -47,17 +49,16 @@ public class AuthenticationController
     }
 
     @PostMapping("/register")
-    public String registerUser(@RequestParam String email,
+    public String registerUser(@RequestParam String email ,
                                @RequestParam String password,
                                @RequestParam String userName,
-                               @RequestParam Integer age,
+                               @RequestParam(defaultValue = "21") Integer age ,
                                Model model)
     {
         ArrayList<String>res= (ArrayList<String>) authenticationService.register(email,password,userName,age);
         if(res.isEmpty())
         {
-            this.authenticationService.register(email,password,userName,age);
-            return "redirect:/login";
+            return "redirect:/auth/login";
         }
         else
         {
@@ -66,21 +67,4 @@ public class AuthenticationController
             return "signup_form";
         }
     }
-
-    @PostMapping("/users/delete/{id}")
-    public String deleteUser(@PathVariable Long id)
-    {
-        this.authenticationService.deleteUserById(id);
-        return "redirect:/users";
-    }
-
-    @GetMapping("/users")
-    public String listUsers(Model model)
-    {
-        List<User>listUsers=authenticationService.getAllUsers();
-        model.addAttribute("listUsers", listUsers);
-
-        return "users";
-    }
-
 }

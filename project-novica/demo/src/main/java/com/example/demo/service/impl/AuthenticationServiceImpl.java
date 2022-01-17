@@ -123,11 +123,15 @@ public class AuthenticationServiceImpl implements AuthenticationService
             //throw new EmailAlreadyExistException("Already existing email address");
             lista.add("Already existing email address ");
         }
+        if(userName==null || userName.isEmpty()){
+            lista.add("Invalid username");
+        }
         if(lista.size()==0)
         {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             String encodedPassword = passwordEncoder.encode(password);
-            User user = new User(email, password, userName, age);
+            User user = new User(email, encodedPassword, userName, age);
+            this.userRepository.save(user);
         }
         return lista;
     }

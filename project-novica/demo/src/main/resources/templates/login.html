@@ -8,16 +8,16 @@
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-<form method="get" action="/">
+<form method="get" action="/auth">
     <button type="submit" class="btn btn-primary" style="display: flex">Login</button>
 </form>
-<form method="get" action="/register">
+<form method="get" action="/auth/register">
     <button type="submit" class="btn btn-primary" style="display: flex">Register</button>
 </form>
 <div>
     <h1 align="center">Log in</h1>
 </div>
-<form th:action="@{/register-sucessfull}" th:object="${user}"
+<form th:action="@{/auth/register-sucessfull}" th:object="${user}"
       method="post" style="max-width: 600px; margin: 0 auto;">
     <div class="m-3">
         <div class="form-group row">
