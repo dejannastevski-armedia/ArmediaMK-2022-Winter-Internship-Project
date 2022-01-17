@@ -40,11 +40,11 @@
 </head>
 <body>
 <ul>
-    <li><a href="register">Register</a></li>
-    <li><a href="login">Login</a></li>
+    <li><a href="/auth/register">Register</a></li>
+    <li><a href="/auth/login">Login</a></li>
 </ul>
 <div class="container text-center">
-    <form th:action="@{/register-successful}" th:object="${user}"
+    <form th:action="@{/auth/register-successful}" th:object="${user}"
           method="post" style="max-width: 600px; margin: 0 auto;">
         <div class="m-3">
             <div class="form-group row">
