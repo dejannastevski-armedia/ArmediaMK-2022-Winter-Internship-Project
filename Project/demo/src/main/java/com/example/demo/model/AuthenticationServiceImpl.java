@@ -4,6 +4,7 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.service.AuthenticationService;
 import io.micrometer.core.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -14,7 +15,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private UserRepository useRepo;
 
     @Override
-    public String validateAndSave( User user)
+    public String validateUser(User user)
     {
         String res= "";
         if(!validateEmail(user.getEmail())){
@@ -67,10 +68,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     }
 
+
     @Override
-    public void saveValidUser(User user)
+    public void saveUser(User user)
     {
+        encryptPassword(user);
         useRepo.save(user);
+    }
+
+    private void encryptPassword(User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
     }
 
 

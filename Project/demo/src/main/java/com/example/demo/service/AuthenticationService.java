@@ -8,7 +8,7 @@ public interface AuthenticationService {
 
 boolean validateEmail(String email);
     boolean validatePassword(String password);
-    String validateAndSave(User user);
+    String validateUser(User user);
     boolean validateUsername(String username);
-    void saveValidUser(User user);
+    void saveUser(User user);
 }

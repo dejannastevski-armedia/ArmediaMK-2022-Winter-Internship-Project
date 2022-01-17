@@ -39,14 +39,12 @@ public class AuthenticationController
     @PostMapping("/register/redirect-to-login")
     public String loginForm(User user, Model model)
     {
-        String res = authenticationService.validateAndSave(user);
+        String res = authenticationService.validateUser(user);
         if(res.length() == 0)
         {
 
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String encodedPassword = passwordEncoder.encode(user.getPassword());
-            user.setPassword(encodedPassword);
-            authenticationService.saveValidUser(user);
+
+            authenticationService.saveUser(user);
             return "login_user";
 
         }
