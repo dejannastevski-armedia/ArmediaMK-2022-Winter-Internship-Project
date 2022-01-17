@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.User;
 import com.example.demo.model.exceptions.EmailAlreadyExistException;
-import com.example.demo.model.exceptions.InvalidargumentException;
+import com.example.demo.model.exceptions.InvalidArgumentException;
 import com.example.demo.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -40,7 +40,7 @@ public class AuthenticationController
         return "login";
     }
 
-//    @PostMapping("/register")
+    //    @PostMapping("/register")
 //    public String processRegister(User user, Model model)
 //    {
 //        model.addAttribute("user", new User());
@@ -51,17 +51,23 @@ public class AuthenticationController
     @PostMapping("/register")
     public String registerUser(@RequestParam String email,
                                @RequestParam String password,
-                               @RequestParam String firstName,
-                               @RequestParam String lastName) throws EmailAlreadyExistException, InvalidargumentException {
+                               @RequestParam String userName,
+                               @RequestParam Integer age,
+                               Model model)
+    {
+
         try{
-            this.authenticationService.register(email,password,firstName,lastName);
+
+            this.authenticationService.register(email,password,userName,age);
             return "redirect:/login";
         }
-        catch (InvalidargumentException | EmailAlreadyExistException e){
-            return "redirect:/register";
+        catch (InvalidArgumentException | EmailAlreadyExistException e){
+            model.addAttribute("error",e.getMessage());
+            model.addAttribute("user", new User());
+            return "signup_form";
         }
     }
-    
+
     @PostMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable Long id)
     {

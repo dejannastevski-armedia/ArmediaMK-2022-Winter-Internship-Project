@@ -17,22 +17,22 @@ public class User
     @Column(nullable = false, length = 64)
     private String password;
 
-    @Column(name = "first_name", nullable = false, length = 20)
-    private String firstName;
+    @Column(name = "user_name", nullable = false, length = 20)
+    private String userName;
 
-    @Column(name = "last_name", nullable = false, length = 20)
-    private String lastName;
+    @Column(name = "age", nullable = true)
+    private Integer age;
 
     public User() {
     }
 
-    public User(Long id, String email, String password, String firstName, String lastName)
+    public User(Long id, String email, String password, String userName, Integer age)
     {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.userName = userName;
+        this.age = age;
     }
 
     public User(String email, String password) {
@@ -40,11 +40,17 @@ public class User
         this.password=password;
     }
 
-    public User(String email, String password, String firstName, String lastName) {
+    public User(String email, String password, String userName, Integer age) {
         this.email=email;
         this.password=password;
-        this.firstName=firstName;
-        this.lastName=lastName;
+        this.userName = userName;
+        this.age = age;
+    }
+
+    public User(String email, String password, String userName) {
+        this.email=email;
+        this.password=password;
+        this.userName = userName;
     }
 
     public Long getId()
@@ -77,23 +83,23 @@ public class User
         this.password = password;
     }
 
-    public String getFirstName()
+    public String getUserName()
     {
-        return firstName;
+        return userName;
     }
 
-    public void setFirstName(String firstName)
+    public void setUserName(String userName)
     {
-        this.firstName = firstName;
+        this.userName = userName;
     }
 
-    public String getLastName()
+    public Integer getAge()
     {
-        return lastName;
+        return age;
     }
 
-    public void setLastName(String lastName)
+    public void setAge(Integer age)
     {
-        this.lastName = lastName;
+        this.age = age;
     }
 }

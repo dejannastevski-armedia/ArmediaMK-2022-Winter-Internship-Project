@@ -24,7 +24,7 @@
             <div class="form-group row">
                 <label class="col-4 col-form-label">E-mail: </label>
                 <div class="col-8">
-                    <input type="email" th:field="*{email}" class="form-control" required />
+                    <input type="text" th:field="*{email}" class="form-control" />
                 </div>
             </div>
 
@@ -32,26 +32,28 @@
                 <label class="col-4 col-form-label">Password: </label>
                 <div class="col-8">
                     <input type="password" th:field="*{password}" class="form-control"
-                           required minlength="6" maxlength="10"/>
+                            minlength="6" maxlength="10"/>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-4 col-form-label">First Name: </label>
+                <label class="col-4 col-form-label">User Name: </label>
                 <div class="col-8">
-                    <input type="text" th:field="*{firstName}" class="form-control"
-                           required minlength="2" maxlength="20"/>
+                    <input type="text" th:field="*{userName}" class="form-control"
+                            minlength="2" maxlength="20"/>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-4 col-form-label">Last Name: </label>
+                <label class="col-4 col-form-label">Age: </label>
                 <div class="col-8">
-                    <input type="text" th:field="*{lastName}" class="form-control"
-                           required minlength="2" maxlength="20" />
+                    <input type="text" th:field="*{age}" class="form-control"
+                           minlength="1" maxlength="2" />
                 </div>
             </div>
+            <div th:text="${error}">
 
+            </div>
             <div>
                 <button type="submit" class="btn btn-primary">Sign Up</button>
             </div>

@@ -2,7 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.User;
 import com.example.demo.model.exceptions.EmailAlreadyExistException;
-import com.example.demo.model.exceptions.InvalidargumentException;
+import com.example.demo.model.exceptions.InvalidArgumentException;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +24,9 @@ public class AuthenticationServiceImpl implements AuthenticationService
         this.userRepository=userRepository;
     }
     @Override
-    public boolean checkUserName(String firstName)
+    public boolean checkUserName(String userName)
     {
-        if(firstName.length() >=3){
-            return true;
-        }
-        return false;
-    }
-    @Override
-    public boolean checkLastName(String lastName)
-    {
-        if(lastName.length()>=5){
+        if(userName!=null){
             return true;
         }
         return false;
@@ -46,7 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
         String upperCaseChars = "(.*[A-Z].*)";
         String lowerCaseChars = "(.*[a-z].*)";
         String specialChars = "(.*[@,#,$,%].*$)";
-        if(!(password.length()>=7) || !password.matches(upperCaseChars) || !password.matches(lowerCaseChars) || !password.matches(specialChars))
+        if((password.length()<7) || !password.matches(upperCaseChars) || !password.matches(lowerCaseChars) || !password.matches(specialChars))
         {
             isValid=false;
         }
@@ -55,7 +47,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     @Override
     public boolean validateAndSave(User user)
     {
-        if(checkUserName(user.getFirstName()) && checkLastName(user.getLastName()) && checkPassword(user.getPassword()))
+        if(checkUserName(user.getUserName()) && checkPassword(user.getPassword())) //falit validacija za email
         {
             userRepository.save(user);
             return true;
@@ -82,8 +74,8 @@ public class AuthenticationServiceImpl implements AuthenticationService
     {
         User user1=this.userRepository.getById(id);
 
-        user1.setFirstName(user.getFirstName());
-        user1.setLastName(user.getLastName());
+        user1.setUserName(user.getUserName());
+        user1.setAge(user.getAge());
         user1.setEmail(user.getEmail());
         user1.setPassword(user.getPassword());
 
@@ -108,39 +100,45 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
-    public User login(String email, String password) throws InvalidargumentException
+    public User login(String email, String password) throws InvalidArgumentException
     {
         if(email==null || email.isEmpty() || password==null || password.isEmpty())
         {
-            throw new InvalidargumentException();
+            throw new InvalidArgumentException(""); //TODO:login
         }
         return null;
     }
 
     @Override
-    public User register(String email, String password, String firstName, String lastName) throws InvalidargumentException, EmailAlreadyExistException {
+    public User register(String email, String password, String userName, Integer age) throws InvalidArgumentException, EmailAlreadyExistException {
 //        if(email==null || email.isEmpty() || password==null || password.isEmpty()){
 //            //throw new InvalidargumentException();
 //        }
 //        User user = new User(email,password);
 //        return userRepository.save(user);
-        if(!checkUserName(firstName)|| !checkLastName(lastName) || !checkPassword(password))
-            throw new InvalidargumentException();
+        if(!checkUserName(userName)) {
+            throw new InvalidArgumentException("Enter valid user name");
+        }
+        if(!checkPassword(password)) {
+            throw new InvalidArgumentException("Enter valid password");
+        }
+        if(!checkEmail(email)) {
+            throw new InvalidArgumentException("Enter valid email");
+        }
         if(this.userRepository.findByEmail(email).isPresent())
-            throw new EmailAlreadyExistException();
-        User user=new User(email,password,firstName,lastName);
+        {
+            throw new EmailAlreadyExistException("Already existing email address");
+        }
+        User user=new User(email,password,userName, age);
         return this.userRepository.save(user);
-
     }
-    //    @Override
-//    public boolean checkEmail(String email) {
-//        boolean isValid=true;
-//        try{
-//            InternetAddress emailAddr = new InternetAddress(email);
-//
-//        } catch (AddressException e) {
-//            isValid=false;
-//        }
-//        return isValid;
-//    }
+    @Override
+    public boolean checkEmail(String email) {
+         String regex = "^(.+)@(.+)$";
+        if(email!=null && !email.isEmpty() && email.matches(regex))
+        {
+            return true;
+        }
+        return false;
+    }
 }
