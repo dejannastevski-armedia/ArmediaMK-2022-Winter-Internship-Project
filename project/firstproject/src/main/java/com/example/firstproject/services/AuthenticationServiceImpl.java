@@ -4,6 +4,7 @@ import com.example.firstproject.models.User;
 import com.example.firstproject.repository.UserRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;
@@ -13,6 +14,9 @@ import java.util.regex.Pattern;
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public boolean checkEmail(String email) {
@@ -28,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public boolean checkUserName(String userName) {
-        if(userName != null || userName.isEmpty() || userName.length() <= 2)
+        if(userName == null || userName.isEmpty() || userName.length() <= 2)
         {
             return false;
         }
@@ -49,6 +53,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public void saveUser(User user) {
         userRepository.save(user);
+    }
+
+    @Override
+    public User encryptPassword(User user) {
+        User newUser = new User();
+        newUser.setUserName(user.getUserName());
+        newUser.setEmail(user.getEmail());
+        newUser.setAge(user.getAge());
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        return newUser;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.firstproject.controller;
 import com.example.firstproject.models.User;
 import com.example.firstproject.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,8 @@ public class RegisterController
         String result = authenticationService.validate(user);
         if(result.length() == 0)
         {
-            authenticationService.saveUser(user);
+            User toEnter = authenticationService.encryptPassword(user);
+            authenticationService.saveUser(toEnter);
             return "login";
         }
         else

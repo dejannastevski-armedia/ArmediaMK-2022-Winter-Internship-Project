@@ -9,4 +9,5 @@ public interface AuthenticationService
     boolean checkPassword(String password);
     String validate(User user);
     void saveUser(User user);
+    User encryptPassword(User user);
 }
