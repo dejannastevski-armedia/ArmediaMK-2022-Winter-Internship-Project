@@ -1,10 +1,13 @@
 package first.project.service;
 
-import first.project.acessingdatamysql.User;
-import first.project.acessingdatamysql.UserRepository;
+import first.project.model.User;
+import first.project.repository.UserRepository;
+import first.project.util.PasswordHashing;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,9 +17,16 @@ public class AuthenticationServiceImpl implements AuthenticationService
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    private PasswordHashing passwordHashing;
+
     @Override
     public boolean checkEmail(String email)
     {
+        if ((email == null) || (email.length() == 0))
+        {
+            return false;
+        }
         String regex = "^[A-Za-z0-9_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
@@ -30,7 +40,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     @Override
     public boolean checkUserName(String username)
     {
-        if (username.equals(""))
+        if ("".equals(username))
         {
             return false;
         }
@@ -51,45 +61,37 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
-    public String[] validateAndSave(User user)
+    public void passwordEncode(User user)
     {
-        String res[] = new String[4];
-        for (int i = 0; i < 4; i++)
-        {
-            res[i] = "";
-        }
+        String newPass = passwordHashing.passwordEncoder().encode(user.getPassword());
+        user.setPassword(newPass);
+    }
+
+    @Override
+    public ArrayList<String> validateAndSave(User user)
+    {
+        ArrayList<String> res = new ArrayList<String>();
         if (checkEmail(user.getEmail()) == false)
         {
-            res[0] += "The email is invalid\n";
+            res.add("The email is invalid");
         }
         User u = userRepo.findByEmail(user.getEmail());
         if (u != null)
         {
-            res[0] += "The email is already in use\n";
+            res.add("The email is already in use");
         }
         if (checkPassword(user.getPassword()) == false)
         {
-            res[1] += "The password is invalid\n";
+            res.add("The password is invalid");
         }
         if (checkUserName(user.getUsername()) == false)
         {
-            res[2] += "The username is invalid\n";
+            res.add("The username is invalid");
         }
-        boolean ok = true;
-        for (int i = 0; i < 4; i++)
+        if (res.isEmpty())
         {
-            if (res[i] != "")
-            {
-                ok = false;
-            }
-        }
-        if (ok == true)
-        {
-            res[3] = "true";
+            passwordEncode(user);
             userRepo.save(user);
-        } else
-        {
-            res[3] = "false";
         }
         return res;
     }

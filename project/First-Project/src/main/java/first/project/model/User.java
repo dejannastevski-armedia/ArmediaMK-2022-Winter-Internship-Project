@@ -1,4 +1,4 @@
-package first.project.acessingdatamysql;
+package first.project.model;
 
 
 import javax.persistence.*;

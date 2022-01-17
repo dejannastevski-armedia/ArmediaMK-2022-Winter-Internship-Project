@@ -2,8 +2,8 @@ package first.project.accessingdatamysql;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import first.project.acessingdatamysql.User;
-import first.project.acessingdatamysql.UserRepository;
+import first.project.model.User;
+import first.project.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

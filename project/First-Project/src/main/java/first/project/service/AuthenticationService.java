@@ -1,6 +1,8 @@
 package first.project.service;
 
-import first.project.acessingdatamysql.User;
+import first.project.model.User;
+
+import java.util.ArrayList;
 
 public interface AuthenticationService
 {
@@ -10,5 +12,7 @@ public interface AuthenticationService
 
     boolean checkPassword(String password);
 
-    String[] validateAndSave(User user);
+    void passwordEncode(User user);
+
+    ArrayList<String> validateAndSave(User user);
 }
