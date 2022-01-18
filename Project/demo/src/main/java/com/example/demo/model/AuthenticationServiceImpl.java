@@ -23,7 +23,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (!validatePassword(user.getPassword())) {
             res += " Invalid password \n ";
         }
-        
         return res;
     }
 
@@ -54,7 +53,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public boolean validateUsername(String username) {
-        if (username.length() <= 2 || username.isEmpty() || username == null) {
+        if (username == null || username.length() <= 2 || username.isEmpty() ) {
             return false;
         }
 
