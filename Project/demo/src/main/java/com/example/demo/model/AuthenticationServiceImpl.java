@@ -23,8 +23,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (!validatePassword(user.getPassword())) {
             res += " Invalid password \n ";
         }
-
-
+        
         return res;
     }
 
