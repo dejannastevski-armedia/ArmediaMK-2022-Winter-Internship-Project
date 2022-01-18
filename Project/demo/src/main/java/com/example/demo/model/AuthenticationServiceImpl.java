@@ -6,6 +6,7 @@ import io.micrometer.core.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -15,14 +16,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private UserRepository useRepo;
 
     @Override
-    public String validateUser(User user)
-    {
-        String res= "";
-        if(!validateEmail(user.getEmail())){
-            res+=" Invalid email \n ";
+    public String validateUser(User user) {
+        String res = "";
+        if (!validateEmail(user.getEmail())) {
+            res += " Invalid email \n ";
         }
-        if (!validatePassword(user.getPassword())){
-            res+=" Invalid password \n ";
+        if (!validatePassword(user.getPassword())) {
+            res += " Invalid password \n ";
         }
 
 
@@ -30,14 +30,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public boolean validatePassword(String password)
-    {
-        boolean isValid=true;
+    public boolean validatePassword(String password) {
+        boolean isValid = true;
         String upperCaseChars = "(.*[A-Z].*)";
         String lowerCaseChars = "(.*[a-z].*)";
         String specialChars = "(.*[@,#,$,%].*$)";
-        if((password.length()<7) || !password.matches(upperCaseChars) || !password.matches(lowerCaseChars) || !password.matches(specialChars)){
-            isValid=false;
+        if ((password.length() < 7) || !password.matches(upperCaseChars) || !password.matches(lowerCaseChars) || !password.matches(specialChars)) {
+            isValid = false;
         }
         return isValid;
 
@@ -45,22 +44,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 
     @Override
-    public boolean validateEmail(String email)
-    {
+    public boolean validateEmail(String email) {
         String regex = "^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
-        if (matcher.matches())
-        {
+        if (matcher.matches()) {
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean validateUsername(String username)
-    {
-        if(username.length()<=2 || username.isEmpty() || username==null){
+    public boolean validateUsername(String username) {
+        if (username.length() <= 2 || username.isEmpty() || username == null) {
             return false;
         }
 
@@ -68,10 +64,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     }
 
-
     @Override
-    public void saveUser(User user)
-    {
+    public void saveUser(User user) {
         encryptPassword(user);
         useRepo.save(user);
     }

@@ -15,8 +15,7 @@ import java.util.List;
 
 
 @Controller
-public class AuthenticationController
-{
+public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
@@ -24,50 +23,45 @@ public class AuthenticationController
     private UserRepository userRepo;
 
     @GetMapping("")
-    public String viewHomePage()
-    {
+    public String viewHomePage() {
         return "index";
     }
+
     @GetMapping("/register")
-    public String showRegistrationForm(Model model)
-    {
+    public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
 
         return "signup_form";
     }
 
     @PostMapping("/register/redirect-to-login")
-    public String loginForm(User user, Model model)
-    {
+    public String loginForm(User user, Model model) {
         String res = authenticationService.validateUser(user);
-        if(res.length() == 0)
-        {
+        if (res.length() == 0) {
 
 
             authenticationService.saveUser(user);
             return "login_user";
 
-        }
-        else
-        {
+        } else {
             model.addAttribute("errorMessage", res);
             return "signup_form";
         }
     }
+
     @GetMapping("/login-user")
-    public String login(Model model)
-    {
+    public String login(Model model) {
         model.addAttribute("user", new User());
 
         return "login_user";
     }
+
     @GetMapping("/users")
     public String listUsers(Model model) {
 
 
         return "users";
     }
-
 
 
 }

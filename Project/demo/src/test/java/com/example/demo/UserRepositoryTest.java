@@ -1,5 +1,7 @@
 package com.example.demo;
+
 import static org.assertj.core.api.Assertions.assertThat;
+
 import com.example.demo.repository.UserRepository;
 import com.example.demo.model.User;
 import org.junit.jupiter.api.Test;
@@ -11,25 +13,23 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 
 
-
 @DataJpaTest
-@AutoConfigureTestDatabase(replace=Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
 public class UserRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
     @Autowired
     private UserRepository repo;
+
     @Test
-    public void testCreateUser()
-    {
+    public void testCreateUser() {
         User user = new User();
         user.setUsername("ivan.n");
         user.setEmail("ivan@yahoo.com");
         user.setUsername("andrija.m");
         user.setPassword("andrija");
         user.setAge(28);
-
 
 
         User savedUser = repo.save(user);
