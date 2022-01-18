@@ -1,12 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.model.User;
-import com.example.demo.model.exceptions.EmailAlreadyExistException;
-import com.example.demo.model.exceptions.InvalidArgumentException;
 
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
+import java.util.Optional;
 
 public interface AuthenticationService {
     //Create Read Update Delete
@@ -26,7 +24,7 @@ public interface AuthenticationService {
 
     void deleteUserById(Long id);
 
-    User login(String email, String password) throws InvalidArgumentException;
+    List<String> login(String email, String password);
 
     List<String> register(String email, String password, String userName, Integer age) ;
 

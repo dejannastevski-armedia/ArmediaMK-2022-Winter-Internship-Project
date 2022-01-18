@@ -2,41 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Welcome to CodeJava Home</title>
+    <title>Sign Up - CodeJava</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+
+    </script>
 </head>
 <body>
-<form method="get" action="/auth">
+<form method="get" action="/auth/login">
     <button type="submit" class="btn btn-primary" style="display: flex">Login</button>
 </form>
 <form method="get" action="/auth/register">
     <button type="submit" class="btn btn-primary" style="display: flex">Register</button>
 </form>
-<div>
-    <h1 align="center">Log in</h1>
-</div>
-<form th:action="@{/auth/register-sucessfull}" th:object="${user}"
-      method="post" style="max-width: 600px; margin: 0 auto;">
-    <div class="m-3">
-        <div class="form-group row">
-            <div class="col-8">
-                <input type="email" class="form-control" th:field="*{email}" placeholder="xyz@gmail.com" required />
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-8">
-                <input type="password" class="form-control" th:field="*{password}" placeholder="Password"
-                       pattern="(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{7,}" required />
-            </div>
-        </div>
-
-        <div>
-            <button type="submit" class="btn btn-primary" style="display: flex">Login</button>
-        </div>
+<div class="container text-center">
+    <div>
+        <h1>Log In</h1>
     </div>
-</form>
+    <form th:action="@{/auth/login}" th:object="${user}"
+          method="post" style="max-width: 600px; margin: 0 auto;">
+        <div class="m-3">
+            <div class="form-group row">
+                <label class="col-4 col-form-label">E-mail: </label>
+                <div class="col-8">
+                    <input type="text" th:field="*{email}" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Password: </label>
+                <div class="col-8">
+                    <input type="password" th:field="*{password}" class="form-control"/>
+                </div>
+            </div>
+
+            <div th:text="${error}">
+
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Log In</button>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>
