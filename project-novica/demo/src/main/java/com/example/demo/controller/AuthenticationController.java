@@ -1,11 +1,14 @@
 package com.example.demo.controller;
 
 import antlr.StringUtils;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.model.User;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.util.PasswordHashing;
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,10 +55,11 @@ public class AuthenticationController
         model.addAttribute("user",new  User());
         return "login";
     }
+
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> logIn (String email, String password){
-        List<String> res=authenticationService.login(email,password);
+    public ResponseEntity<String> logIn (@RequestBody UserDTO userDTO){
+        List<String> res=authenticationService.login(userDTO.getEmail(),userDTO.getPassword());
         if(res.size()==0){
             return ResponseEntity.ok("success");
         }

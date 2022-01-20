@@ -23,15 +23,4 @@ public class HelloController
         return "home";
     }
 
-//    @RequestMapping(path = "/login", method = RequestMethod.POST)
-//    @ResponseBody
-//    public ResponseEntity<String> add (User user){
-//        String res= String.valueOf(authenticationService.login(user.getEmail(), user.getPassword()));
-//        if(/*authenticationService.login(user.getEmail(), user.getPassword()).isEmpty()/*/res.length()==0){
-//            return ResponseEntity.ok("success");
-//        }
-//        else{
-//           return ResponseEntity.badRequest().body("Please enter valid credentials");
-//        }
-//    }
 }
