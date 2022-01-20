@@ -1,13 +1,18 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.UserDTO;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
+import com.sun.istack.NotNull;
+import io.micrometer.core.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -34,8 +39,6 @@ public class AuthenticationController {
     public String loginForm(User user, Model model) {
         String res = authenticationService.validateUser(user);
         if (res.length() == 0) {
-
-
             authenticationService.saveUser(user);
             return "login_user";
 
@@ -52,11 +55,21 @@ public class AuthenticationController {
         return "login_user";
     }
 
-    @GetMapping("/users")
-    public String listUsers(Model model) {
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> homePage(@RequestBody UserDTO userdto) {
+        String result = authenticationService.validateUserForLogin(userdto);
+        if (result.length() == 0) {
+            return ResponseEntity.ok().body("result");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
+        }
 
+    }
 
-        return "users";
+    @GetMapping("/home")
+    public String home() {
+        return "home";
     }
 
 

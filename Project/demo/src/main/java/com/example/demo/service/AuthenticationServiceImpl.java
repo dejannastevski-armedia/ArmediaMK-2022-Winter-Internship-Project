@@ -1,5 +1,7 @@
-package com.example.demo.model;
+package com.example.demo.service;
 
+import com.example.demo.dto.UserDTO;
+import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +20,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public String validateUser(User user) {
         String res = "";
         if (!validateEmail(user.getEmail())) {
-            res += " Invalid email \n ";
+            res += " Invalid email,  ";
         }
         if (!validatePassword(user.getPassword())) {
-            res += " Invalid password \n ";
+            res += " Invalid password,  ";
+        } else {
+            User newUser = useRepo.findByEmail(user.getEmail());
+            if (newUser != null) {
+                res += " Email already exist ";
+            }
         }
         return res;
     }
+
 
     @Override
     public boolean validatePassword(String password) {
@@ -53,7 +61,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public boolean validateUsername(String username) {
-        if (username == null || username.length() <= 2 || username.isEmpty() ) {
+        if (username == null || username.length() <= 2 || username.isEmpty()) {
             return false;
         }
 
@@ -66,6 +74,32 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         encryptPassword(user);
         useRepo.save(user);
     }
+
+    @Override
+    public String validateUserForLogin(UserDTO user) {
+        String result = "";
+        if (user.getEmail() == null || !validateEmail(user.getEmail())) {
+            result += " Invalid email, ";
+        }
+        if (user.getPassword() == null || !validatePassword(user.getPassword())) {
+            result += " Invalid password ";
+        }
+        if (result.length() == 0) {
+            User existing = useRepo.findByEmail(user.getEmail());
+            if (existing == null) {
+                result += " Email not exist ";
+            } else {
+                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                if (!passwordEncoder.matches(user.getPassword(), existing.getPassword())) {
+                    result += " Incorrect password ";
+                }
+            }
+
+        }
+        return result;
+
+    }
+
 
     private void encryptPassword(User user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
