@@ -30,17 +30,18 @@ public class AuthenticationController
     @GetMapping("")
     public String viewHomePage(Model model)
     {
-        model.addAttribute("user",new User());
+        model.addAttribute("user", new User());
         return "login";
     }
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model)
     {
-        model.addAttribute("user",new User());
+        model.addAttribute("user", new User());
 
         return "signup_form";
     }
+
     @GetMapping("/home")
     public String showHomePage(Model model)
     {
@@ -52,19 +53,21 @@ public class AuthenticationController
     @GetMapping("/login")
     public String getLoginPage(Model model)
     {
-        model.addAttribute("user",new  User());
+        model.addAttribute("user", new User());
         return "login";
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> logIn (@RequestBody UserDTO userDTO){
-        List<String> res=authenticationService.login(userDTO.getEmail(),userDTO.getPassword());
-        if(res.size()==0){
+    public ResponseEntity<String> logIn(@RequestBody UserDTO userDTO)
+    {
+        List<String> res = authenticationService.login(userDTO.getEmail(), userDTO.getPassword());
+        if (res.size() == 0)
+        {
             return ResponseEntity.ok("success");
-        }
-        else{
-            return ResponseEntity.badRequest().body(String.join(", ",res));
+        } else
+        {
+            return ResponseEntity.badRequest().body(String.join(", ", res));
         }
     }
 
@@ -85,20 +88,19 @@ public class AuthenticationController
 //    }
 
     @PostMapping("/register")
-    public String registerUser(@RequestParam String email ,
+    public String registerUser(@RequestParam String email,
                                @RequestParam String password,
                                @RequestParam String userName,
-                               @RequestParam(defaultValue = "21") Integer age ,
+                               @RequestParam(defaultValue = "21") Integer age,
                                Model model)
     {
-        ArrayList<String>res= (ArrayList<String>) authenticationService.register(email,password,userName,age);
-        if(res.isEmpty())
+        ArrayList<String> res = (ArrayList<String>) authenticationService.register(email, password, userName, age);
+        if (res.isEmpty())
         {
             return "redirect:/auth/login";
-        }
-        else
+        } else
         {
-            model.addAttribute("error",res);
+            model.addAttribute("error", res);
             model.addAttribute("user", new User());
             return "signup_form";
         }
