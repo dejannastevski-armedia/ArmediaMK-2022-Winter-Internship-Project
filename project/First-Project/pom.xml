@@ -19,6 +19,7 @@
         <springframework.version>5.6.1</springframework.version>
         <javax.version>2.0.1.Final</javax.version>
         <webjars.version>3.4.1</webjars.version>
+        <modelmapper.version>2.3.5</modelmapper.version>
     </properties>
     <dependencies>
         <dependency>
@@ -83,6 +84,11 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>

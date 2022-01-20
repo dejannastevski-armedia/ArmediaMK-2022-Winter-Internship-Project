@@ -13,4 +13,10 @@ public interface AuthenticationService
     boolean checkPassword(String password);
 
     ArrayList<String> validateAndSave(User user);
+
+    int checkLoginEmail(String email);
+
+    boolean checkLoginPassword(String password,int id);
+
+    ArrayList<String> validateAndLogin(User user);
 }
