@@ -7,7 +7,21 @@
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script>
-
+      function logIn() {
+          var email = $("#email").val();
+          var password = $("#password").val()
+           $.ajax({
+          type:"POST",
+          url:"/auth/login",
+          data:{email: email, password: password},
+          success: function (data){
+              window.location.replace("http://localhost:8080/auth/home");
+          },
+          error: function(e){
+              document.getElementById("errorMessage").innerHTML=e.responseText;
+          }
+           });
+      }
     </script>
 </head>
 <body>
@@ -21,31 +35,11 @@
     <div>
         <h1>Log In</h1>
     </div>
-    <form th:action="@{/auth/login}" th:object="${user}"
-          method="post" style="max-width: 600px; margin: 0 auto;">
-        <div class="m-3">
-            <div class="form-group row">
-                <label class="col-4 col-form-label">E-mail: </label>
-                <div class="col-8">
-                    <input type="text" th:field="*{email}" class="form-control" />
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-4 col-form-label">Password: </label>
-                <div class="col-8">
-                    <input type="password" th:field="*{password}" class="form-control"/>
-                </div>
-            </div>
-
-            <div th:text="${error}">
-
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary">Log In</button>
-            </div>
-        </div>
-    </form>
+   Username: <input id= "email" name="email" type="text">
+    <br /><br/>
+    Password: <input id="password" name="password" type="password">
+    <div id="errorMessage"></div>
 </div>
+<button class="btn btn-primary" onclick="logIn()">Log In</button>
 </body>
 </html>
