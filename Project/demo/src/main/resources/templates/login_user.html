@@ -2,10 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="ISO-8859-1">
-  <title>Sign Up - CodeJava</title>
+  <title>Login</title>
   <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
   <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/postRequest.js"></script>
+
 </head>
 <style>
   body {font-family: Arial, Helvetica, sans-serif;}
@@ -53,25 +56,17 @@
 </style>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" th:href="@{/register}">Register</a>
-      <a class="nav-item nav-link" th:href="@{/login-user}">Login</a>
-    </div>
-  </div>
-</nav>
+
 <div class="container text-center">
   <div>
-    <h1>User Registration - Sign Up</h1>
+    <h1>User login</h1>
   </div>
-  <form th:action="@{/users}" th:object="${user}"
-        method="post" style="max-width: 600px; margin: 0 auto;">
+  <div   style="max-width: 600px; margin: 0 auto;">
     <div class="form-group row">
-      <label class="col-4 col-form-label">Username: </label>
+      <label class="col-4 col-form-label">Email: </label>
       <div class="col-8">
-        <input type="text" th:field="*{username}" class="form-control"
-               required minlength="2" maxlength="20"/>
+        <input type="text" id="email" class="form-control"
+               required minlength="2" maxlength="50"/>
 
       </div>
     </div>
@@ -81,7 +76,7 @@
       <div class="form-group row">
         <label class="col-4 col-form-label">Password: </label>
         <div class="col-8">
-          <input type="password" th:field="*{password}" class="form-control"
+          <input type="password" id="password" class="form-control"
                  required minlength="6" maxlength="10" />
 
         </div>
@@ -89,12 +84,15 @@
 
 
       </div>
-
-      <div>
-        <button type="submit" class="btn btn-primary">Sign Up</button>
+    <div class="form-group row ">
+      <div class="col-12 text-danger" id="errorMessage">
       </div>
     </div>
-  </form>
+      <div>
+        <button onclick="login()"  class="btn btn-primary">Login</button>
+      </div>
+
+  </div>
 </div>
 </body>
 </html>
