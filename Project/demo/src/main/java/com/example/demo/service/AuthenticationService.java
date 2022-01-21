@@ -17,6 +17,6 @@ public interface AuthenticationService {
 
     void saveUser(User user);
 
-    String validateUserForLogin(UserDTO user);
+    String validateUserForLogin(UserDTO userDTO);
 
 }
