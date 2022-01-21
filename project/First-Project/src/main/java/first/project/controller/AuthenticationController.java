@@ -3,7 +3,6 @@ package first.project.controller;
 import first.project.dto.UserDTO;
 import first.project.model.User;
 import first.project.service.AuthenticationService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,10 +66,7 @@ public class AuthenticationController
     @ResponseBody
     public ResponseEntity<String> processLogin(@RequestBody UserDTO userDTO)
     {
-        User user = new User();
-        user.setPassword(userDTO.getPassword());
-        user.setEmail(userDTO.getEmail());
-        ArrayList<String> res = authenticationService.validateAndLogin(user);
+        ArrayList<String> res = authenticationService.validateAndLogin(userDTO);
         if (res.isEmpty())
         {
             return ResponseEntity.ok("Success");

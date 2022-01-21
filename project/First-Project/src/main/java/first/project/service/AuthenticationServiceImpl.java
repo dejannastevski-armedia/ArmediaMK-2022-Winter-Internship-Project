@@ -1,5 +1,6 @@
 package first.project.service;
 
+import first.project.dto.UserDTO;
 import first.project.model.User;
 import first.project.repository.UserRepository;
 import first.project.util.PasswordHashing;
@@ -94,7 +95,8 @@ public class AuthenticationServiceImpl implements AuthenticationService
     public int checkLoginEmail(String email)
     {
         User u = userRepo.findByEmail(email);
-        if(u!=null){
+        if (u != null)
+        {
             return u.getId();
         }
         return -1;
@@ -103,23 +105,25 @@ public class AuthenticationServiceImpl implements AuthenticationService
     @Override
     public boolean checkLoginPassword(String password, int id)
     {
-        User u=userRepo.findById(id);
-        if(passwordHashing.passwordEncoder().matches(password,u.getPassword())==true)
+        User u = userRepo.findById(id);
+        if (passwordHashing.passwordEncoder().matches(password, u.getPassword()) == true)
+        {
             return true;
+        }
         return false;
     }
 
     @Override
-    public ArrayList<String> validateAndLogin(User user)
+    public ArrayList<String> validateAndLogin(UserDTO userDTO)
     {
         ArrayList<String> res = new ArrayList<String>();
-        int id=checkLoginEmail(user.getEmail());
-        if(id==-1){
+        int id = checkLoginEmail(userDTO.getEmail());
+        if (id == -1)
+        {
             res.add("The email is not registered");
-        }else{
-            if(checkLoginPassword(user.getPassword(),id)==false){
-                res.add("The email and password does not match");
-            }
+        } else if (checkLoginPassword(userDTO.getPassword(), id) == false)
+        {
+            res.add("The email and password does not match");
         }
         return res;
     }

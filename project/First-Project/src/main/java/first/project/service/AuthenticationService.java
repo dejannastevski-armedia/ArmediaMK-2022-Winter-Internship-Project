@@ -1,5 +1,6 @@
 package first.project.service;
 
+import first.project.dto.UserDTO;
 import first.project.model.User;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public interface AuthenticationService
 
     int checkLoginEmail(String email);
 
-    boolean checkLoginPassword(String password,int id);
+    boolean checkLoginPassword(String password, int id);
 
-    ArrayList<String> validateAndLogin(User user);
+    ArrayList<String> validateAndLogin(UserDTO userDTO);
 }
