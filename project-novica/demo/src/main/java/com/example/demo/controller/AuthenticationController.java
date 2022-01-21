@@ -65,27 +65,12 @@ public class AuthenticationController
         if (res.size() == 0)
         {
             return ResponseEntity.ok("success");
-        } else
+        }
+        else
         {
             return ResponseEntity.badRequest().body(String.join(", ", res));
         }
     }
-
-//    @PostMapping("/login")
-//    public String loginUser(@RequestParam String email,
-//                            @RequestParam String password,
-//                            Model model)
-//    {
-//        ArrayList<String>list= (ArrayList<String>) authenticationService.login(email,password);
-//        if(list.isEmpty()){
-//            return "redirect:/home";
-//        }
-//        else {
-//            model.addAttribute("error", list);
-//            model.addAttribute("user", new User());
-//            return "login";
-//        }
-//    }
 
     @PostMapping("/register")
     public String registerUser(@RequestParam String email,
