@@ -1,5 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<script>
+    function submit(){
+        var userdto = {};
+        userdto.email = $("#username").val();
+        userdto.password = $("#password").val();
+        $.ajax({
+            type: "POST",
+            contentType:"application/json",
+            url: "/auth/login",
+            //data:{email: email, password: password},
+            data: JSON.stringify(userdto),
+            success: function (){
+                window.location.replace("http://localhost:8080/auth/logged-in");
+            },
+            error: function (e){
+                document.getElementById("errorMessage").innerHTML = e.responseText;
+            }
+        });
+    }
+</script>
 <head>
     <meta charset="ISO-8859-1">
     <title>Login - Page</title>
@@ -34,7 +54,6 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link" th:href="@{/auth/register/register-page}">Register</a>
-                <a class="nav-item nav-link" th:href="@{/auth/login}">Login</a>
             </div>
         </div>
     </nav>
@@ -44,20 +63,25 @@
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-                        <form id="login-form" class="form" action="" method="post">
+                        <div id="login-form" class="form">
                             <h3 class="text-center text-info">Login</h3>
                             <div class="form-group">
-                                <label for="username" class="text-info">Username:</label><br>
-                                <input type="text" name="username" id="username" class="form-control">
+                                <label for="username" class="text-info">E-Mail:</label><br>
+                                <input type="email" name="username" id="username" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="password" class="text-info">Password:</label><br>
-                                <input type="text" name="password" id="password" class="form-control">
+                                <input type="password" name="password" id="password" class="form-control">
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-8">
+                                    <span id="errorMessage"></span>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                                <input onclick="submit()" type="button" class="btn btn-info btn-md" value="Login">
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,13 +1,15 @@
 package com.example.firstproject.controller;
 
+import com.example.firstproject.dto.UserLoginDTO;
 import com.example.firstproject.model.User;
 import com.example.firstproject.services.AuthenticationService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(value = "/auth")
@@ -44,5 +46,25 @@ public class AuthenticationController
     public String login()
     {
         return "login";
+    }
+
+
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> loginUser(@RequestBody @NotNull UserLoginDTO userdto)
+    {
+        String result = authenticationService.loginUser(userdto.getEmail(), userdto.getPassword());
+        if(result.length() == 0)
+        {
+            return ResponseEntity.status(HttpStatus.OK).body("");
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
+        }
+    }
+
+    @GetMapping("/logged-in")
+    public String loggedIn()
+    {
+        return "loggedIn";
     }
 }

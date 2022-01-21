@@ -60,6 +60,35 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
+    public String loginUser(String email, String password) {
+        StringBuilder sb = new StringBuilder();
+        if(email ==  null || !checkEmail(email))
+        {
+            sb.append("Invalid E-Mail!\n");
+        }
+        if(password == null || !checkPassword(password))
+        {
+            sb.append("Password Validation Error!\n");
+        }
+        if(sb.length() == 0)
+        {
+            User dbUser = userRepository.findByEmail(email);
+            if(dbUser == null)
+            {
+                sb.append("User Not Found!\n");
+            }
+                else
+            {
+                if(!passwordEncoder.matches(password,dbUser.getPassword()))
+                {
+                    sb.append("Invalid Password!\n");
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+    @Override
     public User createUser(User user)
     {
         User newUser = new User();
