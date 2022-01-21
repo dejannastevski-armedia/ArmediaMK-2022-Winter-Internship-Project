@@ -60,7 +60,8 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
-    public String loginUser(String email, String password) {
+    public String loginUser(String email, String password)
+    {
         StringBuilder sb = new StringBuilder();
         if(email ==  null || !checkEmail(email))
         {

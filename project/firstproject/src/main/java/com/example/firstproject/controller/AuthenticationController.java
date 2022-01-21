@@ -51,9 +51,9 @@ public class AuthenticationController
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> loginUser(@RequestBody @NotNull UserLoginDTO userdto)
+    public ResponseEntity<String> loginUser(@RequestBody @NotNull UserLoginDTO userDTO)
     {
-        String result = authenticationService.loginUser(userdto.getEmail(), userdto.getPassword());
+        String result = authenticationService.loginUser(userDTO.getEmail(), userDTO.getPassword());
         if(result.length() == 0)
         {
             return ResponseEntity.status(HttpStatus.OK).body("");

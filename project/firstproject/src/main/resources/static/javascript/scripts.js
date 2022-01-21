@@ -1,14 +1,14 @@
-function submit()
+function loginUser()
 {
-    var userdto = {};
-    userdto.email = $("#username").val();
-    userdto.password = $("#password").val();
+    var userDTO = {};
+    userDTO.email = $("#username").val();
+    userDTO.password = $("#password").val();
     $.ajax({
         type: "POST",
         contentType:"application/json",
         url: "/auth/login",
         //data:{email: email, password: password},
-        data: JSON.stringify(userdto),
+        data: JSON.stringify(userDTO),
         success: function (){
             window.location.replace("http://localhost:8080/auth/logged-in");
         },
