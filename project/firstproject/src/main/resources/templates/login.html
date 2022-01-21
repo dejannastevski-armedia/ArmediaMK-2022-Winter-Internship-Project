@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/javascript/scripts.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <style>
         body {
@@ -34,7 +35,6 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link" th:href="@{/auth/register/register-page}">Register</a>
-                <a class="nav-item nav-link" th:href="@{/auth/login}">Login</a>
             </div>
         </div>
     </nav>
@@ -44,20 +44,25 @@
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-                        <form id="login-form" class="form" action="" method="post">
+                        <div id="login-form" class="form">
                             <h3 class="text-center text-info">Login</h3>
                             <div class="form-group">
-                                <label for="username" class="text-info">Username:</label><br>
-                                <input type="text" name="username" id="username" class="form-control">
+                                <label for="username" class="text-info">E-Mail:</label><br>
+                                <input type="email" name="username" id="username" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="password" class="text-info">Password:</label><br>
-                                <input type="text" name="password" id="password" class="form-control">
+                                <input type="password" name="password" id="password" class="form-control">
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-8">
+                                    <span id="errorMessage"></span>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                                <input onclick="loginUser()" type="button" class="btn btn-info btn-md" value="Login">
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

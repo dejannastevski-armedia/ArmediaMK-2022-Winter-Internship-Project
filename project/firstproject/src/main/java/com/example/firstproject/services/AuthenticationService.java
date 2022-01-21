@@ -10,4 +10,5 @@ public interface AuthenticationService
     String validateUserRegistration(User user);
     void saveUser(User user);
     User createUser(User user);
+    String loginUser(String email, String password);
 }
