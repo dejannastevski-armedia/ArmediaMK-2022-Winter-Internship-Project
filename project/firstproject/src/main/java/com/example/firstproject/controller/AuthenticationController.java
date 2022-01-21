@@ -57,7 +57,9 @@ public class AuthenticationController
         if(result.length() == 0)
         {
             return ResponseEntity.status(HttpStatus.OK).body("");
-        }else{
+        }
+        else
+        {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
         }
     }
