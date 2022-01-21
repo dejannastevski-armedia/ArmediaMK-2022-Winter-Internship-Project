@@ -1,14 +1,15 @@
 package com.example.demo.controller;
 
+import antlr.StringUtils;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.model.User;
-import com.example.demo.model.exceptions.EmailAlreadyExistException;
-import com.example.demo.model.exceptions.InvalidArgumentException;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.util.PasswordHashing;
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers;
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class AuthenticationController
     @GetMapping("")
     public String viewHomePage(Model model)
     {
-        model.addAttribute("user",new  User());
+        model.addAttribute("user", new User());
         return "login";
     }
 
@@ -41,28 +42,50 @@ public class AuthenticationController
         return "signup_form";
     }
 
+    @GetMapping("/home")
+    public String showHomePage(Model model)
+    {
+        model.addAttribute("user", new User());
+
+        return "home";
+    }
+
     @GetMapping("/login")
     public String getLoginPage(Model model)
     {
-        model.addAttribute("user",new  User());
+        model.addAttribute("user", new User());
         return "login";
     }
 
-    @PostMapping("/register")
-    public String registerUser(@RequestParam String email ,
-                               @RequestParam String password,
-                               @RequestParam String userName,
-                               @RequestParam(defaultValue = "21") Integer age ,
-                               Model model)
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> logIn(@RequestBody UserDTO userDTO)
     {
-        ArrayList<String>res= (ArrayList<String>) authenticationService.register(email,password,userName,age);
-        if(res.isEmpty())
+        List<String> res = authenticationService.login(userDTO.getEmail(), userDTO.getPassword());
+        if (res.size() == 0)
         {
-            return "redirect:/auth/login";
+            return ResponseEntity.ok("success");
         }
         else
         {
-            model.addAttribute("error",res);
+            return ResponseEntity.badRequest().body(String.join(", ", res));
+        }
+    }
+
+    @PostMapping("/register")
+    public String registerUser(@RequestParam String email,
+                               @RequestParam String password,
+                               @RequestParam String userName,
+                               @RequestParam(defaultValue = "21") Integer age,
+                               Model model)
+    {
+        ArrayList<String> res = (ArrayList<String>) authenticationService.register(email, password, userName, age);
+        if (res.isEmpty())
+        {
+            return "redirect:/auth/login";
+        } else
+        {
+            model.addAttribute("error", res);
             model.addAttribute("user", new User());
             return "signup_form";
         }
