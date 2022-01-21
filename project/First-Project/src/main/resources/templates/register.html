@@ -9,8 +9,10 @@
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <style>
         body {
-            background-image: url("background.jpg");
+            background-image: url("/static/javascript/photos/locksecurity.jpg");
             background-color: #cccccc;
+            background-size: cover;
+            background-repeat: no-repeat;
         }
 
         ul {
@@ -35,6 +37,13 @@
 
         li a:hover {
             background-color: #111;
+        }
+
+        #errorMessage {
+            color: white;
+            -webkit-text-stroke-width: 0.04em;
+            -webkit-text-stroke-color: black;
+            font-size: 1.4em;
         }
     </style>
 </head>
@@ -73,7 +82,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <span th:text="${res}"></span>
+                <strong><span id="errorMessage" th:text="${res}"></span></strong>
             </div>
             <div>
                 <button type="submit" class="btn btn-primary" style="display: flex">Register</button>
