@@ -78,12 +78,9 @@ public class AuthenticationServiceImpl implements AuthenticationService
             {
                 sb.append("User Not Found!\n");
             }
-                else
+            else if(!passwordEncoder.matches(password,dbUser.getPassword()))
             {
-                if(!passwordEncoder.matches(password,dbUser.getPassword()))
-                {
-                    sb.append("Invalid Password!\n");
-                }
+                sb.append("Invalid Password!\n");
             }
         }
         return sb.toString();
