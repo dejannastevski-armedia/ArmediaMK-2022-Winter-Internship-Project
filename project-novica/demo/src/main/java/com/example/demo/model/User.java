@@ -1,6 +1,11 @@
 package com.example.demo.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
@@ -23,7 +28,8 @@ public class User
     @Column(name = "age", nullable = true)
     private Integer age;
 
-    public User() {
+    public User()
+    {
     }
 
     public User(Long id, String email, String password, String userName, Integer age)
@@ -35,21 +41,24 @@ public class User
         this.age = age;
     }
 
-    public User(String email, String password) {
-        this.email=email;
-        this.password=password;
+    public User(String email, String password)
+    {
+        this.email = email;
+        this.password = password;
     }
 
-    public User(String email, String password, String userName, Integer age) {
-        this.email=email;
-        this.password=password;
+    public User(String email, String password, String userName, Integer age)
+    {
+        this.email = email;
+        this.password = password;
         this.userName = userName;
         this.age = age;
     }
 
-    public User(String email, String password, String userName) {
-        this.email=email;
-        this.password=password;
+    public User(String email, String password, String userName)
+    {
+        this.email = email;
+        this.password = password;
         this.userName = userName;
     }
 
