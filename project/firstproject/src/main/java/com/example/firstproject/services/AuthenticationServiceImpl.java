@@ -2,10 +2,12 @@ package com.example.firstproject.services;
 
 import com.example.firstproject.model.User;
 import com.example.firstproject.repository.UserRepository;
+
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -103,8 +105,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     {
         StringBuilder sb = new StringBuilder();
         if (!checkUserName(user.getUserName())) {
-            sb.append(" Username Not Valid!");
-            sb.append("\n");
+            sb.append(" Username Not Valid! \n");
         }
         if (!checkPassword(user.getPassword())) {
             sb.append(" Password Not Valid! \n");
