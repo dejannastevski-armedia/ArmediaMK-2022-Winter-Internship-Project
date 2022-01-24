@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,17 +22,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String res = "";
         if (!validateEmail(user.getEmail()))
         {
-            res += " Invalid email,  ";
+            res += "Invalid email,";
         }
         if (!validatePassword(user.getPassword()))
         {
-            res += " Invalid password,  ";
+            res += "Invalid password,";
         } else
         {
             User newUser = useRepo.findByEmail(user.getEmail());
             if (newUser != null)
             {
-                res += " Email already exist ";
+                res += "Email already exist";
             }
         }
         return res;

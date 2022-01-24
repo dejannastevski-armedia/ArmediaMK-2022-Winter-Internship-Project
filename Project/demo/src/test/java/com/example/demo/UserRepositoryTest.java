@@ -2,43 +2,39 @@ package com.example.demo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.example.demo.repository.UserRepository;
 import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Rollback;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@Rollback(false)
-public class UserRepositoryTest {
-    @Autowired
-    private TestEntityManager entityManager;
+@Rollback(true)
+public class UserRepositoryTest
+{
+
     @Autowired
     private UserRepository repo;
 
     @Test
-    public void testCreateUser() {
+    public void testCreateUser()
+    {
         User user = new User();
-        user.setUsername("ivan.n");
-        user.setEmail("ivan@yahoo.com");
-        user.setUsername("andrija.m");
-        user.setPassword("andrija");
-        user.setAge(28);
-
+        user.setUsername("john.ray");
+        user.setEmail("john@hotmail.com");
+        user.setPassword("Ray123#");
+        user.setAge(24);
 
         User savedUser = repo.save(user);
 
-        User existUser = entityManager.find(User.class, savedUser.getId());
+        User existUser = repo.findByEmail("john@hotmail.com");
 
-        assertThat(user.getEmail()).isEqualTo(existUser.getEmail());
-
+        assertThat(savedUser.getId()).isEqualTo(existUser.getId());
     }
-
 
 }
