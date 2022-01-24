@@ -4,7 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import com.example.demo.model.User;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -24,11 +24,26 @@ public class UserRepositoryTest
     private UserRepository userRepository;
 
     @Test
+    public void testCreateAndFindUser()
+    {
+        User user = new User();
+        user.setEmail("novicds13123@hotmail.com");
+        user.setPassword("Novica@");
+        user.setUserName("Novica123");
+        user.setAge(21);
+
+        User savedUser = userRepository.save(user);
+        Optional<User> existUser = userRepository.findByEmail(savedUser.getEmail());
+
+        assertThat(existUser.get().getEmail()).isEqualTo(user.getEmail());
+    }
+
+    @Test
     public void testFoundByEmail()
     {
         Optional<User> u;
         u = userRepository.findByEmail("novica@hotmail.com");
-        assertThat(u).isNotNull();
+        assertThat(u.get()).isNotNull();
     }
 
     @Test
