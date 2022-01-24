@@ -40,6 +40,17 @@ public class AuthenticationServiceTests
     }
 
     @Test
+    public void checkPasswordTest()
+    {
+        String invalidPassword1 = "aaa";
+        String invalidPassword2 = "pass";
+        String invalidPassword3 = "123";
+        assertThat(authenticationService.checkEmail(invalidPassword1)).isEqualTo(false);
+        assertThat(authenticationService.checkEmail(invalidPassword2)).isEqualTo(false);
+        assertThat(authenticationService.checkEmail(invalidPassword3)).isEqualTo(false);
+    }
+
+    @Test
     public void validateAndLoginInvalidEmailTest1()
     {
         UserDTO user = new UserDTO();
