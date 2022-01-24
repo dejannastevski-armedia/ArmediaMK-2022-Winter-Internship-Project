@@ -24,16 +24,16 @@ public class AuthenticationServiceTests
     @Test
     public void checkEmailTest()
     {
-        String validemail1 = "novica@gmail.com";
-        String validemail2 = "novica@hotmail.com";
-        String validemail3 = "novica123@gmail.com";
+        String validEmail1 = "novica@gmail.com";
+        String validEmail2 = "novica@hotmail.com";
+        String validEmail3 = "novica123@gmail.com";
         String invalidEmail1 = "invalidEmail";
         String invalidEmail2 = "@InvalidEmail";
         String invalidEmail3 = "///////";
 
-        assertThat(authenticationService.checkEmail(validemail1)).isEqualTo(true);
-        assertThat(authenticationService.checkEmail(validemail2)).isEqualTo(true);
-        assertThat(authenticationService.checkEmail(validemail3)).isEqualTo(true);
+        assertThat(authenticationService.checkEmail(validEmail1)).isEqualTo(true);
+        assertThat(authenticationService.checkEmail(validEmail2)).isEqualTo(true);
+        assertThat(authenticationService.checkEmail(validEmail3)).isEqualTo(true);
         assertThat(authenticationService.checkEmail(invalidEmail1)).isEqualTo(false);
         assertThat(authenticationService.checkEmail(invalidEmail2)).isEqualTo(false);
         assertThat(authenticationService.checkEmail(invalidEmail3)).isEqualTo(false);
