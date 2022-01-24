@@ -6,7 +6,7 @@ $(document).ready(function () {
         };
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/auth/login-successful",
+            url: "http://localhost:8080/auth/login",
             data: JSON.stringify(user),
             contentType: "application/JSON",
             success: function (data) {

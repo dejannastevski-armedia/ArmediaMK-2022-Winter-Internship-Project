@@ -8,6 +8,20 @@ import java.io.Serializable;
 @Table(name = "user")
 public class User implements Serializable
 {
+
+    public User(Integer id, String email, String password, String username, Integer age)
+    {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.age = age;
+    }
+
+    public User()
+    {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -33,7 +47,6 @@ public class User implements Serializable
     {
         this.id = id;
     }
-
 
     public String getEmail()
     {

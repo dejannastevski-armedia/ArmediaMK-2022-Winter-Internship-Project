@@ -62,7 +62,7 @@ public class AuthenticationController
         }
     }
 
-    @PostMapping("/login-successful")
+    @PostMapping("/login")
     @ResponseBody
     public ResponseEntity<String> processLogin(@RequestBody UserDTO userDTO)
     {
