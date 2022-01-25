@@ -1,0 +1,36 @@
+package com.example.demo.controller;
+
+import com.example.demo.model.Question;
+import com.example.demo.service.QuestionService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class QuestionController
+{
+    @Autowired
+    private QuestionService questionService;
+
+    @RequestMapping(value = "/saveQuestion", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> Questions(@RequestBody Question question)
+    {
+        String result = questionService.validateQuestionAndTitle(question);
+        if (result.length() == 0)
+        {
+            questionService.createQuestion(question);
+            return ResponseEntity.ok().body("result");
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
+        }
+    }
+}
