@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -39,8 +40,10 @@ public class Question implements Serializable
 
     @Column(updatable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @CreatedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy", timezone = "UTC")
     private Date createdAt;
+
 
     public Date getCreatedAt()
     {
