@@ -1,10 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="ISO-8859-1">
+    <title>Welcome - Page</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/javascript/scripts.js"></script>
+    <script type="text/javascript" src="/static/addQuestion.js"></script>
+    <style>
+        #addButton {
+            position: relative;
+            left: 75px;
+            top: 20px;
+        }
+    </style>
 </head>
 <body>
-<h1>Welcome to homepage</h1>
+<a href="/auth/login">
+    <button class="btn btn-primary">Log Out</button>
+</a>
+<button type="button" id="addButton" class="btn btn-primary" data-toggle="modal"
+        data-target="#myModal">Add Question
+</button>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Question Form</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="title" class="text-info">Title:</label><br>
+                    <input type="text" name="title" id="title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="question" class="text-info">Question:</label><br>
+                    <textarea type="text" name="question" cols="40" rows="5" id="question"
+                              class="form-control"></textarea>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8">
+                        <span id="errorMessage"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" style="border: 1px solid black" class="btn btn-default" onclick="addQuestion()">
+                    Submit
+                </button>
+                <button type="button" style="border: 1px solid black" class="btn btn-default" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
