@@ -16,12 +16,17 @@ public class Question
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String title;
+
     @Column(nullable = false)
     private String question;
+
     private String creator;
+
     private String modifier;
+
     @Column(nullable = false)
     private LocalDateTime createdDate;
 
