@@ -5,7 +5,7 @@ function submitQuestion(){
     $.ajax({
         type:"POST",
         contentType:"application/json",
-        url:"/saveQuestion",
+        url:"/addQuestion",
         data:JSON.stringify(question),
         success: function(data){
             $('#myModal').modal('hide');

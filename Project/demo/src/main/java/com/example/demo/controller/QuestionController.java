@@ -18,9 +18,9 @@ public class QuestionController
     @Autowired
     private QuestionService questionService;
 
-    @RequestMapping(value = "/saveQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/addQuestion", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> Questions(@RequestBody Question question)
+    public ResponseEntity<String> addQuestions(@RequestBody Question question)
     {
         String result = questionService.validateQuestionAndTitle(question);
         if (result.length() == 0)
