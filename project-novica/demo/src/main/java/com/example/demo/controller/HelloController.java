@@ -14,11 +14,11 @@ public class HelloController
     @Autowired
     AuthenticationService authenticationService;
 
-    @RequestMapping("/home")
+    @RequestMapping("/")
     public String helloWorld(Model model)
     {
         model.addAttribute("user", new User());
-        return "home";
+        return "login";
     }
 
 }
