@@ -132,7 +132,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
         List<String> lista = new ArrayList<>();
         if (!checkUserName(userName))
         {
-            // throw new InvalidArgumentException("Enter valid user name");
+
             lista.add("Enter valid username ");
         }
         if (!checkPassword(password))
@@ -142,12 +142,12 @@ public class AuthenticationServiceImpl implements AuthenticationService
         }
         if (!checkEmail(email))
         {
-            // throw new InvalidArgumentException("Enter valid email");
+
             lista.add("Enter valid email");
         }
         if (this.userRepository.findByEmail(email).isPresent())
         {
-            // throw new EmailAlreadyExistException("Already existing email address");
+
             lista.add("Already existing email address ");
         }
         if (userName == null || userName.isEmpty())

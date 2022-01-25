@@ -75,7 +75,7 @@ public class QuestionServiceImpl implements QuestionService
         {
             res += "Title is empty ";
         }
-        if (res.isEmpty())
+        if (res.isEmpty() && validateQuestion(questionDTO.getQuestion(), questionDTO.getTitle()).isEmpty())
         {
             Question question = new Question();
             question.setCreator("Novica");

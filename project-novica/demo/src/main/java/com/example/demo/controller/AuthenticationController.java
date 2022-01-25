@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.QuestionDTO;
 import com.example.demo.dto.UserDTO;
-import com.example.demo.model.Question;
 import com.example.demo.model.User;
 import com.example.demo.repository.QuestionRepository;
 import com.example.demo.service.AuthenticationService;
@@ -10,7 +9,6 @@ import com.example.demo.service.QuestionService;
 import com.example.demo.util.PasswordHashing;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -112,21 +110,14 @@ public class AuthenticationController
     {
         String res = questionService.createQuestion(questionDTO);
 
-     if (res == null || res.isEmpty())
-     {
-         return ResponseEntity.ok("success");
-     }
-     else
-     {
-         return ResponseEntity.badRequest().body(res);
-     }
- }
-
-    @RequestMapping(path = "/question", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Question> listQuestion()
-    {
-        return questionRepository.findAll();
-
+        if (res == null || res.isEmpty())
+        {
+            return ResponseEntity.ok("success");
+        }
+        else
+        {
+            return ResponseEntity.badRequest().body(res);
+        }
     }
 
 }
