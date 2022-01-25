@@ -4,15 +4,13 @@ import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.util.PasswordHashing;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService
@@ -41,7 +39,8 @@ public class AuthenticationServiceImpl implements AuthenticationService
         String upperCaseChars = "(.*[A-Z].*)";
         String lowerCaseChars = "(.*[a-z].*)";
         String specialChars = "(.*[@,#,$,%].*$)";
-        if ((password.length() < 7) || !password.matches(upperCaseChars) || !password.matches(lowerCaseChars) || !password.matches(specialChars))
+        if ((password.length() < 7) || !password.matches(upperCaseChars) || !password.matches(lowerCaseChars)
+                || !password.matches(specialChars))
         {
             isValid = false;
         }
@@ -51,7 +50,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     @Override
     public boolean validateAndSave(User user)
     {
-        if (checkUserName(user.getUserName()) && checkPassword(user.getPassword())) //falit validacija za email
+        if (checkUserName(user.getUserName()) && checkPassword(user.getPassword()))
         {
             userRepository.save(user);
             return true;
@@ -114,7 +113,8 @@ public class AuthenticationServiceImpl implements AuthenticationService
             if (!user.isPresent())
             {
                 lista.add("There is not user with that email");
-            } else
+            }
+            else
             {
                 String hashedPassword = user.get().getPassword();
                 if (!passwordHashing.encoder().matches(password, hashedPassword))
@@ -125,7 +125,6 @@ public class AuthenticationServiceImpl implements AuthenticationService
         }
         return lista;
     }
-
 
     @Override
     public List<String> register(String email, String password, String userName, Integer age)
@@ -138,17 +137,17 @@ public class AuthenticationServiceImpl implements AuthenticationService
         }
         if (!checkPassword(password))
         {
-            //throw new InvalidArgumentException("Enter valid password");
+            // throw new InvalidArgumentException("Enter valid password");
             lista.add("Enter valid password ");
         }
         if (!checkEmail(email))
         {
-            //throw new InvalidArgumentException("Enter valid email");
+            // throw new InvalidArgumentException("Enter valid email");
             lista.add("Enter valid email");
         }
         if (this.userRepository.findByEmail(email).isPresent())
         {
-            //throw new EmailAlreadyExistException("Already existing email address");
+            // throw new EmailAlreadyExistException("Already existing email address");
             lista.add("Already existing email address ");
         }
         if (userName == null || userName.isEmpty())

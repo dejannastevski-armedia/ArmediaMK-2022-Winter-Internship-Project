@@ -2,12 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.model.User;
 
-
 import java.util.List;
-import java.util.Optional;
 
-public interface AuthenticationService {
-    //Create Read Update Delete
+public interface AuthenticationService
+{
+    // Create Read Update Delete
     boolean checkUserName(String firstName);
 
     boolean checkPassword(String password);
@@ -26,7 +25,7 @@ public interface AuthenticationService {
 
     List<String> login(String email, String password);
 
-    List<String> register(String email, String password, String userName, Integer age) ;
+    List<String> register(String email, String password, String userName, Integer age);
 
     boolean checkEmail(String email);
 }

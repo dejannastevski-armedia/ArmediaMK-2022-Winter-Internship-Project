@@ -1,18 +1,26 @@
 package com.example.demo.controller;
 
-import antlr.StringUtils;
+import com.example.demo.dto.QuestionDTO;
 import com.example.demo.dto.UserDTO;
+import com.example.demo.model.Question;
 import com.example.demo.model.User;
+import com.example.demo.repository.QuestionRepository;
 import com.example.demo.service.AuthenticationService;
+import com.example.demo.service.QuestionService;
 import com.example.demo.util.PasswordHashing;
-import com.sun.istack.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +34,12 @@ public class AuthenticationController
 
     @Autowired
     private PasswordHashing passwordHashing;
+
+    @Autowired
+    QuestionService questionService;
+
+    @Autowired
+    QuestionRepository questionRepository;
 
     @GetMapping("")
     public String viewHomePage(Model model)
@@ -57,6 +71,26 @@ public class AuthenticationController
         return "login";
     }
 
+    @PostMapping("/register")
+    public String registerUser(@RequestParam String email,
+            @RequestParam String password,
+            @RequestParam String userName,
+            @RequestParam(defaultValue = "21") Integer age,
+            Model model)
+    {
+        ArrayList<String> res = (ArrayList<String>) authenticationService.register(email, password, userName, age);
+        if (res.isEmpty())
+        {
+            return "redirect:/auth/login";
+        }
+        else
+        {
+            model.addAttribute("error", res);
+            model.addAttribute("user", new User());
+            return "signup_form";
+        }
+    }
+
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> logIn(@RequestBody UserDTO userDTO)
@@ -72,22 +106,28 @@ public class AuthenticationController
         }
     }
 
-    @PostMapping("/register")
-    public String registerUser(@RequestParam String email,
-                               @RequestParam String password,
-                               @RequestParam String userName,
-                               @RequestParam(defaultValue = "21") Integer age,
-                               Model model)
+    @RequestMapping(path = "/home", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> addQuestion(@RequestBody QuestionDTO questionDTO)
     {
-        ArrayList<String> res = (ArrayList<String>) authenticationService.register(email, password, userName, age);
-        if (res.isEmpty())
+        String res = questionService.createQuestion(questionDTO);
+
+        if (res == null || res.isEmpty())
         {
-            return "redirect:/auth/login";
-        } else
+            return ResponseEntity.ok("success");
+        }
+        else
         {
-            model.addAttribute("error", res);
-            model.addAttribute("user", new User());
-            return "signup_form";
+            // return ResponseEntity.badRequest().body("error");
+            return ResponseEntity.badRequest().body(res);
         }
     }
+
+    @RequestMapping(path = "/question", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Question> listQuestion()
+    {
+        return questionRepository.findAll();
+
+    }
+
 }
