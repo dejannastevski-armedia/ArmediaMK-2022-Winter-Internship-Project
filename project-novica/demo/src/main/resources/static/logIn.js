@@ -9,7 +9,7 @@ function logIn() {
         //  data:{email: email, password: password},
         data: JSON.stringify(userDTO),
         success: function (data){
-            window.location.replace("http://localhost:8080/auth/home");
+            window.location.replace("http://localhost:8080/home");
         },
         error: function(e){
             document.getElementById("errorMessage").innerHTML=e.responseText;

@@ -6,12 +6,12 @@ function addQuestion() {
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/auth/home",
+        url: "/question/add-question",
         //  data:{question: question, title: title},
         data: JSON.stringify(questionDTO),
         success: function (data) {
-           // alert("vo success");
-            window.location.replace("http://localhost:8080/auth/home");
+            // alert("vo success");
+            window.location.replace("http://localhost:8080/home");
         },
         error: function (e) {
             // alert("vo error");

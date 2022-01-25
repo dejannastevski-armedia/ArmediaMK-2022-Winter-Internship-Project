@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.QuestionDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.model.User;
 import com.example.demo.repository.QuestionRepository;
@@ -54,13 +53,6 @@ public class AuthenticationController
         return "signup_form";
     }
 
-    @GetMapping("/home")
-    public String showHomePage(Model model)
-    {
-        model.addAttribute("user", new User());
-
-        return "home";
-    }
 
     @GetMapping("/login")
     public String getLoginPage(Model model)
@@ -104,20 +96,6 @@ public class AuthenticationController
         }
     }
 
-    @RequestMapping(path = "/home", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<String> addQuestion(@RequestBody QuestionDTO questionDTO)
-    {
-        String res = questionService.createQuestion(questionDTO);
 
-        if (res == null || res.isEmpty())
-        {
-            return ResponseEntity.ok("success");
-        }
-        else
-        {
-            return ResponseEntity.badRequest().body(res);
-        }
-    }
 
 }
