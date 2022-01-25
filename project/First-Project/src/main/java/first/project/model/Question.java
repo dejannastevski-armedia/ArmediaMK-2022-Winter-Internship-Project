@@ -18,20 +18,6 @@ import java.time.Instant;
 @EntityListeners(AuditingEntityListener.class)
 public class Question implements Serializable
 {
-    public Question(Integer id, String question, String title, String creator, String modifier, Instant createdDate)
-    {
-        this.id = id;
-        this.title = title;
-        this.question = question;
-        this.creator = creator;
-        this.modifier = modifier;
-        this.createdDate = createdDate;
-    }
-
-    public Question()
-    {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -51,6 +37,20 @@ public class Question implements Serializable
     @Column(name = "created_date", nullable = false)
     @CreatedDate
     private Instant createdDate;
+
+    public Question(Integer id, String question, String title, String creator, String modifier, Instant createdDate)
+    {
+        this.id = id;
+        this.title = title;
+        this.question = question;
+        this.creator = creator;
+        this.modifier = modifier;
+        this.createdDate = createdDate;
+    }
+
+    public Question()
+    {
+    }
 
     public Integer getId()
     {
