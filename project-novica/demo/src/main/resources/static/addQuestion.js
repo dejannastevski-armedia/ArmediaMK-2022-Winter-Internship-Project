@@ -10,7 +10,7 @@ function addQuestion() {
         //  data:{question: question, title: title},
         data: JSON.stringify(questionDTO),
         success: function (data) {
-            alert("vo success");
+           // alert("vo success");
             window.location.replace("http://localhost:8080/auth/home");
         },
         error: function (e) {

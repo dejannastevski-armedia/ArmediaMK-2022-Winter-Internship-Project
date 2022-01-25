@@ -82,11 +82,7 @@ public class QuestionServiceImpl implements QuestionService
             question.setModifier("Novica");
             question.setTitle(questionDTO.getTitle());
             question.setQuestion(questionDTO.getQuestion());
-            // DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            // LocalDateTime now = LocalDateTime.now();
-            // question.setCreatedAt(new Date(String.valueOf(now)));
-            // TODO:fix date format
-            // question.setCreatedAt();
+
             questionRepository.save(question);
         }
         return res;
