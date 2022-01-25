@@ -5,7 +5,6 @@ import first.project.model.User;
 import first.project.repository.UserRepository;
 import first.project.util.PasswordHashing;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
