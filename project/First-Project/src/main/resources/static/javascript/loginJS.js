@@ -10,7 +10,7 @@ $(document).ready(function () {
             data: JSON.stringify(user),
             contentType: "application/JSON",
             success: function (data) {
-                window.location = "http://localhost:8080/auth/home";
+                window.location = "http://localhost:8080/home";
             },
             error: function (data) {
                 $("#errorMessage").html(data.responseText);
