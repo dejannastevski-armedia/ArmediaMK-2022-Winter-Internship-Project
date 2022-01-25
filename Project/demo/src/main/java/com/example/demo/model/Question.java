@@ -22,12 +22,17 @@ public class Question implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false, length = 45)
     private String title;
+
     @Column(nullable = false, length = 50)
     private String question;
+
     private String creator;
+
     private String modifier;
+
     @CreatedDate
     @Column(name = "date", nullable = false)
     private Instant createDate;
