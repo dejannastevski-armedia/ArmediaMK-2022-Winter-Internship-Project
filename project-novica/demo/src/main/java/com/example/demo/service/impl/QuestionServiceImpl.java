@@ -78,8 +78,8 @@ public class QuestionServiceImpl implements QuestionService
         if (res.isEmpty() && validateQuestion(questionDTO.getQuestion(), questionDTO.getTitle()).isEmpty())
         {
             Question question = new Question();
-            question.setCreator("Novica");
-            question.setModifier("Novica");
+            question.setCreator(questionDTO.getEmail());
+            question.setModifier(questionDTO.getEmail());
             question.setTitle(questionDTO.getTitle());
             question.setQuestion(questionDTO.getQuestion());
 

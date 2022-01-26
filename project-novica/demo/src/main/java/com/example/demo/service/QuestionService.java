@@ -14,4 +14,5 @@ public interface QuestionService
     String validateQuestion(String question, String title);
 
     String createQuestion(QuestionDTO questionDTO);
+
 }

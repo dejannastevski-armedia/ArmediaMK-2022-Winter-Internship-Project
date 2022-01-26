@@ -88,7 +88,8 @@ public class AuthenticationController
         List<String> res = authenticationService.login(userDTO.getEmail(), userDTO.getPassword());
         if (res.size() == 0)
         {
-            return ResponseEntity.ok("success");
+            // return ResponseEntity.ok("success");
+            return ResponseEntity.ok(userDTO.getEmail());
         }
         else
         {

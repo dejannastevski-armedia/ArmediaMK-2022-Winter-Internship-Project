@@ -4,6 +4,17 @@ public class QuestionDTO
 {
     String question;
     String title;
+    String email;
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
 
     public QuestionDTO()
     {
