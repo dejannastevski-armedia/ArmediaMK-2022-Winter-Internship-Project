@@ -2,13 +2,24 @@
 <html>
 <head>
   <meta charset="ISO-8859-1">
-  <title>List Users</title>
+  <title>Questions</title>
   <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
   <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
   <script src="/questionService.js"></script>
 </head>
-<body>
+<body onload="displayEmail()">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ">
+      <a class="nav-item nav-link" onclick="logOut()">LogOut</a>
+      <a class="nav-item nav-link" th:href="@{/login-user}">Login</a>
+    </div>
+  </div>
+</nav>
+<div class="form-group row ">
+  <p class="col-sm-12 d-flex justify-content-center h4 text-dark mt-5" >You are login as: <span class="h4 text-dark" id="displayLoggedUser" ></span></p>
+</div>
 <div class="container text-center">
   <div>
       <button type="button" class="btn btn-success btn-lg btn-block mt-5"  data-toggle="modal" data-target="#myModal">Add Question</button>

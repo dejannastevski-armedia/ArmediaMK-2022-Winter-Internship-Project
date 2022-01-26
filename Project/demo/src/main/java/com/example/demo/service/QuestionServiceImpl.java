@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.QuestionDTO;
 import com.example.demo.model.Question;
 import com.example.demo.repository.QuestionRepository;
 
@@ -33,17 +34,18 @@ public class QuestionServiceImpl implements QuestionService
     }
 
     @Override
-    public String validateQuestionAndTitle(Question question)
+    public String validateQuestionAndTitle(QuestionDTO questionDTO)
     {
         String res = "";
-        if (!checkTitle(question.getTitle()))
+        if (!checkTitle(questionDTO.getTitle()))
         {
             res += "Invalid title,";
         }
-        if (!checkQuestion(question.getQuestion()))
+        if (!checkQuestion(questionDTO.getQuestion()))
         {
             res += "Invalid question";
         }
+
         return res;
     }
 
@@ -55,14 +57,15 @@ public class QuestionServiceImpl implements QuestionService
     }
 
     @Override
-    public Question createQuestion(Question question)
+    public void createQuestion(QuestionDTO questionDTO)
     {
-        question.setCreator("Marija");
-        question.setModifier("Marija");
-        question.setTitle(question.getTitle());
-        question.setQuestion(question.getQuestion());
+        Question question = new Question();
+        question.setCreator(questionDTO.getEmail());
+        question.setModifier(questionDTO.getEmail());
+        question.setTitle(questionDTO.getTitle());
+        question.setQuestion(questionDTO.getQuestion());
         questionRepository.save(question);
-        return question;
+
     }
 
 }
