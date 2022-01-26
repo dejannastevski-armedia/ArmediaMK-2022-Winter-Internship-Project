@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#submit").click(function (e) {
+    $("#submit").click(function () {
         let user = {
             email: $("#email").val(),
             password: $("#password").val(),
@@ -10,10 +10,13 @@ $(document).ready(function () {
             data: JSON.stringify(user),
             contentType: "application/JSON",
             success: function (data) {
+                let obj = JSON.stringify(data);
+                window.sessionStorage.setItem("loggedUser", JSON.parse(obj).email);
                 window.location = "http://localhost:8080/home";
             },
-            error: function (data) {
-                $("#errorMessage").html(data.responseText);
+            error: function (xhr, status, error) {
+                let errorMessage = xhr.responseJSON.message;
+                $("#errorMessage").html(errorMessage);
             }
         });
     });

@@ -10,5 +10,7 @@ public interface QuestionService
 
     boolean checkQuestion(String question);
 
+    boolean checkEmail(String email);
+
     ArrayList<String> validateAndPost(QuestionDTO questionDTO);
 }
