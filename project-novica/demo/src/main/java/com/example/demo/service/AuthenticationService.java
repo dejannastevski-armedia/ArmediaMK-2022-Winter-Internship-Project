@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.User;
+import com.example.demo.model.exceptions.UserValidationException;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface AuthenticationService
 
     void deleteUserById(Long id);
 
-    List<String> login(String email, String password);
+    User login(String email, String password) throws UserValidationException;
 
     List<String> register(String email, String password, String userName, Integer age);
 

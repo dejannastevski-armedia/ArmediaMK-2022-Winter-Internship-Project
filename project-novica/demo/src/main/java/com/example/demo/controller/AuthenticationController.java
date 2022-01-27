@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.UserDTO;
 import com.example.demo.model.User;
+import com.example.demo.model.exceptions.UserValidationException;
 import com.example.demo.repository.QuestionRepository;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.QuestionService;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller()
 @RequestMapping("/auth")
@@ -53,7 +53,6 @@ public class AuthenticationController
         return "signup_form";
     }
 
-
     @GetMapping("/login")
     public String getLoginPage(Model model)
     {
@@ -83,19 +82,11 @@ public class AuthenticationController
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> logIn(@RequestBody UserDTO userDTO)
+    public ResponseEntity<User> logIn(@RequestBody UserDTO userDTO) throws UserValidationException
+
     {
-        List<String> res = authenticationService.login(userDTO.getEmail(), userDTO.getPassword());
-        if (res.size() == 0)
-        {
-            return ResponseEntity.ok("success");
-        }
-        else
-        {
-            return ResponseEntity.badRequest().body(String.join(", ", res));
-        }
+        User res = authenticationService.login(userDTO.getEmail(), userDTO.getPassword());
+        return ResponseEntity.ok(res);
     }
-
-
 
 }

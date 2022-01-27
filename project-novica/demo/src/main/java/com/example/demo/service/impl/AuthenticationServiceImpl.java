@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.User;
+import com.example.demo.model.exceptions.UserValidationException;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.util.PasswordHashing;
@@ -96,34 +97,30 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
-    public List<String> login(String email, String password)
+    public User login(String email, String password) throws UserValidationException
     {
-        List<String> lista = new ArrayList<>();
         if (email == null || email.isEmpty() || !checkEmail(email))
         {
-            lista.add("Invalid Email");
+            throw new UserValidationException("Invalid Email");
         }
         if (password == null || password.isEmpty() || !checkPassword(password))
         {
-            lista.add("Invalid password");
+            throw new UserValidationException("Invalid password");
         }
-        if (lista.isEmpty())
+        Optional<User> user = this.userRepository.findByEmail(email);
+        if (!user.isPresent())
         {
-            Optional<User> user = this.userRepository.findByEmail(email);
-            if (!user.isPresent())
+            throw new UserValidationException("Invalid credentials");
+        }
+        else
+        {
+            String hashedPassword = user.get().getPassword();
+            if (!passwordHashing.encoder().matches(password, hashedPassword))
             {
-                lista.add("There is not user with that email");
-            }
-            else
-            {
-                String hashedPassword = user.get().getPassword();
-                if (!passwordHashing.encoder().matches(password, hashedPassword))
-                {
-                    lista.add("Password doesn't matches");
-                }
+                throw new UserValidationException("Invalid credentials");
             }
         }
-        return lista;
+        return user.get();
     }
 
     @Override
@@ -132,12 +129,10 @@ public class AuthenticationServiceImpl implements AuthenticationService
         List<String> lista = new ArrayList<>();
         if (!checkUserName(userName))
         {
-
             lista.add("Enter valid username ");
         }
         if (!checkPassword(password))
         {
-            // throw new InvalidArgumentException("Enter valid password");
             lista.add("Enter valid password ");
         }
         if (!checkEmail(email))
