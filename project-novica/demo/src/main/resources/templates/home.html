@@ -20,8 +20,8 @@
 <a href="/auth/login">
     <button class="btn btn-primary">Log Out</button>
 </a>
-<div id="email"></div>
-<button type="button" id="addButton" class="btn btn-primary" data-toggle="modal"
+<div id="email" style="font-size: 16px;color: black;float: right; margin-right: 30px; background-color: darkcyan"></div>
+<button type="button" id="addButton" class="btn btn-primary" data-toggle="modal" style="margin-top:-40px"
         data-target="#myModal">Add Question
 </button>
 
@@ -78,7 +78,8 @@
         <td th:text="${q.creator}">Creator</td>
         <td th:text="${q.createdAt}">Date</td>
         <td>
-            <button>Answer</button>
+            <button onclick="window.location.href='question/answer';">View Answer
+            </button>
         </td>
         <td>
             <button>Trash</button>
