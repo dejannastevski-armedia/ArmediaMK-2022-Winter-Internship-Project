@@ -36,6 +36,16 @@ public class QuestionServiceImpl implements QuestionService
     }
 
     @Override
+    public boolean checkEmail(String email)
+    {
+        if ("".equals(email) || email == null)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public ArrayList<String> validateAndPost(QuestionDTO questionDTO)
     {
         ArrayList<String> res = new ArrayList<String>();
@@ -47,11 +57,15 @@ public class QuestionServiceImpl implements QuestionService
         {
             res.add("Question is empty. Please enter question");
         }
+        if (checkEmail(questionDTO.getEmail()) == false)
+        {
+            res.add("You are not logged in. Please log in to ask a question");
+        }
         if (res.isEmpty())
         {
             Question question = new Question();
-            question.setCreator("Kiko");
-            question.setModifier("Kiko");
+            question.setCreator(questionDTO.getEmail());
+            question.setModifier(questionDTO.getEmail());
             question.setTitle(questionDTO.getTitle());
             question.setQuestion(questionDTO.getQuestion());
             questionRepository.save(question);

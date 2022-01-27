@@ -39,6 +39,14 @@
             text-decoration: none;
         }
 
+        #userLogged {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
         li a:hover {
             background-color: #111;
         }
@@ -49,12 +57,19 @@
             -webkit-text-stroke-color: black;
             font-size: 1.4em;
         }
+
+        #SuccessfullyAskedQuestion {
+            color: white;
+            -webkit-text-stroke-color: black;
+            font-size: 1.4em;
+        }
     </style>
 </head>
 <body>
 <ul>
     <li><a href="/home">Home</a></li>
-    <li class="w3-right"><a href="/auth/register">Logout</a></li>
+    <li id="logout" class="w3-right"><a href="/auth/login">Logout</a></li>
+    <li id="userLogged" class="w3-right"></li>
 </ul>
 
 <div class="w3-container">
@@ -63,7 +78,7 @@
         Add Question
     </button>
 
-    <div class="askedQuestion">
+    <div id="SuccessfullyAskedQuestion">
 
     </div>
 
@@ -85,15 +100,17 @@
                 </div>
             </form>
 
-            <footer class="w3-container w3-teal">
-                <strong><span id="errorMessage" , style="color: azure"></span></strong>
+            <footer class="w3-container">
+                <strong><span id="errorMessage" style="color: black"></span></strong>
             </footer>
 
             <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
                 <button onclick="document.getElementById('id01').style.display='none'" type="button"
                         class="w3-right w3-button w3-red">Cancel
                 </button>
-                <button class="w3-right w3-button w3-blue" type="button" id="submitQuestion" style="margin-right: 2.6%">Submit</button>
+                <button class="w3-right w3-button w3-blue" type="button" id="submitQuestion" style="margin-right: 2.6%">
+                    Submit
+                </button>
             </div>
 
         </div>

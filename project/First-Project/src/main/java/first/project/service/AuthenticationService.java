@@ -1,6 +1,7 @@
 package first.project.service;
 
 import first.project.dto.UserDTO;
+import first.project.exceptions.UserValidationException;
 import first.project.model.User;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public interface AuthenticationService
 
     int checkLoginEmail(String email);
 
-    boolean checkLoginPassword(String password, int id);
+    User checkLoginPassword(String password, int id);
 
-    ArrayList<String> validateAndLogin(UserDTO userDTO);
+    User validateAndLogin(UserDTO userDTO) throws UserValidationException;
 }

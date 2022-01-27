@@ -1,15 +1,17 @@
 package first.project.service;
 
-import first.project.dto.UserDTO;
-import first.project.model.User;
-import first.project.repository.UserRepository;
-import first.project.util.PasswordHashing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import first.project.dto.UserDTO;
+import first.project.exceptions.UserValidationException;
+import first.project.model.User;
+import first.project.repository.UserRepository;
+import first.project.util.PasswordHashing;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService
@@ -63,7 +65,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     @Override
     public ArrayList<String> validateAndSave(User user)
     {
-        ArrayList<String> res = new ArrayList<String>();
+        ArrayList<String> res = new ArrayList<>();
         if (checkEmail(user.getEmail()) == false)
         {
             res.add("The email is invalid");
@@ -102,28 +104,28 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
-    public boolean checkLoginPassword(String password, int id)
+    public User checkLoginPassword(String password, int id)
     {
         User u = userRepo.findById(id);
         if (passwordHashing.passwordEncoder().matches(password, u.getPassword()) == true)
         {
-            return true;
+            return u;
         }
-        return false;
+        return null;
     }
 
     @Override
-    public ArrayList<String> validateAndLogin(UserDTO userDTO)
+    public User validateAndLogin(UserDTO userDTO) throws UserValidationException
     {
-        ArrayList<String> res = new ArrayList<String>();
-        int id = checkLoginEmail(userDTO.getEmail());
-        if (id == -1)
+        User u = userRepo.findByEmail(userDTO.getEmail());
+        if (u == null)
         {
-            res.add("The email is not registered");
-        } else if (checkLoginPassword(userDTO.getPassword(), id) == false)
-        {
-            res.add("The email and password does not match");
+            throw new UserValidationException("The email is not registered");
         }
-        return res;
+        if (passwordHashing.passwordEncoder().matches(userDTO.getPassword(), u.getPassword()) == false)
+        {
+            throw new UserValidationException("The email and password does not match");
+        }
+        return u;
     }
 }

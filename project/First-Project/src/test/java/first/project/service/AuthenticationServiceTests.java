@@ -3,6 +3,7 @@ package first.project.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import first.project.dto.UserDTO;
+import first.project.exceptions.UserValidationException;
 import first.project.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -136,7 +137,7 @@ public class AuthenticationServiceTests
     }
 
     @Test
-    public void validateAndLoginInvalidEmailTest()
+    public void validateAndLoginInvalidEmailTest() throws UserValidationException
     {
         UserDTO user = new UserDTO();
         user.setEmail("kiko4_slavkoski.com");
@@ -147,7 +148,7 @@ public class AuthenticationServiceTests
     }
 
     @Test
-    public void validateAndLoginEmailAndPasswordDoesNotMatchTest()
+    public void validateAndLoginEmailAndPasswordDoesNotMatchTest() throws UserValidationException
     {
         UserDTO user = new UserDTO();
         user.setEmail("kiko4_slavkoski@yahoo.com");
@@ -158,7 +159,7 @@ public class AuthenticationServiceTests
     }
 
     @Test
-    public void validateAndLoginValidLoginTest()
+    public void validateAndLoginValidLoginTest() throws UserValidationException
     {
         UserDTO user = new UserDTO();
         user.setEmail("kiko_slavkoski30@yahoo.com");

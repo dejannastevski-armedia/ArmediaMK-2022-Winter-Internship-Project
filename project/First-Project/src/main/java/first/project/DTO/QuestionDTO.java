@@ -1,11 +1,10 @@
 package first.project.dto;
 
-import java.sql.Date;
-
 public class QuestionDTO
 {
     private String title;
     private String question;
+    private String email;
 
     public String getTitle()
     {
@@ -26,4 +25,15 @@ public class QuestionDTO
     {
         this.question = question;
     }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
 }
