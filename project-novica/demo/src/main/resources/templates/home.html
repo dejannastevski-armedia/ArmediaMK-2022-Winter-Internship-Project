@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
     <title>Welcome - Page</title>
@@ -60,5 +60,31 @@
         </div>
     </div>
 </div>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Question</th>
+        <th scope="col">Creator</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Answer</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="q: ${questions}">
+        <td th:text="${q.title}">Title</td>
+        <td th:text="${q.question}">Question</td>
+        <td th:text="${q.creator}">Creator</td>
+        <td th:text="${q.createdAt}">Date</td>
+        <td>
+            <button>Answer</button>
+        </td>
+        <td>
+            <button>Trash</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
