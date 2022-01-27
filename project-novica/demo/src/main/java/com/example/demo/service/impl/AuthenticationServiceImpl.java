@@ -110,14 +110,14 @@ public class AuthenticationServiceImpl implements AuthenticationService
         Optional<User> user = this.userRepository.findByEmail(email);
         if (!user.isPresent())
         {
-            throw new UserValidationException("There is not user with that email");
+            throw new UserValidationException("Invalid credentials");
         }
         else
         {
             String hashedPassword = user.get().getPassword();
             if (!passwordHashing.encoder().matches(password, hashedPassword))
             {
-                throw new UserValidationException("Password doesn't matches");
+                throw new UserValidationException("Invalid credentials");
             }
         }
         return user.get();
