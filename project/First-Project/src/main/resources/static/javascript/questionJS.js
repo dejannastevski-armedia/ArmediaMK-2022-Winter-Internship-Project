@@ -17,13 +17,6 @@ $(document).ready(function () {
         sessionStorage.removeItem("loggedUser");
     })
 
-    $(".viewAnswer").click(function () {
-        let answerId = $(this).attr("id");
-        let answerIdSeperated = answerId.split(" ");
-        let stringId = "answers/view-answer/" + answerIdSeperated[1];
-        window.location.href = stringId;
-    })
-
     $("#submitQuestion").click(function () {
         let question = {
             title: $("#title").val(),

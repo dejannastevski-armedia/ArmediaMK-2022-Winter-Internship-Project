@@ -156,7 +156,9 @@
                 <td th:text="${question.creator}"></td>
                 <td th:text="${question.createdDate}"></td>
                 <td style="text-align: center">
-                    <button class="viewAnswer" id="viewAnswer">View Answers</button>
+                    <a th:href="@{/answers/view-answer/{id}(id=${question.id})}">
+                        <button id="viewAnswer" type="button">View Answers</button>
+                    </a>
                 </td>
                 <td style="text-align: center"><img src="/static/javascript/photos/deleteIcon.png" alt="DeleteIcon"
                                                     id="deleteQuestion" height=50% width=50%>
