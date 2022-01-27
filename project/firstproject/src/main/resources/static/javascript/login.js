@@ -9,11 +9,12 @@ function loginUser()
         url: "/auth/login",
         //data:{email: email, password: password},
         data: JSON.stringify(userDTO),
-        success: function () {
+        success: function (data) {
             window.location.replace("http://localhost:8080/auth/logged-in");
+            window.sessionStorage.setItem("loggedInUser", JSON.stringify(data));
         },
         error: function (e) {
-            document.getElementById("errorMessage").innerHTML = e.responseText;
+            document.getElementById("errorMessage").innerHTML = e.responseJSON.message;
         }
     });
 }

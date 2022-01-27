@@ -1,5 +1,6 @@
 package com.example.firstproject.services;
 
+import com.example.firstproject.exceptions.UserValidationException;
 import com.example.firstproject.model.User;
 import com.example.firstproject.repository.UserRepository;
 
@@ -27,7 +28,8 @@ public class AuthenticationServiceImpl implements AuthenticationService
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern = Pattern.compile(regexPattern);
         Matcher matcher = pattern.matcher(email);
-        if (!matcher.matches()) {
+        if (!matcher.matches())
+        {
             return false;
         }
         return true;
@@ -36,7 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     @Override
     public boolean checkUserName(String userName)
     {
-        if(userName == null || userName.isEmpty() || userName.length() <= 2)
+        if (userName == null || userName.isEmpty() || userName.length() <= 2)
         {
             return false;
         }
@@ -49,7 +51,8 @@ public class AuthenticationServiceImpl implements AuthenticationService
         String regexPattern = "(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{7,}";
         Pattern pattern = Pattern.compile(regexPattern);
         Matcher matcher = pattern.matcher(password);
-        if (!matcher.matches()) {
+        if (!matcher.matches())
+        {
             return false;
         }
         return true;
@@ -62,30 +65,28 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
-    public String loginUser(String email, String password)
+    public User loginUser(String email, String password) throws UserValidationException
     {
-        StringBuilder sb = new StringBuilder();
-        if(email ==  null || !checkEmail(email))
+        if (email == null || !checkEmail(email))
         {
-            sb.append("Invalid E-Mail!\n");
+            throw new UserValidationException("Invalid E-Mail!");
         }
-        if(password == null || !checkPassword(password))
+        if (password == null || !checkPassword(password))
         {
-            sb.append("Password Validation Error!\n");
+            throw new UserValidationException("Password Validation Error!");
         }
-        if(sb.length() == 0)
+
+        User dbUser = userRepository.findByEmail(email);
+        if (dbUser == null)
         {
-            User dbUser = userRepository.findByEmail(email);
-            if(dbUser == null)
-            {
-                sb.append("User Not Found!\n");
-            }
-            else if(!passwordEncoder.matches(password,dbUser.getPassword()))
-            {
-                sb.append("Invalid Password!\n");
-            }
+            throw new UserValidationException("User Not Found!");
         }
-        return sb.toString();
+        else if (!passwordEncoder.matches(password, dbUser.getPassword()))
+        {
+            throw new UserValidationException("Invalid Password!");
+        }
+
+        return dbUser;
     }
 
     @Override
@@ -104,17 +105,23 @@ public class AuthenticationServiceImpl implements AuthenticationService
     public String validateUserRegistration(@NotNull User user)
     {
         StringBuilder sb = new StringBuilder();
-        if (!checkUserName(user.getUserName())) {
+        if (!checkUserName(user.getUserName()))
+        {
             sb.append(" Username Not Valid! \n");
         }
-        if (!checkPassword(user.getPassword())) {
+        if (!checkPassword(user.getPassword()))
+        {
             sb.append(" Password Not Valid! \n");
         }
-        if (!checkEmail(user.getEmail())) {
+        if (!checkEmail(user.getEmail()))
+        {
             sb.append(" Email Not Valid!\n");
-        } else {
+        }
+        else
+        {
             User newUser = userRepository.findByEmail(user.getEmail());
-            if (newUser != null) {
+            if (newUser != null)
+            {
                 sb.append("Email Already Exist!\n");
             }
         }

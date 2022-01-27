@@ -52,13 +52,14 @@ public class QuestionServiceImpl implements QuestionService
     }
 
     @Override
-    public Question createQuestion(String question, String title)
+    public Question createQuestion(String question, String title, String email)
     {
         Question newQuestion = new Question();
         newQuestion.setQuestion(question);
         newQuestion.setCreatedDate(LocalDateTime.now());
         newQuestion.setTitle(title);
-        newQuestion.setCreator("David");
+        newQuestion.setCreator(email);
+        newQuestion.setModifier(email);
         return newQuestion;
     }
 }

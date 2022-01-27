@@ -1,7 +1,16 @@
+$(document).ready(function () {
+    $("#loggedInUser").html("You are logged in as: " + JSON.parse(sessionStorage.loggedInUser).email);
+});
+
+function logOut() {
+    sessionStorage.removeItem("loggedInUser");
+}
+
 function saveQuestion() {
     var questionDTO = {};
     questionDTO.title = $("#title").val();
     questionDTO.question = $("#questionform").val();
+    questionDTO.email = JSON.parse(sessionStorage.loggedInUser).email;
     $.ajax({
         type: "POST",
         contentType: "application/json",

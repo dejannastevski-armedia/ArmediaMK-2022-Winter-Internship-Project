@@ -1,15 +1,21 @@
 package com.example.firstproject.controller;
 
 import com.example.firstproject.dto.UserLoginDTO;
+import com.example.firstproject.exceptions.UserValidationException;
 import com.example.firstproject.model.User;
 import com.example.firstproject.services.AuthenticationService;
+
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value = "/auth")
@@ -29,7 +35,7 @@ public class AuthenticationController
     public String loginForm(User user, Model model)
     {
         String result = authenticationService.validateUserRegistration(user);
-        if(result.length() == 0)
+        if (result.length() == 0)
         {
             User toEnter = authenticationService.createUser(user);
             authenticationService.saveUser(toEnter);
@@ -48,20 +54,12 @@ public class AuthenticationController
         return "login";
     }
 
-
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> loginUser(@RequestBody @NotNull UserLoginDTO userDTO)
+    public ResponseEntity<User> loginUser(@RequestBody @NotNull UserLoginDTO userDTO) throws UserValidationException
     {
-        String result = authenticationService.loginUser(userDTO.getEmail(), userDTO.getPassword());
-        if(result.length() == 0)
-        {
-            return ResponseEntity.status(HttpStatus.OK).body("");
-        }
-        else
-        {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
-        }
+        User user = authenticationService.loginUser(userDTO.getEmail(), userDTO.getPassword());
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/logged-in")

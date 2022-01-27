@@ -19,7 +19,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" id="navBarLogout">Home</a>
+            <p class="nav-item" style="color: white" id="loggedInUser"></p>
+        </div>
+        <div class="navbar-nav">
+            <a href="/auth/login" class="nav-item nav-link" onclick="logOut()">Log Out</a>
         </div>
     </div>
 </nav>
