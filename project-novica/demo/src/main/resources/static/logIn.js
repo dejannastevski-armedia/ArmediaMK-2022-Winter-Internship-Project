@@ -8,12 +8,13 @@ function logIn() {
         url: "/auth/login",
         //  data:{email: email, password: password},
         data: JSON.stringify(userDTO),
-        success: function (email) {
+        success: function (data) {
             window.location.replace("http://localhost:8080/home");
-            window.sessionStorage.setItem('email', JSON.stringify(email));
+            window.sessionStorage.setItem('user', JSON.stringify(data));
         },
         error: function (e) {
-            document.getElementById("errorMessage").innerHTML = e.responseText;
+            document.getElementById("errorMessage").innerHTML = e.responseJSON.message;
+
         }
     });
 }

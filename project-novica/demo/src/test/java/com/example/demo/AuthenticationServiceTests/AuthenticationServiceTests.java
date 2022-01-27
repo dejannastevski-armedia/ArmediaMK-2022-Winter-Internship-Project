@@ -1,8 +1,10 @@
 package com.example.demo.AuthenticationServiceTests;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.model.exceptions.UserValidationException;
 import com.example.demo.service.impl.AuthenticationServiceImpl;
 
 import org.junit.Test;
@@ -10,9 +12,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -56,9 +55,10 @@ public class AuthenticationServiceTests
         UserDTO user = new UserDTO();
         user.setEmail("novicagmail.com");
         user.setPassword("Nndnds@@3");
-        List<String> expected = new ArrayList<>();
-        expected.add("Invalid Email");
-        assertThat(authenticationService.login(user.getEmail(), user.getPassword())).isEqualTo(expected);
+        UserValidationException userValidationException = assertThrows(UserValidationException.class, () -> {
+            authenticationService.login(user.getEmail(), user.getPassword());
+        });
+        assertThat(userValidationException.getMessage()).isEqualTo("Invalid Email");
     }
 
     @Test
@@ -67,9 +67,10 @@ public class AuthenticationServiceTests
         UserDTO user = new UserDTO();
         user.setEmail("InvalidEmailExample");
         user.setPassword("Ttt$#@2");
-        List<String> expected = new ArrayList<>();
-        expected.add("Invalid Email");
-        assertThat(authenticationService.login(user.getEmail(), user.getPassword())).isEqualTo(expected);
+        UserValidationException userValidationException = assertThrows(UserValidationException.class, () -> {
+            authenticationService.login(user.getEmail(), user.getPassword());
+        });
+        assertThat(userValidationException.getMessage()).isEqualTo("Invalid Email");
     }
 
     @Test
@@ -78,9 +79,10 @@ public class AuthenticationServiceTests
         UserDTO user = new UserDTO();
         user.setEmail("novicagmail.com");
         user.setPassword("ADDss@@3");
-        List<String> expected = new ArrayList<>();
-        expected.add("Invalid Email");
-        assertThat(authenticationService.login(user.getEmail(), user.getPassword())).isEqualTo(expected);
+        UserValidationException userValidationException = assertThrows(UserValidationException.class, () -> {
+            authenticationService.login(user.getEmail(), user.getPassword());
+        });
+        assertThat(userValidationException.getMessage()).isEqualTo("Invalid Email");
     }
 
     @Test
@@ -89,9 +91,10 @@ public class AuthenticationServiceTests
         UserDTO user = new UserDTO();
         user.setEmail("novica@gmail.com");
         user.setPassword("dsadsa");
-        List<String> expected = new ArrayList<>();
-        expected.add("Invalid password");
-        assertThat(authenticationService.login(user.getEmail(), user.getPassword())).isEqualTo(expected);
+        UserValidationException userValidationException = assertThrows(UserValidationException.class, () -> {
+            authenticationService.login(user.getEmail(), user.getPassword());
+        });
+        assertThat(userValidationException.getMessage()).isEqualTo("Invalid password");
     }
 
     @Test
@@ -100,9 +103,10 @@ public class AuthenticationServiceTests
         UserDTO user = new UserDTO();
         user.setEmail("novica@gmail.com");
         user.setPassword("invalidpasswordexample");
-        List<String> expected = new ArrayList<>();
-        expected.add("Invalid password");
-        assertThat(authenticationService.login(user.getEmail(), user.getPassword())).isEqualTo(expected);
+        UserValidationException userValidationException = assertThrows(UserValidationException.class, () -> {
+            authenticationService.login(user.getEmail(), user.getPassword());
+        });
+        assertThat(userValidationException.getMessage()).isEqualTo("Invalid password");
     }
 
     @Test
@@ -111,8 +115,9 @@ public class AuthenticationServiceTests
         UserDTO user = new UserDTO();
         user.setEmail("novica@gmail.com");
         user.setPassword("nevaliden pasvord");
-        List<String> expected = new ArrayList<>();
-        expected.add("Invalid password");
-        assertThat(authenticationService.login(user.getEmail(), user.getPassword())).isEqualTo(expected);
+        UserValidationException userValidationException = assertThrows(UserValidationException.class, () -> {
+            authenticationService.login(user.getEmail(), user.getPassword());
+        });
+        assertThat(userValidationException.getMessage()).isEqualTo("Invalid password");
     }
 }
