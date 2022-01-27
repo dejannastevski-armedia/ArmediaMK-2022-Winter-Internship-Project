@@ -1,13 +1,14 @@
 package first.project.service;
 
-import first.project.dto.QuestionDTO;
-import first.project.model.Question;
-import first.project.repository.QuestionRepository;
-import first.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import first.project.dto.QuestionDTO;
+import first.project.model.Question;
+import first.project.repository.QuestionRepository;
 
 @Service
 public class QuestionServiceImpl implements QuestionService
@@ -48,7 +49,7 @@ public class QuestionServiceImpl implements QuestionService
     @Override
     public ArrayList<String> validateAndPost(QuestionDTO questionDTO)
     {
-        ArrayList<String> res = new ArrayList<String>();
+        ArrayList<String> res = new ArrayList<>();
         if (checkTitle(questionDTO.getTitle()) == false)
         {
             res.add("Title is empty. Please enter title");
@@ -71,5 +72,11 @@ public class QuestionServiceImpl implements QuestionService
             questionRepository.save(question);
         }
         return res;
+    }
+
+    @Override
+    public List<Question> getAllQuestions()
+    {
+        return questionRepository.findAll();
     }
 }

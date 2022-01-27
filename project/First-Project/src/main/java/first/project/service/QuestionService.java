@@ -1,8 +1,10 @@
 package first.project.service;
 
-import first.project.dto.QuestionDTO;
-
 import java.util.ArrayList;
+import java.util.List;
+
+import first.project.dto.QuestionDTO;
+import first.project.model.Question;
 
 public interface QuestionService
 {
@@ -13,4 +15,6 @@ public interface QuestionService
     boolean checkEmail(String email);
 
     ArrayList<String> validateAndPost(QuestionDTO questionDTO);
+
+    List<Question> getAllQuestions();
 }
