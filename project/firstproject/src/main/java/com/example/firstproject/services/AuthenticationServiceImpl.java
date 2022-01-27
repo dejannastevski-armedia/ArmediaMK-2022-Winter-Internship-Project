@@ -1,7 +1,9 @@
 package com.example.firstproject.services;
 
 import com.example.firstproject.exceptions.UserValidationException;
+import com.example.firstproject.model.Question;
 import com.example.firstproject.model.User;
+import com.example.firstproject.repository.QuestionRepository;
 import com.example.firstproject.repository.UserRepository;
 
 import org.jetbrains.annotations.NotNull;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +20,9 @@ public class AuthenticationServiceImpl implements AuthenticationService
 {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -62,6 +68,12 @@ public class AuthenticationServiceImpl implements AuthenticationService
     public void saveUser(User user)
     {
         userRepository.save(user);
+    }
+
+    @Override
+    public List<Question> listAllQuestions()
+    {
+        return questionRepository.findAll();
     }
 
     @Override

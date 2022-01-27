@@ -1,7 +1,10 @@
 package com.example.firstproject.services;
 
 import com.example.firstproject.exceptions.UserValidationException;
+import com.example.firstproject.model.Question;
 import com.example.firstproject.model.User;
+
+import java.util.List;
 
 public interface AuthenticationService
 {
@@ -13,4 +16,6 @@ public interface AuthenticationService
     User createUser(User user);
 
     User loginUser(String email, String password) throws UserValidationException;
+
+    List<Question> listAllQuestions();
 }
