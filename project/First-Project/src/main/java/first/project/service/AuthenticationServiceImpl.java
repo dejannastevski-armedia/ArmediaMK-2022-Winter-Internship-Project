@@ -1,16 +1,17 @@
 package first.project.service;
 
-import first.project.dto.UserDTO;
-import first.project.exceptions.UserValidationException;
-import first.project.model.User;
-import first.project.repository.UserRepository;
-import first.project.util.PasswordHashing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import first.project.dto.UserDTO;
+import first.project.exceptions.UserValidationException;
+import first.project.model.User;
+import first.project.repository.UserRepository;
+import first.project.util.PasswordHashing;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService
@@ -64,7 +65,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     @Override
     public ArrayList<String> validateAndSave(User user)
     {
-        ArrayList<String> res = new ArrayList<String>();
+        ArrayList<String> res = new ArrayList<>();
         if (checkEmail(user.getEmail()) == false)
         {
             res.add("The email is invalid");
@@ -117,10 +118,12 @@ public class AuthenticationServiceImpl implements AuthenticationService
     public User validateAndLogin(UserDTO userDTO) throws UserValidationException
     {
         User u = userRepo.findByEmail(userDTO.getEmail());
-        if(u==null){
+        if (u == null)
+        {
             throw new UserValidationException("The email is not registered");
         }
-        if (passwordHashing.passwordEncoder().matches(userDTO.getPassword(), u.getPassword()) == false){
+        if (passwordHashing.passwordEncoder().matches(userDTO.getPassword(), u.getPassword()) == false)
+        {
             throw new UserValidationException("The email and password does not match");
         }
         return u;
