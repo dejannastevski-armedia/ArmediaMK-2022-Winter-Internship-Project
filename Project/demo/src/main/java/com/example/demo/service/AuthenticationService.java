@@ -1,11 +1,14 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.exceptions.UserValidationException;
 import com.example.demo.model.User;
+
 import org.springframework.stereotype.Service;
 
 @Service
-public interface AuthenticationService {
+public interface AuthenticationService
+{
 
     boolean validateEmail(String email);
 
@@ -17,6 +20,6 @@ public interface AuthenticationService {
 
     void saveUser(User user);
 
-    String validateUserForLogin(UserDTO userDTO);
+    User validateUserForLogin(UserDTO userDTO) throws UserValidationException;
 
 }

@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Question;
+import com.example.demo.dto.QuestionDTO;
 import com.example.demo.service.QuestionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +20,12 @@ public class QuestionController
 
     @RequestMapping(value = "/addQuestion", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> addQuestions(@RequestBody Question question)
+    public ResponseEntity<String> addQuestions(@RequestBody QuestionDTO questionDTO)
     {
-        String result = questionService.validateQuestionAndTitle(question);
+        String result = questionService.validateQuestionAndTitle(questionDTO);
         if (result.length() == 0)
         {
-            questionService.createQuestion(question);
+            questionService.createQuestion(questionDTO);
             return ResponseEntity.ok().body("result");
         }
         else

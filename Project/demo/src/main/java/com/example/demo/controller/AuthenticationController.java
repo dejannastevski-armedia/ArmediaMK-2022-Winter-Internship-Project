@@ -1,11 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.exceptions.UserValidationException;
 import com.example.demo.model.User;
 import com.example.demo.service.AuthenticationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,18 +63,10 @@ public class AuthenticationController
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> homePage(@RequestBody UserDTO userDTO)
+    public ResponseEntity<User> homePage(@RequestBody UserDTO userDTO) throws UserValidationException
     {
-        String result = authenticationService.validateUserForLogin(userDTO);
-        if (result.length() == 0)
-        {
-
-            return ResponseEntity.ok().body("result");
-        }
-        else
-        {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
-        }
+        User u = authenticationService.validateUserForLogin(userDTO);
+        return ResponseEntity.ok(u);
     }
 
     @GetMapping("/home")

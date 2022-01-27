@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.exceptions.UserValidationException;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 
@@ -12,7 +13,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class AuthenticationServiceImpl implements AuthenticationService {
+public class AuthenticationServiceImpl implements AuthenticationService
+{
     @Autowired
     private UserRepository useRepo;
 
@@ -27,7 +29,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (!validatePassword(user.getPassword()))
         {
             res += "Invalid password,";
-        } else
+        }
+        else
         {
             User newUser = useRepo.findByEmail(user.getEmail());
             if (newUser != null)
@@ -38,7 +41,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return res;
     }
 
-
     @Override
     public boolean validatePassword(String password)
     {
@@ -46,14 +48,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String upperCaseChars = "(.*[A-Z].*)";
         String lowerCaseChars = "(.*[a-z].*)";
         String specialChars = "(.*[@,#,$,%].*$)";
-        if ((password.length() < 7) || !password.matches(upperCaseChars) || !password.matches(lowerCaseChars) || !password.matches(specialChars))
+        if ((password.length() < 7) || !password.matches(upperCaseChars) || !password.matches(lowerCaseChars)
+                || !password.matches(specialChars))
         {
             isValid = false;
         }
         return isValid;
 
     }
-
 
     @Override
     public boolean validateEmail(String email)
@@ -88,38 +90,37 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public String validateUserForLogin(UserDTO userDTO)
+    public User validateUserForLogin(UserDTO userDTO) throws UserValidationException
     {
-        String result = "";
+
         if (userDTO.getEmail() == null || !validateEmail(userDTO.getEmail()))
         {
-            result += " Invalid email, ";
+            throw new UserValidationException(" Invalid email, ");
         }
         if (userDTO.getPassword() == null || !validatePassword(userDTO.getPassword()))
         {
-            result += " Invalid password ";
-        }
-        if (result.length() == 0)
-        {
-            User existing = useRepo.findByEmail(userDTO.getEmail());
-            if (existing == null)
-            {
-                result += " Email not exist ";
-            }
-            else
-            {
-                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-                if (!passwordEncoder.matches(userDTO.getPassword(), existing.getPassword()))
-                {
-                    result += " Incorrect password ";
-                }
-            }
+            throw new UserValidationException(" Invalid password ");
 
         }
-        return result;
+
+        User existing = useRepo.findByEmail(userDTO.getEmail());
+        if (existing == null)
+        {
+            throw new UserValidationException(" Email not exist ");
+
+        }
+        else
+        {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            if (!passwordEncoder.matches(userDTO.getPassword(), existing.getPassword()))
+            {
+                throw new UserValidationException(" Incorrect password ");
+
+            }
+        }
+        return existing;
 
     }
-
 
     private void encryptPassword(User user)
     {
@@ -127,6 +128,5 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
     }
-
 
 }

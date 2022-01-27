@@ -3,9 +3,11 @@ package com.example.demo.utill;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-public class PasswordHashing {
+public class PasswordHashing
+{
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder()
+    {
         return new BCryptPasswordEncoder();
     }
 }

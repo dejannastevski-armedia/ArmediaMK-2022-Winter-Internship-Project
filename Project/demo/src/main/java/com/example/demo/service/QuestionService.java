@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.QuestionDTO;
 import com.example.demo.model.Question;
 
 import org.springframework.stereotype.Service;
@@ -11,10 +12,10 @@ public interface QuestionService
 
     boolean checkQuestion(String question);
 
-    String validateQuestionAndTitle(Question question);
+    String validateQuestionAndTitle(QuestionDTO questionDTO);
 
     void saveQuestion(Question question);
 
-    Question createQuestion(Question question);
+    void createQuestion(QuestionDTO questionDTO);
 
 }

@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
-public class UserDTO {
+public class UserDTO
+{
     private String email;
     private String password;
 
