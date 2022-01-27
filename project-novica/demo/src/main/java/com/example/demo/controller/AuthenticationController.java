@@ -82,8 +82,8 @@ public class AuthenticationController
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<User> logIn(@RequestBody UserDTO userDTO) throws UserValidationException// throws
-                                                                                                  // UserValidationException
+    public ResponseEntity<User> logIn(@RequestBody UserDTO userDTO) throws UserValidationException
+
     {
         User res = authenticationService.login(userDTO.getEmail(), userDTO.getPassword());
         return ResponseEntity.ok(res);
