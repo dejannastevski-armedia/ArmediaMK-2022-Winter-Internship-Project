@@ -27,7 +27,7 @@ public class QuestionController
         String result = questionService.validateQuestion(questionDTO.getQuestion(), questionDTO.getTitle());
         if(result.length() == 0)
         {
-            Question question = questionService.createQuestion(questionDTO.getQuestion(), questionDTO.getTitle());
+            Question question = questionService.createQuestion(questionDTO.getQuestion(), questionDTO.getTitle(), questionDTO.getEmail());
             questionService.saveQuestion(question);
             return ResponseEntity.status(HttpStatus.OK).body("");
         }

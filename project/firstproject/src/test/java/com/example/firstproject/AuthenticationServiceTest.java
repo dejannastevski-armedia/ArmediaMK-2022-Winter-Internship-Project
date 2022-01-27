@@ -1,7 +1,9 @@
 package com.example.firstproject;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
 
+import com.example.firstproject.exceptions.UserValidationException;
 import com.example.firstproject.model.User;
 import com.example.firstproject.services.AuthenticationServiceImpl;
 
@@ -90,8 +92,11 @@ public class AuthenticationServiceTest
         user.setPassword("David123!@#");
         user.setAge(22);
 
-        String result = authenticationServiceImpl.loginUser(user.getEmail(), user.getPassword());
-        assertThat(result).isEqualTo("Invalid E-Mail!\n");
+        UserValidationException userValidationException = assertThrows(UserValidationException.class, () -> {
+            authenticationServiceImpl.loginUser(user.getEmail(), user.getPassword());
+        });
+
+        assertThat(userValidationException.getMessage()).isEqualTo("Invalid E-Mail!");
     }
 
     @Test
@@ -103,8 +108,10 @@ public class AuthenticationServiceTest
         user.setPassword("David12");
         user.setAge(22);
 
-        String result = authenticationServiceImpl.loginUser(user.getEmail(), user.getPassword());
-        assertThat(result).isEqualTo("Password Validation Error!\n");
+        UserValidationException userValidationException = assertThrows(UserValidationException.class, () -> {
+            authenticationServiceImpl.loginUser(user.getEmail(), user.getPassword());
+        });
+        assertThat(userValidationException.getMessage()).isEqualTo("Password Validation Error!");
     }
 
     @Test
@@ -116,8 +123,10 @@ public class AuthenticationServiceTest
         user.setPassword("David123!@#");
         user.setAge(22);
 
-        String result = authenticationServiceImpl.loginUser(user.getEmail(), user.getPassword());
-        assertThat(result).isEqualTo("User Not Found!\n");
+        UserValidationException userValidationException = assertThrows(UserValidationException.class, () -> {
+            authenticationServiceImpl.loginUser(user.getEmail(), user.getPassword());
+        });
+        assertThat(userValidationException.getMessage()).isEqualTo("User Not Found!");
     }
 
     @Test
@@ -129,20 +138,22 @@ public class AuthenticationServiceTest
         user.setPassword("David123!@#");
         user.setAge(22);
 
-        String result = authenticationServiceImpl.loginUser(user.getEmail(), user.getPassword());
-        assertThat(result).isEqualTo("Invalid Password!\n");
+        UserValidationException userValidationException = assertThrows(UserValidationException.class, () -> {
+            authenticationServiceImpl.loginUser(user.getEmail(), user.getPassword());
+        });
+        assertThat(userValidationException.getMessage()).isEqualTo("Invalid Password!");
     }
 
     @Test
-    public void loginUserSuccess()
+    public void loginUserSuccess() throws UserValidationException
     {
-        User user = new User();
-        user.setEmail("david.anastasov1@gmail.com");
-        user.setUserName("David");
-        user.setPassword("David123!");
-        user.setAge(22);
+        User expected = new User();
+        expected.setEmail("david.anastasov1@gmail.com");
+        expected.setUserName("David");
+        expected.setPassword("David123!");
+        expected.setAge(22);
 
-        String result = authenticationServiceImpl.loginUser(user.getEmail(), user.getPassword());
-        assertThat(result).isEqualTo("");
+        User actual = authenticationServiceImpl.loginUser(expected.getEmail(), expected.getPassword());
+        assertThat(actual.getEmail()).isEqualTo(expected.getEmail());
     }
 }
