@@ -1,7 +1,6 @@
 package first.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-
 import first.project.dto.AnswerDTO;
+import first.project.exceptions.AddAnswerException;
+import first.project.model.Answer;
 import first.project.service.AnswerService;
 
 @Controller
@@ -33,17 +32,9 @@ public class AnswerController
 
     @PostMapping("/answer-successful")
     @ResponseBody
-    public ResponseEntity<String> postAnswer(@RequestBody AnswerDTO answerDTO)
+    public ResponseEntity<Answer> postAnswer(@RequestBody AnswerDTO answerDTO) throws AddAnswerException
     {
-        ArrayList<String> res = answerService.validateAndPost(answerDTO);
-        if (res.isEmpty())
-        {
-            return ResponseEntity.ok("Success");
-        }
-        else
-        {
-            String result = String.join("<br>", res);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
-        }
+        Answer answer = answerService.validateAndPost(answerDTO);
+        return ResponseEntity.ok(answer);
     }
 }

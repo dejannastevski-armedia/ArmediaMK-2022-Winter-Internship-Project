@@ -26,8 +26,9 @@ $(document).ready(function () {
                 document.getElementById('id01').style.display = 'none';
                 $("#answer").val("");
             },
-            error: function (data) {
-                $("#errorMessage").html(data.responseText);
+            error: function (xhr, status, error) {
+                let errorMessage = xhr.responseJSON.message;
+                $("#errorMessage").html(errorMessage);
             }
         });
     });

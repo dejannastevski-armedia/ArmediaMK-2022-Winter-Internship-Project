@@ -1,8 +1,8 @@
 package first.project.service;
 
-import java.util.ArrayList;
-
 import first.project.dto.AnswerDTO;
+import first.project.exceptions.AddAnswerException;
+import first.project.model.Answer;
 
 public interface AnswerService
 {
@@ -10,5 +10,5 @@ public interface AnswerService
 
     boolean checkEmail(String email);
 
-    ArrayList<String> validateAndPost(AnswerDTO answerDTO);
+    Answer validateAndPost(AnswerDTO answerDTO) throws AddAnswerException;
 }
