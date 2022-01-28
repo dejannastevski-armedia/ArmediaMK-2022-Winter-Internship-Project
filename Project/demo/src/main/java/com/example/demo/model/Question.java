@@ -9,10 +9,12 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Table(name = "question")
@@ -32,6 +34,9 @@ public class Question implements Serializable
     private String creator;
 
     private String modifier;
+
+    @OneToMany(mappedBy="question")
+    private List<Answer> answer;
 
     @CreatedDate
     @Column(name = "date", nullable = false)

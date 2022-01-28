@@ -18,6 +18,7 @@ function submitQuestion() {
             $('#myModal').modal('hide');
             window.location.replace("http://localhost:8080/home");
 
+
         },
         error: function (e) {
             document.getElementById("errorMessage").innerText = e.responseText;
