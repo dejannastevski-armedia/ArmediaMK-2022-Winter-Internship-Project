@@ -78,7 +78,7 @@
         <td th:text="${q.creator}">Creator</td>
         <td th:text="${q.createdAt}">Date</td>
         <td>
-            <form th:action="@{|/answer/${q.id}|}" method="get">
+            <form th:action="@{|/answer/answer/${q.id}|}" method="get">
                 <button type="submit" class="btn btn-info">View answer
                 </button>
             </form>
