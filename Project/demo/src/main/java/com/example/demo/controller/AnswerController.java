@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.AnswerDTO;
+import com.example.demo.model.Answer;
 import com.example.demo.service.AnswerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +29,22 @@ public class AnswerController
         return "view_answer";
     }
 
-    @RequestMapping(value = "/addAnswer", method = RequestMethod.POST)
+    @RequestMapping(value = "/add-answer", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> addAnswer(@RequestBody AnswerDTO answerDTO)
     {
         String result = answerService.validateAnswer(answerDTO);
         if (result.length() == 0)
         {
-            answerService.createAnswer(answerDTO);
-            return ResponseEntity.ok().body("result");
+            Answer answer=answerService.createAnswer(answerDTO);
+            if (answer != null)
+            {
+                return ResponseEntity.ok().body("result");
+            }
+            else
+            {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid question id");
+            }
         }
         else
         {

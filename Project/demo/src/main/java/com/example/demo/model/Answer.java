@@ -35,7 +35,6 @@ public class Answer
 
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)
-
     private Question question;
 
     private Integer upVotes;

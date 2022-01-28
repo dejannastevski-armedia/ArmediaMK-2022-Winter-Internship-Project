@@ -2,11 +2,11 @@ function submitAnswer() {
     var answerDTO = {};
     answerDTO.answer = $("#answer").val();
     answerDTO.email = sessionStorage.getItem('loggedUser');
-    answerDTO.id = $("#id").text();
+    answerDTO.questionId = $("#id").text();
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/addAnswer",
+        url: "/add-answer",
         data: JSON.stringify(answerDTO),
         success: function (data) {
             $('#myModal').modal('hide');

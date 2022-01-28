@@ -4,7 +4,7 @@ public class AnswerDTO
 {
     private String answer;
     private String email;
-    private Long id;
+    private Long questionId;
 
     public String getAnswer()
     {
@@ -26,13 +26,13 @@ public class AnswerDTO
         this.email = email;
     }
 
-    public Long getId()
+    public Long getQuestionId()
     {
-        return id;
+        return questionId;
     }
 
-    public void setId(Long id)
+    public void setQuestionId(Long questionId)
     {
-        this.id = id;
+        this.questionId = questionId;
     }
 }

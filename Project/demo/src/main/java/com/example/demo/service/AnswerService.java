@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.AnswerDTO;
+import com.example.demo.model.Answer;
 
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,6 @@ public interface AnswerService
 
     String validateAnswer(AnswerDTO answerDTO);
 
-    void createAnswer(AnswerDTO answerDTO);
+    Answer createAnswer(AnswerDTO answerDTO);
 
 }
