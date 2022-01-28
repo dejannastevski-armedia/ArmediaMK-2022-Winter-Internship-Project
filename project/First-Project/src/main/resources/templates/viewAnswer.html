@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Answer</title>
@@ -7,9 +7,136 @@
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/javascript/answerJS.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        body {
+            background-image: url("/static/javascript/photos/homepage.jpg");
+            background-color: #cccccc;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        #userLogged {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+
+        #errorMessage {
+            color: white;
+            -webkit-text-stroke-width: 0.04em;
+            -webkit-text-stroke-color: black;
+            font-size: 1.4em;
+        }
+
+        #SuccessfullyAnsweredQuestion {
+            color: white;
+            -webkit-text-stroke-color: black;
+            font-size: 1.4em;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid black;
+            margin-bottom: 2%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            background-color: aliceblue;
+        }
+
+        th {
+            font-size: larger;
+            text-align: center;
+        !important;
+            font-weight: bolder;
+            background-color: burlywood;
+        }
+    </style>
 </head>
 <body>
-THIS IS THE ANSWER WITH ID: <span id="questionId" th:text="${id}"></span>
+<ul>
+    <li><a href="/home">Home</a></li>
+    <li id="logout" class="w3-right"><a href="/auth/login">Logout</a></li>
+    <li id="userLogged" class="w3-right">YO</li>
+</ul>
+
+
+<div class="w3-container">
+    <br>
+    <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-green w3-large">
+        Add Answer
+    </button>
+
+    <span id="questionId" th:text="${id}" style="display: none"></span>
+
+    <div id="SuccessfullyAnsweredQuestion">
+
+    </div>
+
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+            <div class="w3-center"><br>
+                <h2><strong>Put your answer here!</strong></h2>
+                <hr>
+            </div>
+
+            <form class="w3-container" action="javascript:void(0);" method="post">
+                <div class="w3-section">
+                    <label><b>Answer:</b></label>
+                    <textarea type="text" name="Answer" cols="40" rows="5" id="answer"
+                              class="w3-input w3-border"></textarea>
+                </div>
+            </form>
+
+            <footer class="w3-container">
+                <strong><span id="errorMessage" style="color: black"></span></strong>
+            </footer>
+
+            <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                <button onclick="document.getElementById('id01').style.display='none'" type="button"
+                        class="w3-right w3-button w3-red">Cancel
+                </button>
+                <button class="w3-right w3-button w3-blue" type="button" id="submitAnswer" style="margin-right: 2.6%">
+                    Submit
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>
