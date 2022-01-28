@@ -78,8 +78,6 @@
         <td th:text="${q.creator}">Creator</td>
         <td th:text="${q.createdAt}">Date</td>
         <td>
-            <!--            <button onclick="window.location.href='answer/{q.id}';">View Answer-->
-            <!--            </button>-->
             <form th:action="@{|/answer/${q.id}|}" method="get">
                 <button type="submit" class="btn btn-info">View answer
                 </button>

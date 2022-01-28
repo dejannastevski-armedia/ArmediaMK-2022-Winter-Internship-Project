@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AnswerController
 {
     @GetMapping("/answer/{id}")
-    public String AnswerPage(@PathVariable long id)
+    public String AnswerPage(@PathVariable Long id)
     {
         return "answer";
     }
