@@ -2,6 +2,7 @@ package com.example.firstproject.controller;
 
 import com.example.firstproject.dto.UserLoginDTO;
 import com.example.firstproject.exceptions.UserValidationException;
+import com.example.firstproject.model.Question;
 import com.example.firstproject.model.User;
 import com.example.firstproject.services.AuthenticationService;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/auth")
@@ -63,8 +66,10 @@ public class AuthenticationController
     }
 
     @GetMapping("/logged-in")
-    public String loggedIn()
+    public String loggedIn(Model model)
     {
+        List<Question> questionList = authenticationService.listAllQuestions();
+        model.addAttribute("listQuestions", questionList);
         return "loggedIn";
     }
 }
