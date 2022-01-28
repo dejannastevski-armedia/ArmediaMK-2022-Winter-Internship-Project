@@ -80,6 +80,7 @@
         <th scope="col">Question</th>
         <th scope="col">Creator</th>
         <th scope="col">Date Created</th>
+        <th scope="col">Answers</th>
         <th scope="col"></th>
     </tr>
     </thead>
@@ -91,9 +92,13 @@
         <td th:text="${q.creator}"></td>
         <td th:text="${q.createdDate}"></td>
         <td>
-            <a th:href="@{/answer/view-answer}" class="btn btn-info"><i
-                    class="glyphicon glyphicon-plus"></i>
-            </a>
+            <form th:action="@{|/answer/view-answer/${q.id}|}" method="get">
+                <button type="submit" class="btn btn-info"><i
+                        class="glyphicon glyphicon-plus"></i>
+                </button>
+            </form>
+        </td>
+        <td>
             <a class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
         </td>
     </tr>
