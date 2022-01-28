@@ -22,7 +22,7 @@ public class Answer
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer answerid;
+    private Integer answerId;
 
     @Column(nullable = false)
     private String answer;
@@ -46,12 +46,12 @@ public class Answer
 
     public Integer getAnswerid()
     {
-        return answerid;
+        return answerId;
     }
 
     public void setAnswerid(Integer answerid)
     {
-        this.answerid = answerid;
+        this.answerId = answerid;
     }
 
     public String getAnswer()

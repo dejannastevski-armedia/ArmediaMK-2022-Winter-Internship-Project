@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 import first.project.dto.AnswerDTO;
-import first.project.exceptions.AddAnswerException;
+import first.project.exceptions.InvalidAnswerException;
 import first.project.model.Answer;
 import first.project.model.Question;
 import first.project.repository.AnswerRepository;
@@ -42,16 +42,16 @@ public class AnswerServiceImpl implements AnswerService
     }
 
     @Override
-    public Answer validateAndPost(AnswerDTO answerDTO) throws AddAnswerException
+    public Answer validateAndSave(AnswerDTO answerDTO) throws InvalidAnswerException
     {
         ArrayList<String> res = new ArrayList<>();
         if (checkEmail(answerDTO.getEmail()) == false)
         {
-            throw new AddAnswerException("You are not logged in. Please log in to answer the question");
+            throw new InvalidAnswerException("You are not logged in. Please log in to answer the question");
         }
         if (checkAnswer(answerDTO.getAnswer()) == false)
         {
-            throw new AddAnswerException("Answer is empty. Please enter answer");
+            throw new InvalidAnswerException("Answer is empty. Please enter answer");
         }
         if (res.isEmpty())
         {
@@ -63,7 +63,7 @@ public class AnswerServiceImpl implements AnswerService
             Question question = questionRepository.findById(answerDTO.getId());
             if (question == null)
             {
-                throw new AddAnswerException("Invalid question ID");
+                throw new InvalidAnswerException("Invalid question ID");
             }
             answer.setQuestion(question);
             return answerRepository.save(answer);

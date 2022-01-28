@@ -1,7 +1,7 @@
 package first.project.service;
 
 import first.project.dto.AnswerDTO;
-import first.project.exceptions.AddAnswerException;
+import first.project.exceptions.InvalidAnswerException;
 import first.project.model.Answer;
 
 public interface AnswerService
@@ -10,5 +10,5 @@ public interface AnswerService
 
     boolean checkEmail(String email);
 
-    Answer validateAndPost(AnswerDTO answerDTO) throws AddAnswerException;
+    Answer validateAndSave(AnswerDTO answerDTO) throws InvalidAnswerException;
 }

@@ -4,23 +4,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class AddAnswerException extends Exception
+public class InvalidAnswerException extends Exception
 {
-    public AddAnswerException()
+    public InvalidAnswerException()
     {
     }
 
-    public AddAnswerException(String message)
+    public InvalidAnswerException(String message)
     {
         super(message);
     }
 
-    public AddAnswerException(String message, Throwable cause)
+    public InvalidAnswerException(String message, Throwable cause)
     {
         super(message, cause);
     }
 
-    public AddAnswerException(Throwable cause)
+    public InvalidAnswerException(Throwable cause)
     {
         super(cause);
     }

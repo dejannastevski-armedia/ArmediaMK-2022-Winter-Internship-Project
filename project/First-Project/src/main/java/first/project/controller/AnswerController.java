@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import first.project.dto.AnswerDTO;
-import first.project.exceptions.AddAnswerException;
+import first.project.exceptions.InvalidAnswerException;
 import first.project.model.Answer;
 import first.project.service.AnswerService;
 
@@ -32,9 +32,9 @@ public class AnswerController
 
     @PostMapping("/answer-successful")
     @ResponseBody
-    public ResponseEntity<Answer> postAnswer(@RequestBody AnswerDTO answerDTO) throws AddAnswerException
+    public ResponseEntity<Answer> postAnswer(@RequestBody AnswerDTO answerDTO) throws InvalidAnswerException
     {
-        Answer answer = answerService.validateAndPost(answerDTO);
+        Answer answer = answerService.validateAndSave(answerDTO);
         return ResponseEntity.ok(answer);
     }
 }
