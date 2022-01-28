@@ -2,8 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.UserDTO;
 import com.example.demo.exceptions.UserValidationException;
+import com.example.demo.model.Question;
 import com.example.demo.model.User;
 import com.example.demo.service.AuthenticationService;
+import com.example.demo.service.QuestionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 public class AuthenticationController
 {
     @Autowired
     private AuthenticationService authenticationService;
+    @Autowired
+    private QuestionService questionService;
 
     @GetMapping("")
     public String viewHomePage()
@@ -70,8 +76,10 @@ public class AuthenticationController
     }
 
     @GetMapping("/home")
-    public String home()
+    public String listQuestion(Model model)
     {
+        List<Question> listQuestion = questionService.listAll();
+        model.addAttribute("listQuestion", listQuestion);
         return "home";
     }
 

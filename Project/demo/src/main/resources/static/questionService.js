@@ -16,6 +16,7 @@ function submitQuestion() {
         data: JSON.stringify(question),
         success: function (data) {
             $('#myModal').modal('hide');
+            window.location.replace("http://localhost:8080/home");
 
         },
         error: function (e) {
@@ -24,6 +25,7 @@ function submitQuestion() {
     })
 
 }
-function logOut(){
+
+function logOut() {
     sessionStorage.removeItem('loggedUser');
 }

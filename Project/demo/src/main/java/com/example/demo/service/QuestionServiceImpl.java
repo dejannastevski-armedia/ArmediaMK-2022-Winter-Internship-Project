@@ -7,6 +7,8 @@ import com.example.demo.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class QuestionServiceImpl implements QuestionService
 {
@@ -66,6 +68,12 @@ public class QuestionServiceImpl implements QuestionService
         question.setQuestion(questionDTO.getQuestion());
         questionRepository.save(question);
 
+    }
+
+    @Override
+    public List<Question> listAll()
+    {
+        return questionRepository.findAll();
     }
 
 }

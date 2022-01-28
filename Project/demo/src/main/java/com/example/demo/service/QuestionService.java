@@ -5,6 +5,8 @@ import com.example.demo.model.Question;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface QuestionService
 {
@@ -17,5 +19,7 @@ public interface QuestionService
     void saveQuestion(Question question);
 
     void createQuestion(QuestionDTO questionDTO);
+
+    List<Question> listAll();
 
 }

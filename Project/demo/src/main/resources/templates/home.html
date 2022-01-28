@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="ISO-8859-1">
   <title>Questions</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
   <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -62,16 +63,27 @@
   <table class="table table-striped table-bordered mt-5" id="question-table">
     <thead class="thead-dark">
     <tr>
-      <th>Question ID</th>
-      <th>Date</th>
-      <th>Creator</th>
-      <th>Modifier</th>
       <th>Title</th>
       <th>Question</th>
-      <th></th>
+      <th>Creator</th>
+      <th>Date Created</th>
+      <th>Answer</th>
+      <th>Delete</th>
     </tr>
     </thead>
+    </tr>
     <tbody>
+    <tr th:each="q: ${listQuestion}">
+      <td th:text="${q.title}"></td>
+      <td th:text="${q.question}"></td>
+      <td th:text="${q.creator}"></td>
+      <td th:text="${q.createDate}"></td>
+      <th><form th:action="@{|/view-answer/${q.id}|}" method="get">
+        <button type="submit" class="btn btn-primary justify-content-center">View Answer</button>
+      </form>
+      </th>
+      <th><button style="border: none;"><i style="font-size:24px; color: darkred" class="fa">&#xf014;</i></button></th>
+    </tr>
     </tbody>
   </table>
 </div>
