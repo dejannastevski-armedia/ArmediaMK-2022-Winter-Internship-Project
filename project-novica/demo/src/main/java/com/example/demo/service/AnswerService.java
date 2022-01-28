@@ -3,8 +3,6 @@ package com.example.demo.service;
 import com.example.demo.dto.AnswerDTO;
 import com.example.demo.model.Answer;
 
-import java.util.ArrayList;
-
 public interface AnswerService
 {
     boolean checkAnswer(String answer);
@@ -13,5 +11,5 @@ public interface AnswerService
 
     void saveAnswer(Answer answer);
 
-    ArrayList<String> createAnswer(AnswerDTO answerDTO);
+    String createAnswer(AnswerDTO answerDTO);
 }

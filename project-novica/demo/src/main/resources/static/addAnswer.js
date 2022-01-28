@@ -2,7 +2,7 @@ function addAnswer() {
     var answerDTO = {};
     answerDTO.answer = $("#answer").val();
     answerDTO.email = JSON.parse(sessionStorage.getItem("user")).email;
-    answerDTO.id = $("#questionId").text();
+    answerDTO.questionId = $("#questionId").text();
     $.ajax({
         type: "POST",
         contentType: "application/json",

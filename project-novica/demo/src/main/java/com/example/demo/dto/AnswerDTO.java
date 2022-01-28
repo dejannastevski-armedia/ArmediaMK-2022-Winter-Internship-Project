@@ -6,16 +6,16 @@ public class AnswerDTO
 
     private String email;
 
-    private Long id;
+    private Long questionId;
 
-    public Long getId()
+    public Long getQuestionId()
     {
-        return id;
+        return questionId;
     }
 
-    public void setId(Long id)
+    public void setQuestionId(Long questionId)
     {
-        this.id = id;
+        this.questionId = questionId;
     }
 
     public String getAnswer()

@@ -33,9 +33,9 @@ public class AnswerController
     @ResponseBody
     public ResponseEntity<String> addAnswer(@RequestBody AnswerDTO answerDTO)
     {
-        String res = String.valueOf(answerService.createAnswer(answerDTO));
+        String res = answerService.createAnswer(answerDTO);
 
-        if (res == null || res == "[]")
+        if (res.isEmpty())
         {
             return ResponseEntity.ok("success");
         }
