@@ -1,6 +1,7 @@
 package com.example.firstproject.services;
 
 import com.example.firstproject.model.Answer;
+import com.example.firstproject.model.Question;
 import com.example.firstproject.repository.AnswerRepository;
 import com.example.firstproject.repository.QuestionRepository;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class AnswerServiceImpl implements AnswerService
@@ -52,7 +54,18 @@ public class AnswerServiceImpl implements AnswerService
         newAnswer.setCreatedDate(LocalDateTime.now());
         newAnswer.setDownVotes(0);
         newAnswer.setUpVotes(0);
-        newAnswer.setQuestion(questionRepository.getById(questionId));
+        try
+        {
+            Optional<Question> questionOptional = questionRepository.findById(questionId);
+            if (questionOptional.isPresent())
+            {
+                newAnswer.setQuestion(questionOptional.get());
+            }
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
         return newAnswer;
     }
 }

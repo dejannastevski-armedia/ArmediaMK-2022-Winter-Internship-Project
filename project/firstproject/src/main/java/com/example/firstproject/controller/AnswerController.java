@@ -38,7 +38,15 @@ public class AnswerController
         if (result.length() == 0)
         {
             Answer answer = answerService.createAnswer(answerDTO.getAnswer(), answerDTO.getEmail(), answerDTO.getQuestionId());
-            answerService.saveAnswer(answer);
+            if (answer != null)
+            {
+                answerService.saveAnswer(answer);
+            }
+            else
+            {
+                result = "Invalid Question ID";
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
+            }
             return ResponseEntity.status(HttpStatus.OK).body("");
         }
         else

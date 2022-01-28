@@ -9,10 +9,10 @@ function saveAnswer()
         contentType: "application/json",
         url: "/answer/save",
         data: JSON.stringify(answerDTO),
-        success: function(){
-            $('#myModal').modal('hide');
+        success: function () {
+            window.location.replace("http://localhost:8080/answer/view-answer/" + answerDTO.questionId)
         },
-        error: function (e){
+        error: function (e) {
             document.getElementById("answersErrorMessage").innerHTML = e.responseText;
         }
     });
