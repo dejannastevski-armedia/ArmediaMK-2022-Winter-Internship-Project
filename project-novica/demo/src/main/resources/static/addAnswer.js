@@ -10,11 +10,9 @@ function addAnswer() {
         data: JSON.stringify(answerDTO),
         success: function (data) {
             $('#myModal').modal('hide');
-            alert("vo success")
         },
         error: function (e) {
             document.getElementById("errorMessage").innerHTML = e.responseText;
-            alert("vo error")
         }
     });
 }
