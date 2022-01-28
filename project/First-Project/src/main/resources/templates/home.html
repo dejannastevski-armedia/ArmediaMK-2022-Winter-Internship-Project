@@ -150,18 +150,17 @@
                 <th style="width: 5%">Delete Question</th>
             </tr>
             <tr th:each="question: ${questionList}">
-                <span id="questionId" th:text="${question.id}" style="display: none"></span>
                 <td th:text="${question.title}"></td>
                 <td th:text="${question.question}"></td>
                 <td th:text="${question.creator}"></td>
                 <td th:text="${question.createdDate}"></td>
                 <td style="text-align: center">
                     <a th:href="@{/answers/view-answer/{id}(id=${question.id})}">
-                        <button id="viewAnswer" type="button">View Answers</button>
+                        <button type="button">View Answers</button>
                     </a>
                 </td>
                 <td style="text-align: center"><img src="/static/javascript/photos/deleteIcon.png" alt="DeleteIcon"
-                                                    id="deleteQuestion" height=50% width=50%>
+                                                    height=50% width=50%>
                 </td>
             </tr>
         </table>

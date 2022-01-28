@@ -1,12 +1,4 @@
 $(document).ready(function () {
-    const questionIdList = document.querySelectorAll("#questionId");
-    for (let i = 0; i < questionIdList.length; i++) {
-        let newIdForAnswer = "ViewAnswer " + questionIdList[i].textContent;
-        let newIdForDelete = "DeleteQuestion " + questionIdList[i].textContent;
-        $("#viewAnswer").attr("id", newIdForAnswer);
-        $("#deleteQuestion").attr("id", newIdForDelete);
-    }
-
     if (sessionStorage.getItem("loggedUser") == null) {
         $("#userLogged").html("You are not logged in");
     } else {
