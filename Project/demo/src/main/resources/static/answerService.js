@@ -10,6 +10,7 @@ function submitAnswer() {
         data: JSON.stringify(answerDTO),
         success: function (data) {
             $('#myModal').modal('hide');
+            window.location.replace("http://localhost:8080/view-answer/" + answerDTO.questionId);
 
         },
         error: function (e) {
