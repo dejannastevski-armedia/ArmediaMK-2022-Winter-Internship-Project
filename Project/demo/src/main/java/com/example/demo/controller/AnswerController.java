@@ -43,7 +43,7 @@ public class AnswerController
             }
             else
             {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid question id");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid question id");
             }
         }
         else
