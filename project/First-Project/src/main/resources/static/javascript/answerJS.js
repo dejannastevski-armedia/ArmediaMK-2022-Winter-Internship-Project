@@ -25,6 +25,8 @@ $(document).ready(function () {
                 $("#SuccessfullyAnsweredQuestion").html(message);
                 document.getElementById('id01').style.display = 'none';
                 $("#answer").val("");
+                let id = $("#questionId").text();
+                window.location = "http://localhost:8080/answers/view-answer/" + id;
             },
             error: function (xhr, status, error) {
                 let errorMessage = xhr.responseJSON.message;
