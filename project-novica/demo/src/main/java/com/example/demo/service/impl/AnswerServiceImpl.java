@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,12 @@ public class AnswerServiceImpl implements AnswerService
 
     @Autowired
     QuestionRepository questionRepository;
+
+    @Override
+    public List<Answer> listAllAnswers()
+    {
+        return answerRepository.findAll();
+    }
 
     @Override
     public String createAnswer(AnswerDTO answerDTO)
@@ -63,5 +70,11 @@ public class AnswerServiceImpl implements AnswerService
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<Answer> listAllAnswersPerQuestion(Long id)
+    {
+        return answerRepository.listAllAnswerPerQuestion(id);
     }
 }
