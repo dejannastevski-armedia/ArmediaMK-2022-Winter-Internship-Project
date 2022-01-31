@@ -15,6 +15,38 @@
 <button type="button" id="addButton" class="btn btn-primary" data-toggle="modal" style="margin-top:-40px"
         data-target="#myModal">Add Answer
 </button>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Answer</th>
+        <th scope="col">Creator</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Thumb up</th>
+        <th scope="col">Up votes</th>
+        <th scope="col">Down votes</th>
+        <th scope="col">Thumb down</th>
+        <th scope="col">Trash</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="a: ${answers}">
+        <td th:text="${a.answer}">Answer</td>
+        <td th:text="${a.creator}">Creator</td>
+        <td th:text="${a.createdDate}">Date created</td>
+        <td>
+            <button>Thumbs up button</button>
+        </td>
+        <td th:text="${a.upVotes}">Up votes</td>
+        <td th:text="${a.downVotes}">Down votes</td>
+        <td>
+            <button>Thumbs down button</button>
+        </td>
+        <td>
+            <button>Trash</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 

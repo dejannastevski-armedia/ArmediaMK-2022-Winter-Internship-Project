@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.AnswerDTO;
+import com.example.demo.model.Answer;
 import com.example.demo.service.AnswerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/answer")
 public class AnswerController
@@ -25,7 +28,8 @@ public class AnswerController
     @GetMapping("/answer/{id}")
     public String AnswerPage(@PathVariable Long id, Model model)
     {
-        model.addAttribute("id", id);
+        List<Answer> answers = answerService.listAllAnswersPerQuestion(id);
+        model.addAttribute("answers", answers);
         return "answer";
     }
 
