@@ -16,6 +16,6 @@ public interface AnswerService
 
     Answer createAnswer(AnswerDTO answerDTO);
 
-    List<Answer> listAllAnswers(Long questionId);
+    List<Answer> listAllAnswersPerQuestionId(Long questionId);
 
 }
