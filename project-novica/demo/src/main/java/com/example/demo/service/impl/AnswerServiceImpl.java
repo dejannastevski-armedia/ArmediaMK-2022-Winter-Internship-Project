@@ -36,7 +36,7 @@ public class AnswerServiceImpl implements AnswerService
     public String validateAnswer(String answer)
     {
         String res = "";
-        if (checkAnswer(answer) == false)
+        if (!checkAnswer(answer))
         {
             res += "Answer is empty";
         }
