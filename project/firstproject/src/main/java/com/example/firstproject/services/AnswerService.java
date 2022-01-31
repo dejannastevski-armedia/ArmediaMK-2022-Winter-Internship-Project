@@ -10,5 +10,5 @@ public interface AnswerService
     void saveAnswer(Answer answer);
     Answer createAnswer(String answer, String email, Long questionId);
 
-    List<Answer> listAllAnswers(Long questionId);
+    List<Answer> listAllAnswersByQuestion(Long questionId);
 }

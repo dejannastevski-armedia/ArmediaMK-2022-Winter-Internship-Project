@@ -39,9 +39,9 @@ public class AnswerServiceImpl implements AnswerService
     }
 
     @Override
-    public List<Answer> listAllAnswers(Long questionId)
+    public List<Answer> listAllAnswersByQuestion(Long questionId)
     {
-        return answerRepository.listAnswers(questionId);
+        return answerRepository.listAnswersByQuestion(questionId);
     }
 
     @Override
