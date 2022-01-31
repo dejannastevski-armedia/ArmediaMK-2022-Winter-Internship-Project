@@ -51,7 +51,7 @@ public class AnswerController
         }
         else
         {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
     }
 }
