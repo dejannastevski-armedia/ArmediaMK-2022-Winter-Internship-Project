@@ -24,40 +24,10 @@ public class AnswerServiceImpl implements AnswerService
     QuestionRepository questionRepository;
 
     @Override
-    public boolean checkAnswer(String answer)
-    {
-        if (answer == null || answer.isEmpty())
-        {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String validateAnswer(String answer)
-    {
-        String res = "";
-        if (!checkAnswer(answer))
-        {
-            res += "Answer is empty";
-        }
-        return res;
-    }
-
-    @Override
-    public void saveAnswer(Answer answer)
-    {
-        if (validateAnswer(String.valueOf(answer)).isEmpty())
-        {
-            this.answerRepository.save(answer);
-        }
-    }
-
-    @Override
     public String createAnswer(AnswerDTO answerDTO)
     {
         ArrayList<String> res = new ArrayList<>();
-        if (checkAnswer(answerDTO.getAnswer()) == false)
+        if (!isValidAnswer(answerDTO.getAnswer()))
         {
             res.add("Answer is empty");
         }
@@ -84,5 +54,14 @@ public class AnswerServiceImpl implements AnswerService
             }
         }
         return String.join(", ", res);
+    }
+
+    private boolean isValidAnswer(String answer)
+    {
+        if (answer == null || answer.isEmpty())
+        {
+            return false;
+        }
+        return true;
     }
 }
