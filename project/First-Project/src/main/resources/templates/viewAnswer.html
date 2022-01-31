@@ -153,7 +153,7 @@
             <tr th:each="answer: ${answerList}">
                 <td th:text="${answer.answer}"></td>
                 <td th:text="${answer.creator}"></td>
-                <td th:text="${answer.createdDate}"></td>
+                <td class="CreatedDate" th:text="${answer.createdDate}"></td>
                 <td style="text-align: center">
                     <button type="button>"><img src="/static/javascript/photos/thumbsUpIcon.png" alt="ThumbsUpIcon"
                                                 height=50% width=50%></button>

@@ -9,6 +9,12 @@ $(document).ready(function () {
         sessionStorage.removeItem("loggedUser");
     })
 
+    $(".CreatedDate").each(function () {
+        let createdDate = $(this).text();
+        let createdDateSplit = createdDate.split("T");
+        $(this).text(createdDateSplit[0]);
+    })
+
     $("#submitAnswer").click(function () {
         let answer = {
             answer: $("#answer").val(),
