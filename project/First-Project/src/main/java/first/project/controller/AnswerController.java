@@ -29,7 +29,7 @@ public class AnswerController
     public String ViewAnswer(@PathVariable String id, Model model)
     {
         model.addAttribute("id", id);
-        ArrayList<Answer> answerList = answerService.getAllAnswersById(Integer.parseInt(id));
+        ArrayList<Answer> answerList = answerService.getAllAnswerForQuestion(Integer.parseInt(id));
         model.addAttribute("answerList", answerList);
         return "viewAnswer";
     }

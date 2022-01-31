@@ -72,8 +72,8 @@ public class AnswerServiceImpl implements AnswerService
     }
 
     @Override
-    public ArrayList<Answer> getAllAnswersById(Integer id)
+    public ArrayList<Answer> getAllAnswerForQuestion(Integer id)
     {
-        return answerRepository.getAllAnswersById(id);
+        return answerRepository.getAllAnswerForQuestion(id);
     }
 }

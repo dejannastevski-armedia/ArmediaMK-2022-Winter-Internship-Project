@@ -12,5 +12,5 @@ import first.project.model.Answer;
 public interface AnswerRepository extends JpaRepository<Answer, Long>
 {
     @Query(value = "SELECT * FROM Answer a WHERE a.questionid=?1", nativeQuery = true)
-    public ArrayList<Answer> getAllAnswersById(Integer id);
+    public ArrayList<Answer> getAllAnswerForQuestion(Integer id);
 }

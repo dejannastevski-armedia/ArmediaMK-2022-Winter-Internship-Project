@@ -14,5 +14,5 @@ public interface AnswerService
 
     Answer validateAndSave(AnswerDTO answerDTO) throws InvalidAnswerException;
 
-    ArrayList<Answer> getAllAnswersById(Integer id);
+    ArrayList<Answer> getAllAnswerForQuestion(Integer id);
 }
