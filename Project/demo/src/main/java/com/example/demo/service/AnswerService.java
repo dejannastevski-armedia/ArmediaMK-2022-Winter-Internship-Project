@@ -5,6 +5,8 @@ import com.example.demo.model.Answer;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface AnswerService
 {
@@ -13,5 +15,7 @@ public interface AnswerService
     String validateAnswer(AnswerDTO answerDTO);
 
     Answer createAnswer(AnswerDTO answerDTO);
+
+    List<Answer> listAllAnswersPerQuestionId(Long questionId);
 
 }

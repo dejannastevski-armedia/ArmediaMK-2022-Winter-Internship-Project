@@ -9,6 +9,7 @@ import com.example.demo.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -68,6 +69,12 @@ public class AnswerServiceImpl implements AnswerService
         answer.setUpVotes(0);
         return answerRepository.save(answer);
 
+    }
+
+    @Override
+    public List<Answer> listAllAnswersPerQuestionId(Long questionId)
+    {
+        return answerRepository.listAllAnswersPerQuestionId(questionId);
     }
 
 }

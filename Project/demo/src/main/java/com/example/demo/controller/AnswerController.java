@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 public class AnswerController
 {
@@ -25,6 +27,8 @@ public class AnswerController
     @GetMapping("/view-answer/{id}")
     public String viewAnswer(@PathVariable("id") Long id, Model model)
     {
+        List<Answer> answerList = answerService.listAllAnswersPerQuestionId(id);
+        model.addAttribute("answerList", answerList);
         model.addAttribute("questionId", id);
         return "view_answer";
     }
@@ -36,7 +40,7 @@ public class AnswerController
         String result = answerService.validateAnswer(answerDTO);
         if (result.length() == 0)
         {
-            Answer answer=answerService.createAnswer(answerDTO);
+            Answer answer = answerService.createAnswer(answerDTO);
             if (answer != null)
             {
                 return ResponseEntity.ok().body("result");
