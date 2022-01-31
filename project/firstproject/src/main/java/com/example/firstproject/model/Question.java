@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "question")
@@ -29,6 +31,19 @@ public class Question
 
     @Column(nullable = false)
     private LocalDateTime createdDate;
+
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answerList;
+
+    public List<Answer> getAnswerList()
+    {
+        return answerList;
+    }
+
+    public void setAnswerList(List<Answer> answerList)
+    {
+        this.answerList = answerList;
+    }
 
     public Long getId()
     {

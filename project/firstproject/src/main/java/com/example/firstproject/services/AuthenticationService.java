@@ -1,8 +1,8 @@
 package com.example.firstproject.services;
 
-import com.example.firstproject.exceptions.UserValidationException;
 import com.example.firstproject.model.Question;
 import com.example.firstproject.model.User;
+import com.example.firstproject.util.exceptions.UserValidationException;
 
 import java.util.List;
 

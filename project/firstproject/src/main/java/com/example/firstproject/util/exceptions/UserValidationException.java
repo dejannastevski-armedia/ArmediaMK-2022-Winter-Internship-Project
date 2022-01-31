@@ -1,4 +1,4 @@
-package com.example.firstproject.exceptions;
+package com.example.firstproject.util.exceptions;
 
 public class UserValidationException extends Exception
 {

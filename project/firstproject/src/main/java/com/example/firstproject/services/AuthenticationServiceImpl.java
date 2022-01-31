@@ -1,10 +1,10 @@
 package com.example.firstproject.services;
 
-import com.example.firstproject.exceptions.UserValidationException;
 import com.example.firstproject.model.Question;
 import com.example.firstproject.model.User;
 import com.example.firstproject.repository.QuestionRepository;
 import com.example.firstproject.repository.UserRepository;
+import com.example.firstproject.util.exceptions.UserValidationException;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;

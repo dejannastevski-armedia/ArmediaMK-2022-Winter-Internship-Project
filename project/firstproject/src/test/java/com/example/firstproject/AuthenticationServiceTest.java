@@ -3,9 +3,9 @@ package com.example.firstproject;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertThrows;
 
-import com.example.firstproject.exceptions.UserValidationException;
 import com.example.firstproject.model.User;
 import com.example.firstproject.services.AuthenticationServiceImpl;
+import com.example.firstproject.util.exceptions.UserValidationException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
