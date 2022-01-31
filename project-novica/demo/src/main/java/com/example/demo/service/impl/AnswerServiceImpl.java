@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class AnswerServiceImpl implements AnswerService
@@ -67,10 +68,11 @@ public class AnswerServiceImpl implements AnswerService
             answer.setCreator(answerDTO.getEmail());
             answer.setDownVotes(0);
             answer.setUpVotes(0);
+            Optional<Question> questionOptional = questionRepository.findById(answerDTO.getQuestionId());
             try
             {
                 Question question = questionRepository.getById(answerDTO.getQuestionId());
-                if (question != null)
+                if (question != null && questionOptional.isPresent())
                 {
                     answer.setQuestion(question);
                 }
