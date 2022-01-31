@@ -15,9 +15,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <p class="nav-item" style="color: white" id="loggedInUser"></p>
-        </div>
-        <div class="navbar-nav">
             <a href="/auth/logged-in" class="nav-item nav-link">All Questions</a>
         </div>
     </div>
@@ -61,5 +58,34 @@
         </div>
     </div>
 </div>
+
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Answer</th>
+        <th scope="col">Creator</th>
+        <th scope="col">Date Created</th>
+        <th scope="col"></th>
+        <th scope="col">Upvotes</th>
+        <th scope="col">Downvotes</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="a: ${listAnswers}">
+        <td th:text="${a.id}"></td>
+        <td th:text="${a.answer}"></td>
+        <td th:text="${a.creator}"></td>
+        <td th:text="${a.createdDate}"></td>
+        <td><a class="btn btn-default"><i class="glyphicon glyphicon-thumbs-up"></i></a></td>
+        <td th:text="${a.upVotes}"></td>
+        <td th:text="${a.downVotes}"></td>
+        <td><a class="btn btn-default"><i class="glyphicon glyphicon-thumbs-down"></i></a></td>
+        <td><a class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

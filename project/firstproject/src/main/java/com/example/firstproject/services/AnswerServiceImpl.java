@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,6 +36,12 @@ public class AnswerServiceImpl implements AnswerService
     public void saveAnswer(Answer answer)
     {
         answerRepository.save(answer);
+    }
+
+    @Override
+    public List<Answer> listAllAnswersByQuestion(Long questionId)
+    {
+        return answerRepository.listAnswersByQuestion(questionId);
     }
 
     @Override

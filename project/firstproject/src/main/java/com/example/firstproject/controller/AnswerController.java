@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(value = "/answer")
 public class AnswerController
@@ -27,6 +29,8 @@ public class AnswerController
     public String viewAnswer(@PathVariable Long id, Model model)
     {
         model.addAttribute("questionId", id);
+        List<Answer> answerList = answerService.listAllAnswersByQuestion(id);
+        model.addAttribute("listAnswers", answerList);
         return "viewAnswer";
     }
 
