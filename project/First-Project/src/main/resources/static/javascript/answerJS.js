@@ -9,6 +9,12 @@ $(document).ready(function () {
         sessionStorage.removeItem("loggedUser");
     })
 
+    $(".CreatedDate").each(function () {
+        let createdDate = $(this).text();
+        let createdDateSplit = createdDate.split("T");
+        $(this).text(createdDateSplit[0]);
+    })
+
     $("#submitAnswer").click(function () {
         let answer = {
             answer: $("#answer").val(),
@@ -25,6 +31,8 @@ $(document).ready(function () {
                 $("#SuccessfullyAnsweredQuestion").html(message);
                 document.getElementById('id01').style.display = 'none';
                 $("#answer").val("");
+                let id = $("#questionId").text();
+                window.location = "http://localhost:8080/answers/view-answer/" + id;
             },
             error: function (xhr, status, error) {
                 let errorMessage = xhr.responseJSON.message;

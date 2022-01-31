@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Answer</title>
@@ -136,6 +136,39 @@
             </div>
 
         </div>
+    </div>
+    <br>
+    <div id="tableAnswer">
+        <table>
+            <tr>
+                <th style="width: 56%">Answer</th>
+                <th style="width: 9%">Creator</th>
+                <th style="width: 10%">Date Created</th>
+                <th style="width: 5%">Thumbs up</th>
+                <th style="width: 5%">Up votes</th>
+                <th style="width: 5%">Down votes</th>
+                <th style="width: 5%">Thumbs down</th>
+                <th style="width: 5%">Delete Answer</th>
+            </tr>
+            <tr th:each="answer: ${answerList}">
+                <td th:text="${answer.answer}"></td>
+                <td th:text="${answer.creator}"></td>
+                <td class="CreatedDate" th:text="${answer.createdDate}"></td>
+                <td style="text-align: center">
+                    <button type="button>"><img src="/static/javascript/photos/thumbsUpIcon.png" alt="ThumbsUpIcon"
+                                                height=50% width=50%></button>
+                </td>
+                <td th:text="${answer.upvotes}"></td>
+                <td th:text="${answer.downvotes}"></td>
+                <td style="text-align: center">
+                    <button type="button>"><img src="/static/javascript/photos/thumbsDown.png" alt="ThumbsDownIcon"
+                                                height=50% width=50%></button>
+                </td>
+                <td style="text-align: center"><img src="/static/javascript/photos/deleteIcon.png" alt="DeleteIcon"
+                                                    height=50% width=50%>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 </body>

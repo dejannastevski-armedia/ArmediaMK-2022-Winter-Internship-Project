@@ -24,7 +24,7 @@ public class AnswerServiceImpl implements AnswerService
     @Override
     public boolean checkEmail(String email)
     {
-        if ("".equals(email))
+        if (email == null || "".equals(email))
         {
             return false;
         }
@@ -34,7 +34,7 @@ public class AnswerServiceImpl implements AnswerService
     @Override
     public boolean checkAnswer(String answer)
     {
-        if ("".equals(answer))
+        if (answer == null || "".equals(answer))
         {
             return false;
         }
@@ -69,5 +69,11 @@ public class AnswerServiceImpl implements AnswerService
             return answerRepository.save(answer);
         }
         return null;
+    }
+
+    @Override
+    public ArrayList<Answer> getAllAnswerForQuestion(Integer id)
+    {
+        return answerRepository.getAllAnswerForQuestion(id);
     }
 }

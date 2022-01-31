@@ -153,7 +153,7 @@
                 <td th:text="${question.title}"></td>
                 <td th:text="${question.question}"></td>
                 <td th:text="${question.creator}"></td>
-                <td th:text="${question.createdDate}"></td>
+                <td class="CreatedDate" th:text="${question.createdDate}"></td>
                 <td style="text-align: center">
                     <a th:href="@{/answers/view-answer/{id}(id=${question.id})}">
                         <button type="button">View Answers</button>
