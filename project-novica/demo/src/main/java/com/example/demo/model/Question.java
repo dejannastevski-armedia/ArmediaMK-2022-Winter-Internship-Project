@@ -12,10 +12,12 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "questions")
@@ -44,6 +46,8 @@ public class Question implements Serializable
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy", timezone = "UTC")
     private Date createdAt;
 
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answerList;
 
     public Date getCreatedAt()
     {
@@ -74,6 +78,16 @@ public class Question implements Serializable
     public void setId(Long id)
     {
         this.id = id;
+    }
+
+    public List<Answer> getAnswerList()
+    {
+        return answerList;
+    }
+
+    public void setAnswerList(List<Answer> answerList)
+    {
+        this.answerList = answerList;
     }
 
     public String getTitle()

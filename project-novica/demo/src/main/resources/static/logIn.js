@@ -1,3 +1,10 @@
+$(document).ready(function () {
+    if (sessionStorage.getItem("user") == null) {
+        $("#email").html("You are not logged in");
+    } else {
+        $("#email").html("You are logged in as: " + JSON.parse(sessionStorage.getItem("user")).email);
+    }
+});
 function logIn() {
     var userDTO = {};
     userDTO.email = $("#email").val();
