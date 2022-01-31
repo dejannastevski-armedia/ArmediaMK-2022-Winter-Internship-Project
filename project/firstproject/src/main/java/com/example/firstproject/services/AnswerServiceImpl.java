@@ -21,18 +21,10 @@ public class AnswerServiceImpl implements AnswerService
     private QuestionRepository questionRepository;
 
     @Override
-    public boolean checkAnswer(String answer)
-    {
-        if(answer != null && answer.length() != 0)
-            return true;
-        return false;
-    }
-
-    @Override
     public String validateAnswer(String answer)
     {
         StringBuilder sb = new StringBuilder();
-        if(checkAnswer(answer) == false)
+        if (answer == null || answer.length() == 0)
         {
             sb.append("Answer Field Blank!");
         }

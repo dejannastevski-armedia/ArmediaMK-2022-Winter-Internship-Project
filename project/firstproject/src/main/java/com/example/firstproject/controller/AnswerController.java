@@ -45,7 +45,7 @@ public class AnswerController
             else
             {
                 result = "Invalid Question ID";
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
             }
             return ResponseEntity.status(HttpStatus.OK).body("");
         }
