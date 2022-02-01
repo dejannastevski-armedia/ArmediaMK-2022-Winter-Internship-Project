@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,5 +48,19 @@ public class AnswerController
         {
             return ResponseEntity.badRequest().body(res);
         }
+    }
+
+    @PostMapping("/up-vote-answer")
+    public ResponseEntity<String> thumbsUp(@RequestBody Long answerId)
+    {
+        answerService.upVote(answerId);
+        return ResponseEntity.ok("success");
+    }
+
+    @PostMapping("/down-vote-answer")
+    public ResponseEntity<String> thumbsDown(@RequestBody Long answerId)
+    {
+        answerService.downVote(answerId);
+        return ResponseEntity.ok("success");
     }
 }

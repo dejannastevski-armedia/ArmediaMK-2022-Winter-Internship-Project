@@ -10,6 +10,10 @@ import com.example.demo.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +27,9 @@ public class AnswerServiceImpl implements AnswerService
 
     @Autowired
     QuestionRepository questionRepository;
+
+    @Autowired
+    EntityManager entityManager;
 
     @Override
     public List<Answer> listAllAnswers()
@@ -76,5 +83,25 @@ public class AnswerServiceImpl implements AnswerService
     public List<Answer> listAllAnswersPerQuestion(Long id)
     {
         return answerRepository.listAllAnswerPerQuestion(id);
+    }
+
+    @Override
+    @Transactional
+    public void upVote(Long id)
+    {
+        String query = "UPDATE answer SET up_votes=up_votes+1 WHERE id=?1";
+        Query nativeQuery = entityManager.createNativeQuery(query);
+        nativeQuery.setParameter(1, id);
+        nativeQuery.executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public void downVote(Long id)
+    {
+        String query = "UPDATE answer SET down_votes=down_votes+1 WHERE id=?1";
+        Query nativeQuery = entityManager.createNativeQuery(query);
+        nativeQuery.setParameter(1, id);
+        nativeQuery.executeUpdate();
     }
 }

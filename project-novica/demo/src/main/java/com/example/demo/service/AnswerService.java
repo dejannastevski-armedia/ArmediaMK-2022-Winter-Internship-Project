@@ -13,4 +13,9 @@ public interface AnswerService
     String createAnswer(AnswerDTO answerDTO);
 
     List<Answer> listAllAnswersPerQuestion(Long id);
+
+    void upVote(Long id);
+
+    void downVote(Long id);
+
 }

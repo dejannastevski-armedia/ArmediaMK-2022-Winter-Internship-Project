@@ -34,12 +34,12 @@
         <td th:text="${a.creator}">Creator</td>
         <td th:text="${a.createdDate}">Date created</td>
         <td>
-            <button>Thumbs up button</button>
+            <button th:onclick="'javascript:thumbsUp(\'' + ${a.id} + '\');'">Thumbs up button</button>
         </td>
         <td th:text="${a.upVotes}">Up votes</td>
         <td th:text="${a.downVotes}">Down votes</td>
         <td>
-            <button>Thumbs down button</button>
+            <button th:onclick="'javascript:thumbsDown(\'' + ${a.id} + '\');'">Thumbs down button</button>
         </td>
         <td>
             <button>Trash</button>
