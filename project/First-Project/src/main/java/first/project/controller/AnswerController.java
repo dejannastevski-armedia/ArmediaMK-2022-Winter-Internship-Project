@@ -41,4 +41,20 @@ public class AnswerController
         Answer answer = answerService.validateAndSave(answerDTO);
         return ResponseEntity.ok(answer);
     }
+
+    @PostMapping("/up-vote-answer")
+    @ResponseBody
+    public ResponseEntity<String> upVoteAnswer(@RequestBody Integer answerId)
+    {
+        answerService.upVoteAnswer(answerId);
+        return ResponseEntity.ok("OK");
+    }
+
+    @PostMapping("/down-vote-answer")
+    @ResponseBody
+    public ResponseEntity<String> downVoteAnswer(@RequestBody Integer answerId)
+    {
+        answerService.downVoteAnswer(answerId);
+        return ResponseEntity.ok("OK");
+    }
 }

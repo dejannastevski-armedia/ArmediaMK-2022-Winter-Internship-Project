@@ -40,4 +40,36 @@ $(document).ready(function () {
             }
         });
     });
+
+    $(".UpVoteButton").click(function () {
+        let questionId = $("#questionId").text();
+        let answerId = $(this).text();
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/answers/up-vote-answer",
+            data: JSON.stringify(answerId),
+            contentType: "application/JSON",
+            success: function (data) {
+                window.location = "http://localhost:8080/answers/view-answer/" + questionId;
+            },
+            error: function (xhr, status, error) {
+            }
+        })
+    })
+
+    $(".DownVoteButton").click(function () {
+        let questionId = $("#questionId").text();
+        let answerId = $(this).text();
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/answers/down-vote-answer",
+            data: JSON.stringify(answerId),
+            contentType: "application/JSON",
+            success: function (data) {
+                window.location = "http://localhost:8080/answers/view-answer/" + questionId;
+            },
+            error: function (xhr, status, error) {
+            }
+        })
+    })
 });

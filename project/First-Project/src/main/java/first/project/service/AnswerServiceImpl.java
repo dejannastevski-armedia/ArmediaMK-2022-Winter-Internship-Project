@@ -3,6 +3,10 @@ package first.project.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
+
 import java.util.ArrayList;
 
 import first.project.dto.AnswerDTO;
@@ -20,6 +24,9 @@ public class AnswerServiceImpl implements AnswerService
 
     @Autowired
     private QuestionRepository questionRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
     public boolean checkEmail(String email)
@@ -75,5 +82,25 @@ public class AnswerServiceImpl implements AnswerService
     public ArrayList<Answer> getAllAnswerForQuestion(Integer id)
     {
         return answerRepository.getAllAnswerForQuestion(id);
+    }
+
+    @Override
+    @Transactional
+    public void upVoteAnswer(Integer id)
+    {
+        String query = "UPDATE answer SET upvotes=upvotes+1 WHERE answer_id=?1";
+        Query nativeQuery = entityManager.createNativeQuery(query);
+        nativeQuery.setParameter(1, id);
+        nativeQuery.executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public void downVoteAnswer(Integer id)
+    {
+        String query = "UPDATE answer SET downvotes=downvotes+1 WHERE answer_id=?1";
+        Query nativeQuery = entityManager.createNativeQuery(query);
+        nativeQuery.setParameter(1, id);
+        nativeQuery.executeUpdate();
     }
 }
