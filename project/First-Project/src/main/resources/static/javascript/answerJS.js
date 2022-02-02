@@ -17,10 +17,9 @@ $(document).ready(function () {
 
     $("#submitAnswer").click(function () {
         let answer = {
-            answer: $("#answer").val(),
-            email: sessionStorage.getItem("loggedUser"),
-            id: $("#questionId").text()
+            answer: $("#answer").val(), email: sessionStorage.getItem("loggedUser"), id: $("#questionId").text()
         };
+        let userId = sessionStorage.getItem("loggedUserId");
         $.ajax({
             type: "POST",
             url: "http://localhost:8080/answers/answer-successful",
@@ -32,7 +31,7 @@ $(document).ready(function () {
                 document.getElementById('id01').style.display = 'none';
                 $("#answer").val("");
                 let id = $("#questionId").text();
-                window.location = "http://localhost:8080/answers/view-answer/" + id;
+                window.location = "http://localhost:8080/answers/" + userId + "/view-answer/" + id;
             },
             error: function (xhr, status, error) {
                 let errorMessage = xhr.responseJSON.message;
@@ -43,14 +42,17 @@ $(document).ready(function () {
 
     $(".UpVoteButton").click(function () {
         let questionId = $("#questionId").text();
-        let answerId = $(this).text();
+        let userAnswerStatus = {
+            answerId: $(this).text(), userEmail: sessionStorage.getItem("loggedUser")
+        }
+        let userId = sessionStorage.getItem("loggedUserId");
         $.ajax({
             type: "POST",
             url: "http://localhost:8080/answers/up-vote-answer",
-            data: JSON.stringify(answerId),
+            data: JSON.stringify(userAnswerStatus),
             contentType: "application/JSON",
             success: function (data) {
-                window.location = "http://localhost:8080/answers/view-answer/" + questionId;
+                window.location = "http://localhost:8080/answers/" + userId + "/view-answer/" + questionId;
             },
             error: function (xhr, status, error) {
             }
@@ -59,17 +61,24 @@ $(document).ready(function () {
 
     $(".DownVoteButton").click(function () {
         let questionId = $("#questionId").text();
-        let answerId = $(this).text();
+        let userAnswerStatus = {
+            answerId: $(this).text(), userEmail: sessionStorage.getItem("loggedUser")
+        }
+        let userId = sessionStorage.getItem("loggedUserId");
         $.ajax({
             type: "POST",
             url: "http://localhost:8080/answers/down-vote-answer",
-            data: JSON.stringify(answerId),
+            data: JSON.stringify(userAnswerStatus),
             contentType: "application/JSON",
             success: function (data) {
-                window.location = "http://localhost:8080/answers/view-answer/" + questionId;
+                window.location = "http://localhost:8080/answers/" + userId + "/view-answer/" + questionId;
             },
             error: function (xhr, status, error) {
             }
         })
     })
+
+    $(".isDownVoted").parent().parent().find("button").attr("id", "isClicked");
+
+    $(".isUpVoted").parent().parent().find("button").attr("id", "isClicked");
 });

@@ -3,8 +3,10 @@ package first.project.service;
 import java.util.ArrayList;
 
 import first.project.dto.AnswerDTO;
+import first.project.dto.UserAnswerStatusDTO;
 import first.project.exceptions.InvalidAnswerException;
 import first.project.model.Answer;
+import first.project.model.UserAnswerStatus;
 
 public interface AnswerService
 {
@@ -16,7 +18,21 @@ public interface AnswerService
 
     ArrayList<Answer> getAllAnswerForQuestion(Integer id);
 
-    void upVoteAnswer(Integer id);
+    Integer getUserIdFromEmail(String email);
 
-    void downVoteAnswer(Integer id);
+    ArrayList<UserAnswerStatus> checkIfPreviousVoted(Integer userId, Integer answerId);
+
+    void insertNewUserAnswerStatus(Integer userId, Integer answerId, boolean status);
+
+    void deleteUserAnswerStatus(Integer userId, Integer answerId);
+
+    void updateUserAnswerStatus(Integer userId, Integer answerId, boolean status);
+
+    void updateUpVotes(Integer newUpVote, Integer answerId);
+
+    void updateDownVotes(Integer newDownVote, Integer answerId);
+
+    void upVoteAnswer(UserAnswerStatusDTO userAnswerStatusDTO);
+
+    void downVoteAnswer(UserAnswerStatusDTO userAnswerStatusDTO);
 }

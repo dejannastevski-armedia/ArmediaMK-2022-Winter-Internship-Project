@@ -1,8 +1,16 @@
 package first.project.model;
 
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -37,6 +45,9 @@ public class User implements Serializable
 
     @Column(name = "age", nullable = false, length = 10)
     private Integer age;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserAnswerStatus> userAnswerStatusList;
 
     public Integer getId()
     {

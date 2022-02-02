@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 
 import first.project.dto.AnswerDTO;
+import first.project.dto.UserAnswerStatusDTO;
 import first.project.exceptions.InvalidAnswerException;
 import first.project.model.Answer;
+import first.project.model.UserAnswerStatus;
 import first.project.service.AnswerService;
+import first.project.service.UserAnswerStatusService;
 
 @Controller
 @RequestMapping(value = "/answers")
@@ -25,11 +28,16 @@ public class AnswerController
     @Autowired
     private AnswerService answerService;
 
-    @GetMapping("/view-answer/{id}")
-    public String ViewAnswer(@PathVariable String id, Model model)
+    @Autowired
+    private UserAnswerStatusService userAnswerStatusService;
+
+    @GetMapping("/{userId}/view-answer/{answerId}")
+    public String ViewAnswer(@PathVariable String answerId, @PathVariable String userId, Model model)
     {
-        model.addAttribute("id", id);
-        ArrayList<Answer> answerList = answerService.getAllAnswerForQuestion(Integer.parseInt(id));
+        model.addAttribute("id", answerId);
+        ArrayList<Answer> answerList = answerService.getAllAnswerForQuestion(Integer.parseInt(answerId));
+        ArrayList<UserAnswerStatus> userAnswerStatusArrayList = userAnswerStatusService.getAllByUserId(Integer.parseInt(userId));
+        model.addAttribute("userAnswerStatusArrayList", userAnswerStatusArrayList);
         model.addAttribute("answerList", answerList);
         return "viewAnswer";
     }
@@ -44,17 +52,17 @@ public class AnswerController
 
     @PostMapping("/up-vote-answer")
     @ResponseBody
-    public ResponseEntity<String> upVoteAnswer(@RequestBody Integer answerId)
+    public ResponseEntity<String> upVoteAnswer(@RequestBody UserAnswerStatusDTO userAnswerStatusDTO)
     {
-        answerService.upVoteAnswer(answerId);
+        answerService.upVoteAnswer(userAnswerStatusDTO);
         return ResponseEntity.ok("OK");
     }
 
     @PostMapping("/down-vote-answer")
     @ResponseBody
-    public ResponseEntity<String> downVoteAnswer(@RequestBody Integer answerId)
+    public ResponseEntity<String> downVoteAnswer(@RequestBody UserAnswerStatusDTO userAnswerStatusDTO)
     {
-        answerService.downVoteAnswer(answerId);
+        answerService.downVoteAnswer(userAnswerStatusDTO);
         return ResponseEntity.ok("OK");
     }
 }
