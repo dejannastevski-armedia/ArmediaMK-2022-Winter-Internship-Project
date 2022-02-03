@@ -1,14 +1,22 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.AnswerDTO;
+import com.example.demo.dto.UserAnswerDTO;
 import com.example.demo.model.Answer;
 import com.example.demo.model.Question;
+import com.example.demo.model.User;
+import com.example.demo.model.UserAnswer;
 import com.example.demo.repository.AnswerRepository;
 import com.example.demo.repository.QuestionRepository;
+import com.example.demo.repository.UserAnswerRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.AnswerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +31,15 @@ public class AnswerServiceImpl implements AnswerService
 
     @Autowired
     QuestionRepository questionRepository;
+
+    @Autowired
+    EntityManager entityManager;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    UserAnswerRepository userAnswerRepository;
 
     @Override
     public List<Answer> listAllAnswers()
@@ -76,5 +93,100 @@ public class AnswerServiceImpl implements AnswerService
     public List<Answer> listAllAnswersPerQuestion(Long id)
     {
         return answerRepository.listAllAnswerPerQuestion(id);
+    }
+
+    @Override
+    @Transactional
+    public void upVote(UserAnswerDTO userAnswerDTO)
+    {
+        UserAnswer userAnswer = userAnswerRepository.findUserAnswerByUserIdAndAnswerId(userAnswerDTO.getUserId(),
+                userAnswerDTO.getAnswerId());
+        if (userAnswer == null)
+        {
+            UserAnswer newUserAnswer = new UserAnswer();
+            // find user
+            Optional<User> u = userRepository.findById(userAnswerDTO.getUserId());
+            // find answer
+            Optional<Answer> a = answerRepository.findById(userAnswerDTO.getAnswerId());
+            newUserAnswer.setUser(u.get());
+            newUserAnswer.setAnswer(a.get());
+            newUserAnswer.setLiked(true);
+            newUserAnswer.setDisliked(false);
+            userAnswerRepository.save(newUserAnswer);
+            Answer answerToBeUpdated = a.get();
+            answerToBeUpdated.setUpVotes(answerToBeUpdated.getUpVotes() + 1);
+            answerRepository.save(answerToBeUpdated);
+        }
+        else
+        {
+            if (userAnswer.getLiked())
+            {
+                userAnswerRepository.delete(userAnswer);
+                Optional<Answer> a = answerRepository.findById(userAnswerDTO.getAnswerId());
+                Answer answerToBeUpdated = a.get();
+                answerToBeUpdated.setUpVotes(answerToBeUpdated.getUpVotes() - 1);
+                answerRepository.save(answerToBeUpdated);
+            }
+            else if (userAnswer.getDisliked())
+
+            {
+                userAnswer.setDisliked(false);
+                userAnswer.setLiked(true);
+                userAnswerRepository.save(userAnswer);
+                Optional<Answer> a = answerRepository.findById(userAnswerDTO.getAnswerId());
+                Answer answerToBeUpdated = a.get();
+                answerToBeUpdated.setUpVotes(answerToBeUpdated.getUpVotes() + 1);
+                answerToBeUpdated.setDownVotes(answerToBeUpdated.getDownVotes() - 1);
+                answerRepository.save(answerToBeUpdated);
+            }
+        }
+
+    }
+
+    @Override
+    @Transactional
+    public void downVote(UserAnswerDTO userAnswerDTO)
+    {
+        UserAnswer userAnswer = userAnswerRepository.findUserAnswerByUserIdAndAnswerId(userAnswerDTO.getUserId(),
+                userAnswerDTO.getAnswerId());
+        if (userAnswer == null)
+        {
+            UserAnswer newUserAnswer = new UserAnswer();
+            // find user
+            Optional<User> u = userRepository.findById(userAnswerDTO.getUserId());
+            // find answer
+            Optional<Answer> a = answerRepository.findById(userAnswerDTO.getAnswerId());
+            newUserAnswer.setUser(u.get());
+            newUserAnswer.setAnswer(a.get());
+            newUserAnswer.setLiked(false);
+            newUserAnswer.setDisliked(true);
+            userAnswerRepository.save(newUserAnswer);
+            Answer answerToBeUpdated = a.get();
+            answerToBeUpdated.setDownVotes(answerToBeUpdated.getDownVotes() + 1);
+            answerRepository.save(answerToBeUpdated);
+        }
+        else
+        {
+            if (userAnswer.getLiked())
+            {
+                userAnswer.setDisliked(true);
+                userAnswer.setLiked(false);
+                userAnswerRepository.save(userAnswer);
+                Optional<Answer> a = answerRepository.findById(userAnswerDTO.getAnswerId());
+                Answer answerToBeUpdated = a.get();
+                answerToBeUpdated.setDownVotes(answerToBeUpdated.getDownVotes() + 1);
+                answerToBeUpdated.setUpVotes(answerToBeUpdated.getUpVotes() - 1);
+                answerRepository.save(answerToBeUpdated);
+            }
+            else if (userAnswer.getDisliked())
+
+            {
+                userAnswerRepository.delete(userAnswer);
+                Optional<Answer> a = answerRepository.findById(userAnswerDTO.getAnswerId());
+                Answer answerToBeUpdated = a.get();
+                answerToBeUpdated.setDownVotes(answerToBeUpdated.getDownVotes() - 1);
+                answerRepository.save(answerToBeUpdated);
+            }
+        }
     }
 }

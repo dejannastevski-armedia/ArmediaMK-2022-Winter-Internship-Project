@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.AnswerDTO;
+import com.example.demo.dto.UserAnswerDTO;
 import com.example.demo.model.Answer;
 import com.example.demo.service.AnswerService;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,5 +49,19 @@ public class AnswerController
         {
             return ResponseEntity.badRequest().body(res);
         }
+    }
+
+    @PostMapping("/up-vote-answer")
+    public ResponseEntity<String> thumbsUp(@RequestBody UserAnswerDTO userAnswerDTO)
+    {
+        answerService.upVote(userAnswerDTO);
+        return ResponseEntity.ok("success");
+    }
+
+    @PostMapping("/down-vote-answer")
+    public ResponseEntity<String> thumbsDown(@RequestBody UserAnswerDTO userAnswerDTO)
+    {
+        answerService.downVote(userAnswerDTO);
+        return ResponseEntity.ok("success");
     }
 }

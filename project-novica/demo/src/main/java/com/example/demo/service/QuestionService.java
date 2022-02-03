@@ -18,4 +18,6 @@ public interface QuestionService
     String createQuestion(QuestionDTO questionDTO);
 
     List<Question> getAllQuestions();
+
+    void deleteQuestion(Long id);
 }

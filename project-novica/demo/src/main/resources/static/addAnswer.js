@@ -16,3 +16,39 @@ function addAnswer() {
         }
     });
 }
+
+function thumbsUp(answerId) {
+    var questionId = $("#questionId").text();
+    var userAnswerDTO = {};
+    userAnswerDTO.answerId = answerId;
+    userAnswerDTO.userId = JSON.parse(sessionStorage.getItem("user")).id;
+    $.ajax({
+        type: "POST",
+        url: "/answer/up-vote-answer",
+        data: JSON.stringify(userAnswerDTO),
+        contentType: "application/JSON",
+        success: function () {
+            window.location = "http://localhost:8080/answer/answer/" + questionId;
+        },
+        error: function () {
+        }
+    })
+}
+
+function thumbsDown(answerId) {
+    var questionId = $("#questionId").text();
+    var userAnswerDTO = {};
+    userAnswerDTO.answerId = answerId;
+    userAnswerDTO.userId = JSON.parse(sessionStorage.getItem("user")).id;
+    $.ajax({
+        type: "POST",
+        url: "/answer/down-vote-answer",
+        data: JSON.stringify(userAnswerDTO),
+        contentType: "application/JSON",
+        success: function () {
+            window.location = "http://localhost:8080/answer/answer/" + questionId;
+        },
+        error: function () {
+        }
+    })
+}
