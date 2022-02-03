@@ -79,10 +79,14 @@
         <td th:text="${a.answer}"></td>
         <td th:text="${a.creator}"></td>
         <td th:text="${a.createdDate}"></td>
-        <td><a class="btn btn-default"><i class="glyphicon glyphicon-thumbs-up"></i></a></td>
+        <td><a type="submit" class="btn btn-default" th:attr="onclick=|upVote('${a.id}')|"><i
+                class="glyphicon glyphicon-thumbs-up"></i></a>
+        </td>
         <td th:text="${a.upVotes}"></td>
         <td th:text="${a.downVotes}"></td>
-        <td><a class="btn btn-default"><i class="glyphicon glyphicon-thumbs-down"></i></a></td>
+        <td><a class="btn btn-default" th:attr="onclick=|downVote('${a.id}')|"><i
+                class="glyphicon glyphicon-thumbs-down"></i></a>
+        </td>
         <td><a class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a></td>
     </tr>
     </tbody>

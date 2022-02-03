@@ -1,6 +1,7 @@
 package com.example.firstproject.controller;
 
 import com.example.firstproject.dto.AnswerDTO;
+import com.example.firstproject.dto.UserAnswerDTO;
 import com.example.firstproject.model.Answer;
 import com.example.firstproject.services.AnswerService;
 
@@ -57,5 +58,21 @@ public class AnswerController
         {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
+    }
+
+    @RequestMapping(path = "/up-vote/{answerId}/{questionId}", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<String> incrementUpVote(@RequestBody UserAnswerDTO identifierDTO)
+    {
+        answerService.updateUpVotes(identifierDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("");
+    }
+
+    @RequestMapping(path = "/down-vote/{answerId}/{questionId}", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<String> incrementDownVote(@RequestBody UserAnswerDTO identifierDTO)
+    {
+        answerService.updateDownVotes(identifierDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("");
     }
 }
