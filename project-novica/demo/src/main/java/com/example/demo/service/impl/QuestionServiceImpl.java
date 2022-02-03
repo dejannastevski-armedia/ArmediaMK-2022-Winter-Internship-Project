@@ -95,4 +95,10 @@ public class QuestionServiceImpl implements QuestionService
     {
         return questionRepository.findAll();
     }
+
+    @Override
+    public void deleteQuestion(Long id)
+    {
+        questionRepository.deleteById(id);
+    }
 }
