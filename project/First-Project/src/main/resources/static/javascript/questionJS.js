@@ -7,6 +7,7 @@ $(document).ready(function () {
 
     $("#logout").click(function () {
         sessionStorage.removeItem("loggedUser");
+        sessionStorage.removeItem("loggedUserId");
     })
 
     $(".CreatedDate").each(function () {
