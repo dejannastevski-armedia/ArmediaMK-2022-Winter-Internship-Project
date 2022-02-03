@@ -82,14 +82,4 @@ public class User
     {
         this.age = age;
     }
-
-    public List<UserAnswer> getLikeAndDislikeSystemList()
-    {
-        return likeAndDislikeSystemList;
-    }
-
-    public void setLikeAndDislikeSystemList(List<UserAnswer> likeAndDislikeSystemList)
-    {
-        this.likeAndDislikeSystemList = likeAndDislikeSystemList;
-    }
 }
