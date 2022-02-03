@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.AnswerDTO;
+import com.example.demo.dto.UserAnswerDTO;
 import com.example.demo.model.Answer;
 import com.example.demo.service.AnswerService;
 
@@ -51,16 +52,16 @@ public class AnswerController
     }
 
     @PostMapping("/up-vote-answer")
-    public ResponseEntity<String> thumbsUp(@RequestBody Long answerId)
+    public ResponseEntity<String> thumbsUp(@RequestBody UserAnswerDTO userAnswerDTO)
     {
-        answerService.upVote(answerId);
+        answerService.upVote(userAnswerDTO);
         return ResponseEntity.ok("success");
     }
 
     @PostMapping("/down-vote-answer")
-    public ResponseEntity<String> thumbsDown(@RequestBody Long answerId)
+    public ResponseEntity<String> thumbsDown(@RequestBody UserAnswerDTO userAnswerDTO)
     {
-        answerService.downVote(answerId);
+        answerService.downVote(userAnswerDTO);
         return ResponseEntity.ok("success");
     }
 }

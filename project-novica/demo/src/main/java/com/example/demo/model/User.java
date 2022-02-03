@@ -5,7 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -27,6 +30,9 @@ public class User
 
     @Column(name = "age", nullable = true)
     private Integer age;
+
+    @OneToMany(mappedBy = "user")
+    List<UserAnswer> userAnswerList;
 
     public User()
     {

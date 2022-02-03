@@ -19,12 +19,15 @@ function addAnswer() {
 
 function thumbsUp(answerId) {
     var questionId = $("#questionId").text();
+    var userAnswerDTO = {};
+    userAnswerDTO.answerId = answerId;
+    userAnswerDTO.userEmail = JSON.parse(sessionStorage.getItem("user")).email;
     $.ajax({
         type: "POST",
         url: "/answer/up-vote-answer",
-        data: JSON.stringify(answerId),
+        data: JSON.stringify(userAnswerDTO),
         contentType: "application/JSON",
-        success: function (data) {
+        success: function () {
             window.location = "http://localhost:8080/answer/answer/" + questionId;
         },
         error: function () {
@@ -34,12 +37,15 @@ function thumbsUp(answerId) {
 
 function thumbsDown(answerId) {
     var questionId = $("#questionId").text();
+    var userAnswerDTO = {};
+    userAnswerDTO.answerId = answerId;
+    userAnswerDTO.userEmail = JSON.parse(sessionStorage.getItem("user")).email;
     $.ajax({
         type: "POST",
         url: "/answer/down-vote-answer",
-        data: JSON.stringify(answerId),
+        data: JSON.stringify(userAnswerDTO),
         contentType: "application/JSON",
-        success: function (data) {
+        success: function () {
             window.location = "http://localhost:8080/answer/answer/" + questionId;
         },
         error: function () {
