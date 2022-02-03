@@ -39,7 +39,7 @@ function thumbsDown(answerId) {
     var questionId = $("#questionId").text();
     var userAnswerDTO = {};
     userAnswerDTO.answerId = answerId;
-    userAnswerDTO.userEmail = JSON.parse(sessionStorage.getItem("user")).email;
+    userAnswerDTO.userId = JSON.parse(sessionStorage.getItem("user")).id;
     $.ajax({
         type: "POST",
         url: "/answer/down-vote-answer",

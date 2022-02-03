@@ -147,6 +147,46 @@ public class AnswerServiceImpl implements AnswerService
     @Transactional
     public void downVote(UserAnswerDTO userAnswerDTO)
     {
+        UserAnswer userAnswer = userAnswerRepository.findUserAnswerByUserIdAndAnswerId(userAnswerDTO.getUserId(),
+                userAnswerDTO.getAnswerId());
+        if (userAnswer == null)
+        {
+            UserAnswer newUserAnswer = new UserAnswer();
+            // find user
+            Optional<User> u = userRepository.findById(userAnswerDTO.getUserId());
+            // find answer
+            Optional<Answer> a = answerRepository.findById(userAnswerDTO.getAnswerId());
+            newUserAnswer.setUser(u.get());
+            newUserAnswer.setAnswer(a.get());
+            newUserAnswer.setLiked(false);
+            newUserAnswer.setDisliked(true);
+            userAnswerRepository.save(newUserAnswer);
+            Answer answerToBeUpdated = a.get();
+            answerToBeUpdated.setDownVotes(answerToBeUpdated.getDownVotes() + 1);
+            answerRepository.save(answerToBeUpdated);
+        }
+        else
+        {
+            if (userAnswer.getLiked())
+            {
+                userAnswer.setDisliked(true);
+                userAnswer.setLiked(false);
+                userAnswerRepository.save(userAnswer);
+                Optional<Answer> a = answerRepository.findById(userAnswerDTO.getAnswerId());
+                Answer answerToBeUpdated = a.get();
+                answerToBeUpdated.setDownVotes(answerToBeUpdated.getDownVotes() + 1);
+                answerToBeUpdated.setUpVotes(answerToBeUpdated.getUpVotes() - 1);
+                answerRepository.save(answerToBeUpdated);
+            }
+            else if (userAnswer.getDisliked())
 
+            {
+                userAnswerRepository.delete(userAnswer);
+                Optional<Answer> a = answerRepository.findById(userAnswerDTO.getAnswerId());
+                Answer answerToBeUpdated = a.get();
+                answerToBeUpdated.setDownVotes(answerToBeUpdated.getDownVotes() - 1);
+                answerRepository.save(answerToBeUpdated);
+            }
+        }
     }
 }
