@@ -7,6 +7,7 @@ $(document).ready(function () {
 
     $("#logout").click(function () {
         sessionStorage.removeItem("loggedUser");
+        sessionStorage.removeItem("loggedUserId");
     })
 
     $(".CreatedDate").each(function () {
@@ -14,7 +15,7 @@ $(document).ready(function () {
         let createdDateSplit = createdDate.split("T");
         $(this).text(createdDateSplit[0]);
     })
-    
+
     $("#submitQuestion").click(function () {
         let question = {
             title: $("#title").val(),
@@ -50,3 +51,8 @@ $(document).ready(function () {
         });
     });
 });
+
+function redirectToViewAnswer(questionId) {
+    let userId = sessionStorage.getItem("loggedUserId");
+    window.location = window.location = "http://localhost:8080/answers/" + userId + "/view-answer/" + questionId;
+}

@@ -11,9 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Table(name = "answer")
@@ -43,6 +45,9 @@ public class Answer
 
     @Column(nullable = false)
     private Integer downvotes;
+
+    @OneToMany(mappedBy = "answer")
+    private List<UserAnswerStatus> userAnswerStatusList;
 
     public Integer getAnswerid()
     {
