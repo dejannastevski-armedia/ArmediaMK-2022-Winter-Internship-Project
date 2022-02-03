@@ -5,8 +5,10 @@ import com.example.demo.dto.UserAnswerDTO;
 import com.example.demo.model.Answer;
 import com.example.demo.model.Question;
 import com.example.demo.model.User;
+import com.example.demo.model.UserAnswer;
 import com.example.demo.repository.AnswerRepository;
 import com.example.demo.repository.QuestionRepository;
+import com.example.demo.repository.UserAnswerRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.AnswerService;
 
@@ -14,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import java.util.ArrayList;
@@ -36,6 +37,9 @@ public class AnswerServiceImpl implements AnswerService
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserAnswerRepository userAnswerRepository;
 
     @Override
     public List<Answer> listAllAnswers()
@@ -91,42 +95,58 @@ public class AnswerServiceImpl implements AnswerService
         return answerRepository.listAllAnswerPerQuestion(id);
     }
 
-
     @Override
     @Transactional
     public void upVote(UserAnswerDTO userAnswerDTO)
     {
-        String query = "UPDATE answer SET up_votes=up_votes+1 WHERE id=?1";
-        Query nativeQuery = entityManager.createNativeQuery(query);
-        nativeQuery.setParameter(1, userAnswerDTO.getAnswerId());
-        nativeQuery.executeUpdate();
+        UserAnswer userAnswer = userAnswerRepository.findUserAnswerByUserIdAndAnswerId(userAnswerDTO.getUserId(),
+                userAnswerDTO.getAnswerId());
+        if (userAnswer == null)
+        {
+            UserAnswer newUserAnswer = new UserAnswer();
+            // find user
+            Optional<User> u = userRepository.findById(userAnswerDTO.getUserId());
+            // find answer
+            Optional<Answer> a = answerRepository.findById(userAnswerDTO.getAnswerId());
+            newUserAnswer.setUser(u.get());
+            newUserAnswer.setAnswer(a.get());
+            newUserAnswer.setLiked(true);
+            newUserAnswer.setDisliked(false);
+            userAnswerRepository.save(newUserAnswer);
+            Answer answerToBeUpdated = a.get();
+            answerToBeUpdated.setUpVotes(answerToBeUpdated.getUpVotes() + 1);
+            answerRepository.save(answerToBeUpdated);
+        }
+        else
+        {
+            if (userAnswer.getLiked())
+            {
+                userAnswerRepository.delete(userAnswer);
+                Optional<Answer> a = answerRepository.findById(userAnswerDTO.getAnswerId());
+                Answer answerToBeUpdated = a.get();
+                answerToBeUpdated.setUpVotes(answerToBeUpdated.getUpVotes() - 1);
+                answerRepository.save(answerToBeUpdated);
+            }
+            else if (userAnswer.getDisliked())
 
-        Optional<User> user = userRepository.findByEmail(userAnswerDTO.getUserEmail());
-        String query1 = "insert into user_answer(answer_id,user_id, likes, dislikes) values(?1,?2,?3,?4)";
-        Query nativeQuery1 = entityManager.createNativeQuery(query1);
-        nativeQuery1.setParameter(1, userAnswerDTO.getAnswerId());
-        nativeQuery1.setParameter(2, user.get().getId());
-        nativeQuery1.setParameter(3, 11);
-        nativeQuery1.setParameter(4, 11);
-        nativeQuery1.executeUpdate();
+            {
+                userAnswer.setDisliked(false);
+                userAnswer.setLiked(true);
+                userAnswerRepository.save(userAnswer);
+                Optional<Answer> a = answerRepository.findById(userAnswerDTO.getAnswerId());
+                Answer answerToBeUpdated = a.get();
+                answerToBeUpdated.setUpVotes(answerToBeUpdated.getUpVotes() + 1);
+                answerToBeUpdated.setDownVotes(answerToBeUpdated.getDownVotes() - 1);
+                answerRepository.save(answerToBeUpdated);
+            }
+        }
+
     }
 
     @Override
     @Transactional
     public void downVote(UserAnswerDTO userAnswerDTO)
     {
-        String query = "UPDATE answer SET down_votes=down_votes+1 WHERE id=?1";
-        Query nativeQuery = entityManager.createNativeQuery(query);
-        nativeQuery.setParameter(1, userAnswerDTO.getAnswerId());
-        nativeQuery.executeUpdate();
 
-        Optional<User> user = userRepository.findByEmail(userAnswerDTO.getUserEmail());
-        String query1 = "insert into user_answer(answer_id,user_id, likes, dislikes) values(?1,?2,?3,?4)";
-        Query nativeQuery1 = entityManager.createNativeQuery(query1);
-        nativeQuery1.setParameter(1, userAnswerDTO.getAnswerId());
-        nativeQuery1.setParameter(2, user.get().getId());
-        nativeQuery1.setParameter(3, 11);
-        nativeQuery1.setParameter(4, 11);
-        nativeQuery1.executeUpdate();
     }
 }

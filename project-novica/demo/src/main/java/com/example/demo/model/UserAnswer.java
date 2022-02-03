@@ -22,21 +22,12 @@ public class UserAnswer
     @JoinColumn(name = "answer_id")
     Answer answer;
 
-    Integer likes;
+    Boolean isLiked;
 
-    Integer dislikes;
+    Boolean isDisliked;
 
     public UserAnswer()
     {
-    }
-
-    public UserAnswer(Long id, User user, Answer answer, Integer likes, Integer dislikes)
-    {
-        this.id = id;
-        this.user = user;
-        this.answer = answer;
-        this.likes = likes;
-        this.dislikes = dislikes;
     }
 
     public Long getId()
@@ -69,23 +60,23 @@ public class UserAnswer
         this.answer = answer;
     }
 
-    public Integer getLikes()
+    public Boolean getLiked()
     {
-        return likes;
+        return isLiked;
     }
 
-    public void setLikes(Integer likes)
+    public void setLiked(Boolean liked)
     {
-        this.likes = likes;
+        isLiked = liked;
     }
 
-    public Integer getDislikes()
+    public Boolean getDisliked()
     {
-        return dislikes;
+        return isDisliked;
     }
 
-    public void setDislikes(Integer dislikes)
+    public void setDisliked(Boolean disliked)
     {
-        this.dislikes = dislikes;
+        isDisliked = disliked;
     }
 }

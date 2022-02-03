@@ -4,16 +4,10 @@ public class UserAnswerDTO
 {
     Long answerId;
 
-    String userEmail;
+    Long userId;
 
     public UserAnswerDTO()
     {
-    }
-
-    public UserAnswerDTO(Long answerId, String userEmail)
-    {
-        this.answerId = answerId;
-        this.userEmail = userEmail;
     }
 
     public Long getAnswerId()
@@ -26,13 +20,13 @@ public class UserAnswerDTO
         this.answerId = answerId;
     }
 
-    public String getUserEmail()
+    public Long getUserId()
     {
-        return userEmail;
+        return userId;
     }
 
-    public void setUserEmail(String userEmail)
+    public void setUserId(Long userId)
     {
-        this.userEmail = userEmail;
+        this.userId = userId;
     }
 }
