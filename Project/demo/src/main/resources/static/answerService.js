@@ -24,11 +24,11 @@ function downVotesAnswer(id) {
     var answerDTO = {};
     answerDTO.answerId = id;
     answerDTO.questionId = $("#id").text();
-    answerDTO.userId= sessionStorage.getItem('loggedUserId');
+    answerDTO.userId = sessionStorage.getItem('loggedUserId');
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/increment-down/" + answerDTO.answerId + "/" + answerDTO.questionId,
+        url: "/down-vote-answer/" + answerDTO.answerId + "/" + answerDTO.questionId,
         data: JSON.stringify(answerDTO),
         success: function (data) {
             window.location.replace("http://localhost:8080/view-answer/" + answerDTO.questionId);
@@ -44,11 +44,11 @@ function upVotesAnswer(id) {
     var answerDTO = {};
     answerDTO.answerId = id;
     answerDTO.questionId = $("#id").text();
-    answerDTO.userId= sessionStorage.getItem('loggedUserId');
+    answerDTO.userId = sessionStorage.getItem('loggedUserId');
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/increment-up/"  + answerDTO.answerId + "/" + answerDTO.questionId,
+        url: "/up-vote-answer/" + answerDTO.answerId + "/" + answerDTO.questionId,
         data: JSON.stringify(answerDTO),
         success: function (data) {
             window.location.replace("http://localhost:8080/view-answer/" + answerDTO.questionId);
