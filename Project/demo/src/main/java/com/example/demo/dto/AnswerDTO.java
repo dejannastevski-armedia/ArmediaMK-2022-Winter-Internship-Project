@@ -5,6 +5,8 @@ public class AnswerDTO
     private String answer;
     private String email;
     private Long questionId;
+    private Long answerId;
+    private Long userId;
 
     public String getAnswer()
     {
@@ -34,5 +36,25 @@ public class AnswerDTO
     public void setQuestionId(Long questionId)
     {
         this.questionId = questionId;
+    }
+
+    public Long getAnswerId()
+    {
+        return answerId;
+    }
+
+    public void setAnswerId(Long answerId)
+    {
+        this.answerId = answerId;
+    }
+
+    public Long getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(Long userId)
+    {
+        this.userId = userId;
     }
 }

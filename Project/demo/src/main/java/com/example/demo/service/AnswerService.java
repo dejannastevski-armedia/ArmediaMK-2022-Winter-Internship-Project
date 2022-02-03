@@ -18,4 +18,8 @@ public interface AnswerService
 
     List<Answer> listAllAnswersPerQuestionId(Long questionId);
 
+    void updateUpVotes(AnswerDTO answerDTO);
+
+    void updateDownVotes(AnswerDTO answerDTO);
+
 }

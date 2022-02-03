@@ -5,7 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -27,6 +30,9 @@ public class User
 
     @Column(name = "age", nullable = false, length = 3)
     private int age;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserAnswer> answersLikedByUser;
 
     public User()
     {
@@ -81,4 +87,5 @@ public class User
     {
         this.password = password;
     }
+
 }

@@ -55,4 +55,20 @@ public class AnswerController
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
     }
+
+    @RequestMapping(value = "/increment-down/{answerId}/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> downVotesAnswer(@RequestBody AnswerDTO answerDTO)
+    {
+        answerService.updateDownVotes(answerDTO);
+        return ResponseEntity.ok().body("success");
+    }
+
+    @RequestMapping(value = "/increment-up/{answerId}/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> upVotesAnswer(@RequestBody AnswerDTO answerDTO)
+    {
+        answerService.updateUpVotes(answerDTO);
+        return ResponseEntity.ok().body("success");
+    }
 }

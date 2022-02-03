@@ -31,9 +31,9 @@
             <td th:text="${a.creator}"></td>
             <td th:text="${a.createDate}"></td>
             <td th:text="${a.upVotes}"></td>
-            <td><button style="font-size:24px"><i class="fa fa-thumbs-up"></i></button></td>
-            <td th:text="${a.downVotes}"></td>
-            <td><button style="font-size:24px"><i class="fa fa-thumbs-down"></i></button></td>
+            <td><a type="submit" th:attr="onclick=|upVotesAnswer('${a.id}')|"  style="font-size:24px"><i class="fa fa-thumbs-up"></i></a></td>
+            <td th:text="${a.downVotes}" id="increment"></td>
+            <td><a type="submit" th:attr="onclick=|downVotesAnswer('${a.id}')|" style="font-size:24px"><i class="fa fa-thumbs-down"></i></a></td>
             <td><button style="border: none;"><i style="font-size:24px; color: darkred" class="fa">&#xf014;</i></button></td>
 
 
