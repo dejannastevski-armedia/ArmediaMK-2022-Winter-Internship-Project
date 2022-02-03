@@ -1,6 +1,6 @@
 package com.example.firstproject.services;
 
-import com.example.firstproject.dto.IdentifierDTO;
+import com.example.firstproject.dto.UserAnswerDTO;
 import com.example.firstproject.model.Answer;
 import com.example.firstproject.model.Question;
 import com.example.firstproject.model.User;
@@ -13,7 +13,6 @@ import com.example.firstproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import java.time.LocalDateTime;
@@ -28,9 +27,6 @@ public class AnswerServiceImpl implements AnswerService
 
     @Autowired
     private QuestionRepository questionRepository;
-
-    @Autowired
-    private EntityManager entityManager;
 
     @Autowired
     private UserAnswerRepository userAnswerRepository;
@@ -49,25 +45,9 @@ public class AnswerServiceImpl implements AnswerService
         return sb.toString();
     }
 
-    // @Override
-    // public void updateUpVotes(Long answerId)
-    // {
-    // try
-    // {
-    // Answer answer = answerRepository.getById(answerId);
-    // int old = answer.getUpVotes();
-    // answer.setUpVotes(old + 1);
-    // answerRepository.save(answer);
-    // }
-    // catch (Exception e)
-    // {
-    // e.printStackTrace();
-    // }
-    // }
-
     @Override
     @Transactional
-    public void updateUpVotes(IdentifierDTO identifierDTO)
+    public void updateUpVotes(UserAnswerDTO identifierDTO)
     {
         UserAnswer userAnswer = userAnswerRepository.findByUserAndAnswer(identifierDTO.getUserId(), identifierDTO.getAnswerID());
 
@@ -116,26 +96,9 @@ public class AnswerServiceImpl implements AnswerService
         }
     }
 
-    // @Override
-    // @Transactional
-    // public void updateDownVotes(Long answerId)
-    // {
-    // try
-    // {
-    // String query = "UPDATE answer SET down_votes=down_votes+1 WHERE id=?1";
-    // Query query1 = entityManager.createNativeQuery(query);
-    // query1.setParameter(1, answerId);
-    // query1.executeUpdate();
-    // }
-    // catch (Exception e)
-    // {
-    // e.printStackTrace();
-    // }
-    // }
-
     @Override
     @Transactional
-    public void updateDownVotes(IdentifierDTO identifierDTO)
+    public void updateDownVotes(UserAnswerDTO identifierDTO)
     {
         UserAnswer userAnswer = userAnswerRepository.findByUserAndAnswer(identifierDTO.getUserId(), identifierDTO.getAnswerID());
 

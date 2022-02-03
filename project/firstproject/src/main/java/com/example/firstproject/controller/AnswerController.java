@@ -1,7 +1,7 @@
 package com.example.firstproject.controller;
 
 import com.example.firstproject.dto.AnswerDTO;
-import com.example.firstproject.dto.IdentifierDTO;
+import com.example.firstproject.dto.UserAnswerDTO;
 import com.example.firstproject.model.Answer;
 import com.example.firstproject.services.AnswerService;
 
@@ -60,32 +60,17 @@ public class AnswerController
         }
     }
 
-    // @PostMapping("/increment-up/{answerId}/{questionId}")
-    // public ModelAndView incrementUpVote(@PathVariable Long answerId, @PathVariable Long questionId)
-    // {
-    // answerService.updateUpVotes(answerId);
-    // return new ModelAndView("redirect:/answer/view-answer/" + questionId);
-    // }
-
-    // @RequestMapping(path = "/increment-up/{answerId}/{questionId}", method = RequestMethod.PUT)
-    // @ResponseBody
-    // public ResponseEntity<String> incrementUpVote(@RequestBody IdentifierDTO identifierDTO)
-    // {
-    // answerService.updateUpVotes(identifierDTO.getAnswerID());
-    // return ResponseEntity.status(HttpStatus.OK).body("");
-    // }
-
-    @RequestMapping(path = "/increment-up/{answerId}/{questionId}", method = RequestMethod.PUT)
+    @RequestMapping(path = "/up-vote/{answerId}/{questionId}", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<String> incrementUpVote(@RequestBody IdentifierDTO identifierDTO)
+    public ResponseEntity<String> incrementUpVote(@RequestBody UserAnswerDTO identifierDTO)
     {
         answerService.updateUpVotes(identifierDTO);
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
-    @RequestMapping(path = "/increment-down/{answerId}/{questionId}", method = RequestMethod.PUT)
+    @RequestMapping(path = "/down-vote/{answerId}/{questionId}", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<String> incrementDownVote(@RequestBody IdentifierDTO identifierDTO)
+    public ResponseEntity<String> incrementDownVote(@RequestBody UserAnswerDTO identifierDTO)
     {
         answerService.updateDownVotes(identifierDTO);
         return ResponseEntity.status(HttpStatus.OK).body("");

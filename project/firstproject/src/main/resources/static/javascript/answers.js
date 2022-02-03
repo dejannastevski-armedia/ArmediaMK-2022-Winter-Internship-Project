@@ -26,7 +26,7 @@ function downVote(id) {
     $.ajax({
         type: "PUT",
         contentType: "application/json",
-        url: "/answer/increment-down/" + identifierDTO.answerID + "/" + identifierDTO.questionID,
+        url: "/answer/down-vote/" + identifierDTO.answerID + "/" + identifierDTO.questionID,
         data: JSON.stringify(identifierDTO),
         success: function () {
             window.location.replace("http://localhost:8080/answer/view-answer/" + identifierDTO.questionID)
@@ -45,7 +45,7 @@ function upVote(id) {
     $.ajax({
         type: "PUT",
         contentType: "application/json",
-        url: "/answer/increment-up/" + identifierDTO.answerID + "/" + identifierDTO.questionID,
+        url: "/answer/up-vote/" + identifierDTO.answerID + "/" + identifierDTO.questionID,
         data: JSON.stringify(identifierDTO),
         success: function () {
             window.location.replace("http://localhost:8080/answer/view-answer/" + identifierDTO.questionID)

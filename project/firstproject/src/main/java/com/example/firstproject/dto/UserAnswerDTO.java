@@ -1,6 +1,6 @@
 package com.example.firstproject.dto;
 
-public class IdentifierDTO
+public class UserAnswerDTO
 {
     private Long questionID;
     private Long answerID;
