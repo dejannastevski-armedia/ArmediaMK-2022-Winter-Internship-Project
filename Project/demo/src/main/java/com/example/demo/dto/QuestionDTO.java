@@ -35,5 +35,4 @@ public class QuestionDTO
     {
         this.email = email;
     }
-
 }

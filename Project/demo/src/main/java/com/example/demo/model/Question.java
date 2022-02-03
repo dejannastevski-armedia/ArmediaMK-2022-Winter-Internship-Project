@@ -35,7 +35,7 @@ public class Question implements Serializable
 
     private String modifier;
 
-    @OneToMany(mappedBy="question")
+    @OneToMany(mappedBy = "question")
     private List<Answer> answer;
 
     @CreatedDate

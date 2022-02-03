@@ -19,3 +19,43 @@ function submitAnswer() {
     })
 
 }
+
+function downVotesAnswer(id) {
+    var answerDTO = {};
+    answerDTO.answerId = id;
+    answerDTO.questionId = $("#id").text();
+    answerDTO.userId = sessionStorage.getItem('loggedUserId');
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/down-vote-answer/" + answerDTO.answerId + "/" + answerDTO.questionId,
+        data: JSON.stringify(answerDTO),
+        success: function (data) {
+            window.location.replace("http://localhost:8080/view-answer/" + answerDTO.questionId);
+
+        },
+        error: function (e) {
+
+        }
+    })
+}
+
+function upVotesAnswer(id) {
+    var answerDTO = {};
+    answerDTO.answerId = id;
+    answerDTO.questionId = $("#id").text();
+    answerDTO.userId = sessionStorage.getItem('loggedUserId');
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/up-vote-answer/" + answerDTO.answerId + "/" + answerDTO.questionId,
+        data: JSON.stringify(answerDTO),
+        success: function (data) {
+            window.location.replace("http://localhost:8080/view-answer/" + answerDTO.questionId);
+        },
+        error: function (e) {
+
+        }
+    })
+}
+
