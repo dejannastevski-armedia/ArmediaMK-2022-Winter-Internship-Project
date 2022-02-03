@@ -1,6 +1,7 @@
 package com.example.firstproject.controller;
 
 import com.example.firstproject.dto.AnswerDTO;
+import com.example.firstproject.dto.IdentifierDTO;
 import com.example.firstproject.model.Answer;
 import com.example.firstproject.services.AnswerService;
 
@@ -57,5 +58,36 @@ public class AnswerController
         {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
+    }
+
+    // @PostMapping("/increment-up/{answerId}/{questionId}")
+    // public ModelAndView incrementUpVote(@PathVariable Long answerId, @PathVariable Long questionId)
+    // {
+    // answerService.updateUpVotes(answerId);
+    // return new ModelAndView("redirect:/answer/view-answer/" + questionId);
+    // }
+
+    // @RequestMapping(path = "/increment-up/{answerId}/{questionId}", method = RequestMethod.PUT)
+    // @ResponseBody
+    // public ResponseEntity<String> incrementUpVote(@RequestBody IdentifierDTO identifierDTO)
+    // {
+    // answerService.updateUpVotes(identifierDTO.getAnswerID());
+    // return ResponseEntity.status(HttpStatus.OK).body("");
+    // }
+
+    @RequestMapping(path = "/increment-up/{answerId}/{questionId}", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<String> incrementUpVote(@RequestBody IdentifierDTO identifierDTO)
+    {
+        answerService.updateUpVotes(identifierDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("");
+    }
+
+    @RequestMapping(path = "/increment-down/{answerId}/{questionId}", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<String> incrementDownVote(@RequestBody IdentifierDTO identifierDTO)
+    {
+        answerService.updateDownVotes(identifierDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("");
     }
 }
