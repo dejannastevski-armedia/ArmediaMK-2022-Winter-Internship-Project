@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 
 import first.project.dto.QuestionDTO;
+import first.project.dto.UserQuestionDTO;
+import first.project.exceptions.InvalidCreatorException;
 import first.project.service.QuestionService;
 
 @Controller
@@ -29,10 +31,19 @@ public class QuestionController
         if (res.isEmpty())
         {
             return ResponseEntity.ok("Success");
-        } else
+        }
+        else
         {
             String result = String.join("<br>", res);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
         }
+    }
+
+    @PostMapping("/delete-question")
+    @ResponseBody
+    public ResponseEntity<String> deleteQuestion(@RequestBody UserQuestionDTO userQuestionDTO) throws InvalidCreatorException
+    {
+        questionService.deleteQuestion(userQuestionDTO);
+        return ResponseEntity.ok("Success");
     }
 }

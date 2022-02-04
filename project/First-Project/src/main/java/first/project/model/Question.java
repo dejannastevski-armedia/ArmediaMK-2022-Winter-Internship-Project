@@ -1,5 +1,7 @@
 package first.project.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -42,6 +44,7 @@ public class Question implements Serializable
     private Instant createdDate;
 
     @OneToMany(mappedBy = "question")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Answer> answerList;
 
     public Question(Integer id, String question, String title, String creator, String modifier, Instant createdDate)

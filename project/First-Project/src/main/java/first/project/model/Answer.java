@@ -1,5 +1,7 @@
 package first.project.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -47,6 +49,7 @@ public class Answer
     private Integer downvotes;
 
     @OneToMany(mappedBy = "answer")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<UserAnswerStatus> userAnswerStatusList;
 
     public Integer getAnswerid()
