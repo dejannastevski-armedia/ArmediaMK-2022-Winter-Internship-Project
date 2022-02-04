@@ -30,3 +30,29 @@ function submitQuestion() {
 function logOut() {
     sessionStorage.removeItem('loggedUser');
 }
+
+function deleteQuestion(id) {
+    var questionDTO = {};
+    questionDTO.questionId = id;
+    questionDTO.email = sessionStorage.getItem('loggedUser');
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/delete-question",
+        data: JSON.stringify(questionDTO),
+        success: function (data) {
+            window.location.replace("http://localhost:8080/home");
+
+
+        },
+        error: function (e) {
+            togglePopup();
+            document.getElementById("errorMessages").innerText = e.responseText;
+        }
+    })
+
+}
+
+function togglePopup() {
+    document.getElementById("popup-1").classList.toggle("active");
+}

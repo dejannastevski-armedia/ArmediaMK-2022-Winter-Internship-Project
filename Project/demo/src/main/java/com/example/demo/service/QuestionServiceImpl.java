@@ -7,6 +7,10 @@ import com.example.demo.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
+
 import java.util.List;
 
 @Service
@@ -14,6 +18,8 @@ public class QuestionServiceImpl implements QuestionService
 {
     @Autowired
     private QuestionRepository questionRepository;
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
     public boolean checkTitle(String title)
@@ -74,6 +80,34 @@ public class QuestionServiceImpl implements QuestionService
     public List<Question> listAll()
     {
         return questionRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void deleteQuestion(QuestionDTO questionDTO)
+    {
+
+        String query = "DELETE FROM Question q WHERE q.id=?1";
+        Query nativeQuery = entityManager.createNativeQuery(query);
+        nativeQuery.setParameter(1, questionDTO.getQuestionId());
+        nativeQuery.executeUpdate();
+
+    }
+
+    @Override
+    public String checkIfLoggedUserIsCreator(QuestionDTO questionDTO)
+    {
+        String res = "";
+        Question question = questionRepository.getById(questionDTO.getQuestionId());
+        if (question.getCreator().equals(questionDTO.getEmail()))
+        {
+            res += "";
+        }
+        else
+        {
+            res += "Cannot Delete: logged user is not creator of question";
+        }
+        return res;
     }
 
 }
