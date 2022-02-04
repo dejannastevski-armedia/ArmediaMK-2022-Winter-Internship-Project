@@ -24,3 +24,21 @@ function saveQuestion() {
         }
     });
 }
+
+function deleteQuestion(id) {
+    var deleteQuestionDTO = {};
+    deleteQuestionDTO.questionId = id;
+    deleteQuestionDTO.userEmail = JSON.parse(sessionStorage.loggedInUser).email;
+    $.ajax({
+        type: "DELETE",
+        contentType: "application/json",
+        url: "/question/delete-question",
+        data: JSON.stringify(deleteQuestionDTO),
+        success: function () {
+            window.location.replace("http://localhost:8080/auth/logged-in");
+        },
+        error: function (e) {
+            alert(e.responseText);
+        }
+    });
+}

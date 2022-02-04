@@ -1,5 +1,6 @@
 package com.example.firstproject.services;
 
+import com.example.firstproject.dto.DeleteQuestionDTO;
 import com.example.firstproject.model.Question;
 
 public interface QuestionService
@@ -11,4 +12,6 @@ public interface QuestionService
     String validateQuestion(String question, String title);
 
     Question createQuestion(String question, String title, String email);
+
+    String deleteQuestionById(DeleteQuestionDTO deleteQuestionDTO);
 }
