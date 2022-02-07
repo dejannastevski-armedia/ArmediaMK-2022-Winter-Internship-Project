@@ -34,11 +34,10 @@ public class QuestionController
         }
     }
 
-    @RequestMapping(path = "/delete-question", method = RequestMethod.POST)
+    @RequestMapping(path = "/delete-question", method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<String> deleteQuestion(@RequestBody QuestionDTO questionDTO) throws IllegalAccessException
     {
-
         questionService.deleteQuestion(questionDTO);
         return ResponseEntity.ok("success");
     }
