@@ -63,7 +63,7 @@ function deleteQuestion(questionId) {
         questionId: questionId
     }
     $.ajax({
-        type: "POST",
+        type: "DELETE",
         url: "http://localhost:8080/questions/delete-question",
         data: JSON.stringify(userQuestion),
         contentType: "application/JSON",
