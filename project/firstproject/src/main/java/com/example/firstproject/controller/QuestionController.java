@@ -1,5 +1,6 @@
 package com.example.firstproject.controller;
 
+import com.example.firstproject.dto.DeleteQuestionDTO;
 import com.example.firstproject.dto.QuestionDTO;
 import com.example.firstproject.model.Question;
 import com.example.firstproject.services.QuestionService;
@@ -29,6 +30,21 @@ public class QuestionController
         {
             Question question = questionService.createQuestion(questionDTO.getQuestion(), questionDTO.getTitle(), questionDTO.getEmail());
             questionService.saveQuestion(question);
+            return ResponseEntity.status(HttpStatus.OK).body("");
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+        }
+    }
+
+    @RequestMapping(path = "delete-question", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity<String> deleteQuestion(@RequestBody DeleteQuestionDTO deleteQuestionDTO)
+    {
+        String result = questionService.deleteQuestionById(deleteQuestionDTO);
+        if (result.length() == 0)
+        {
             return ResponseEntity.status(HttpStatus.OK).body("");
         }
         else

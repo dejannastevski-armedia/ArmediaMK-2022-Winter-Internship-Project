@@ -1,5 +1,6 @@
 package com.example.firstproject.services;
 
+import com.example.firstproject.dto.DeleteQuestionDTO;
 import com.example.firstproject.model.Question;
 import com.example.firstproject.repository.QuestionRepository;
 
@@ -47,6 +48,39 @@ public class QuestionServiceImpl implements QuestionService
         if(checkTitle(title) == false)
         {
             sb.append("Title Field Blank!");
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public String deleteQuestionById(DeleteQuestionDTO deleteQuestionDTO)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.setLength(0);
+        String userEmail = deleteQuestionDTO.getUserEmail();
+        Long questionId = deleteQuestionDTO.getQuestionId();
+        try
+        {
+            Question question = questionRepository.getById(questionId);
+            if (question != null)
+            {
+                if (question.getCreator().equals(userEmail))
+                {
+                    questionRepository.deleteQuestionById(questionId);
+                }
+                else
+                {
+                    sb.append("You Are Not A Creator Of This Question!");
+                }
+            }
+            else
+            {
+                sb.append("ERROR - Question ID Not Found!");
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
         return sb.toString();
     }
