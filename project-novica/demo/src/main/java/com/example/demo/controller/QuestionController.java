@@ -41,4 +41,20 @@ public class QuestionController
         questionService.deleteQuestion(questionDTO);
         return ResponseEntity.ok("success");
     }
+
+    @RequestMapping(path = "/edit-question", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> editQuestion(@RequestBody QuestionDTO questionDTO)
+    {
+        String res = questionService.editQuestion(questionDTO);
+        if (res == null || res.isEmpty())
+        {
+            questionService.editQuestion(questionDTO);
+            return ResponseEntity.ok("success");
+        }
+        else
+        {
+            return ResponseEntity.badRequest().body(res);
+        }
+    }
 }

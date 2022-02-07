@@ -20,4 +20,6 @@ public interface QuestionService
     List<Question> getAllQuestions();
 
     void deleteQuestion(QuestionDTO questionDTO) throws IllegalAccessException;
+
+    String editQuestion(QuestionDTO questionDTO);
 }

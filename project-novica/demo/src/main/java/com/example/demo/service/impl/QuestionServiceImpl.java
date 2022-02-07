@@ -116,4 +116,23 @@ public class QuestionServiceImpl implements QuestionService
             throw new IllegalAccessException("You are not creator of that question");
         }
     }
+
+    @Override
+    public String editQuestion(QuestionDTO questionDTO)
+    {
+        String res = "";
+        Question question = questionRepository.getById(questionDTO.getQuestionId());
+        if (question != null)
+        {
+            question.setTitle(questionDTO.getTitle());
+            question.setQuestion(questionDTO.getQuestion());
+            question.setModifier(questionDTO.getEmail());
+            questionRepository.save(question);
+        }
+        else
+        {
+            res += "Invalid data";
+        }
+        return res;
+    }
 }
