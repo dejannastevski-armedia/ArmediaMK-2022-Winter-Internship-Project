@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -19,6 +21,7 @@ import java.util.List;
 @Entity
 @Table(name = "question")
 @EntityListeners(AuditingEntityListener.class)
+
 public class Question implements Serializable
 {
     @Id
@@ -36,6 +39,7 @@ public class Question implements Serializable
     private String modifier;
 
     @OneToMany(mappedBy = "question")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Answer> answer;
 
     @CreatedDate

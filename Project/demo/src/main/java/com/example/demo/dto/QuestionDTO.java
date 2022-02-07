@@ -5,6 +5,7 @@ public class QuestionDTO
     private String title;
     private String question;
     private String email;
+    private Long questionId;
 
     public String getTitle()
     {
@@ -34,5 +35,13 @@ public class QuestionDTO
     public void setEmail(String email)
     {
         this.email = email;
+    }
+
+    public Long getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 }

@@ -22,4 +22,6 @@ public interface QuestionService
 
     List<Question> listAll();
 
+    String deleteQuestion(QuestionDTO questionDTO);
+
 }
