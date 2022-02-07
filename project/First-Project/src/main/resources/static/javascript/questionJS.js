@@ -56,3 +56,22 @@ function redirectToViewAnswer(questionId) {
     let userId = sessionStorage.getItem("loggedUserId");
     window.location = window.location = "http://localhost:8080/answers/" + userId + "/view-answer/" + questionId;
 }
+
+function deleteQuestion(questionId) {
+    let userQuestion = {
+        userId: sessionStorage.getItem("loggedUserId"),
+        questionId: questionId
+    }
+    $.ajax({
+        type: "DELETE",
+        url: "http://localhost:8080/questions/delete-question",
+        data: JSON.stringify(userQuestion),
+        contentType: "application/JSON",
+        success: function (data) {
+            window.location = "http://localhost:8080/home";
+        },
+        error: function (data) {
+            alert(data.responseJSON.message);
+        }
+    })
+}
