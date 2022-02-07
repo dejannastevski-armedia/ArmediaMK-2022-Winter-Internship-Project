@@ -22,7 +22,6 @@ public interface QuestionService
 
     List<Question> listAll();
 
-    void deleteQuestion(QuestionDTO questionDTO);
+    String deleteQuestion(QuestionDTO questionDTO);
 
-    String checkIfLoggedUserIsCreator(QuestionDTO questionDTO);
 }

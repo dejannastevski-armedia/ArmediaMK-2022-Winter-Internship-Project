@@ -34,14 +34,13 @@ public class QuestionController
         }
     }
 
-    @RequestMapping(value = "/delete-question", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete-question", method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<String> deleteQuestion(@RequestBody QuestionDTO questionDTO)
     {
-        String result = questionService.checkIfLoggedUserIsCreator(questionDTO);
+        String result = questionService.deleteQuestion(questionDTO);
         if (result.length() == 0)
         {
-            questionService.deleteQuestion(questionDTO);
             return ResponseEntity.ok().body("success");
         }
         else

@@ -84,30 +84,24 @@ public class QuestionServiceImpl implements QuestionService
 
     @Override
     @Transactional
-    public void deleteQuestion(QuestionDTO questionDTO)
-    {
-
-        String query = "DELETE FROM Question q WHERE q.id=?1";
-        Query nativeQuery = entityManager.createNativeQuery(query);
-        nativeQuery.setParameter(1, questionDTO.getQuestionId());
-        nativeQuery.executeUpdate();
-
-    }
-
-    @Override
-    public String checkIfLoggedUserIsCreator(QuestionDTO questionDTO)
+    public String deleteQuestion(QuestionDTO questionDTO)
     {
         String res = "";
         Question question = questionRepository.getById(questionDTO.getQuestionId());
-        if (question.getCreator().equals(questionDTO.getEmail()))
+        if (question != null)
         {
-            res += "";
-        }
-        else
-        {
-            res += "Cannot Delete: logged user is not creator of question";
+            if (question.getCreator().equals(questionDTO.getEmail()))
+            {
+                String query = "DELETE FROM Question q WHERE q.id=?1";
+                Query nativeQuery = entityManager.createNativeQuery(query);
+                nativeQuery.setParameter(1, questionDTO.getQuestionId());
+                nativeQuery.executeUpdate();
+            }
+            else
+            {
+                res += "Cannot Delete: logged user is not creator of question";
+            }
         }
         return res;
     }
-
 }

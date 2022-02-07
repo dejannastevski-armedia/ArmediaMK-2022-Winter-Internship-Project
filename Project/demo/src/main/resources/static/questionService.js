@@ -36,7 +36,7 @@ function deleteQuestion(id) {
     questionDTO.questionId = id;
     questionDTO.email = sessionStorage.getItem('loggedUser');
     $.ajax({
-        type: "POST",
+        type: "DELETE",
         contentType: "application/json",
         url: "/delete-question",
         data: JSON.stringify(questionDTO),
