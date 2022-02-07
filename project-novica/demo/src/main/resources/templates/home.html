@@ -84,7 +84,7 @@
             </form>
         </td>
         <td>
-            <button>Delete</button>
+            <button th:onclick="'javascript:deleteQuestion(\'' + ${q.id} + '\');'">Delete</button>
         </td>
     </tr>
     </tbody>

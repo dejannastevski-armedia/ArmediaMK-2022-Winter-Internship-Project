@@ -2,6 +2,8 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -48,6 +50,7 @@ public class Answer
     private Question question;
 
     @OneToMany(mappedBy = "answer")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     List<UserAnswer> userAnswerList;
 
     public Question getQuestion()

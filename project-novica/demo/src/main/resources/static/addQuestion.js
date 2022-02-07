@@ -24,3 +24,23 @@ function addQuestion() {
         }
     });
 }
+
+function deleteQuestion(id) {
+    var questionDTO = {};
+    questionDTO.question = $("#question").val();
+    questionDTO.title = $("#title").val();
+    questionDTO.email = JSON.parse(sessionStorage.getItem("user")).email;
+    questionDTO.questionId = id;
+    $.ajax({
+        type: "DELETE",
+        contentType: "application/json",
+        url: "/question/delete-question",
+        data: JSON.stringify(questionDTO),
+        success: function (data) {
+            window.location.replace("http://localhost:8080/home");
+        },
+        error: function (e) {
+            alert(e.responseJSON.message);
+        }
+    });
+}

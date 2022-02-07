@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,6 +35,7 @@ public class User
     private Integer age;
 
     @OneToMany(mappedBy = "user")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     List<UserAnswer> userAnswerList;
 
     public User()

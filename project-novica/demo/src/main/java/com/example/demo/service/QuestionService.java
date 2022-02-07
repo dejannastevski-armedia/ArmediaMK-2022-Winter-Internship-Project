@@ -19,5 +19,5 @@ public interface QuestionService
 
     List<Question> getAllQuestions();
 
-    void deleteQuestion(Long id);
+    void deleteQuestion(QuestionDTO questionDTO) throws IllegalAccessException;
 }

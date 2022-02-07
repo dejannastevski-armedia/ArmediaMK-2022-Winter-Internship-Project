@@ -2,6 +2,8 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -47,6 +49,7 @@ public class Question implements Serializable
     private Date createdAt;
 
     @OneToMany(mappedBy = "question")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Answer> answerList;
 
     public Date getCreatedAt()

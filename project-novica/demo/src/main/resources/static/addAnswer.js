@@ -1,5 +1,6 @@
 function addAnswer() {
     var answerDTO = {};
+    var questionId = $("#questionId").text();
     answerDTO.answer = $("#answer").val();
     answerDTO.email = JSON.parse(sessionStorage.getItem("user")).email;
     answerDTO.questionId = $("#questionId").text();
@@ -10,6 +11,7 @@ function addAnswer() {
         data: JSON.stringify(answerDTO),
         success: function (data) {
             $('#myModal').modal('hide');
+            window.location = "http://localhost:8080/answer/answer/" + questionId;
         },
         error: function (e) {
             document.getElementById("errorMessage").innerHTML = e.responseText;

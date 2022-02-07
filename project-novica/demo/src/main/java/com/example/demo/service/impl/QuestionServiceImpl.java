@@ -2,13 +2,16 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dto.QuestionDTO;
 import com.example.demo.model.Question;
+import com.example.demo.model.User;
 import com.example.demo.repository.QuestionRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.QuestionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuestionServiceImpl implements QuestionService
@@ -16,6 +19,9 @@ public class QuestionServiceImpl implements QuestionService
 
     @Autowired
     QuestionRepository questionRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public boolean checkTitle(String title)
@@ -97,8 +103,17 @@ public class QuestionServiceImpl implements QuestionService
     }
 
     @Override
-    public void deleteQuestion(Long id)
+    public void deleteQuestion(QuestionDTO questionDTO) throws IllegalAccessException
     {
-        questionRepository.deleteById(id);
+        Optional<User> u = userRepository.findByEmail(questionDTO.getEmail());
+        Question q = questionRepository.getById(questionDTO.getQuestionId());
+        if (u.get().getEmail().equals(q.getCreator()))
+        {
+            questionRepository.deleteById(questionDTO.getQuestionId());
+        }
+        else
+        {
+            throw new IllegalAccessException("You are not creator of that question");
+        }
     }
 }
