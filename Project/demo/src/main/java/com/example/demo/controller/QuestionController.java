@@ -49,4 +49,20 @@ public class QuestionController
         }
 
     }
+
+    @RequestMapping(path = "/edit-question", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> editQuestion(@RequestBody QuestionDTO questionDTO)
+    {
+        String result = questionService.editQuestion(questionDTO);
+        if (result.length() == 0)
+        {
+            return ResponseEntity.ok().body("success");
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+        }
+    }
+
 }
