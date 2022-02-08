@@ -24,4 +24,6 @@ public interface QuestionService
 
     String deleteQuestion(QuestionDTO questionDTO);
 
+    String editQuestion(QuestionDTO questionDTO);
+
 }

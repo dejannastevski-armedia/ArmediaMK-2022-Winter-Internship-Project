@@ -104,4 +104,30 @@ public class QuestionServiceImpl implements QuestionService
         }
         return res;
     }
+
+    @Override
+    public String editQuestion(QuestionDTO questionDTO)
+    {
+        String res = "";
+        Question question = questionRepository.getById(questionDTO.getQuestionId());
+        if (question != null)
+        {
+
+            if (checkTitle(questionDTO.getTitle()) && checkQuestion(questionDTO.getQuestion()))
+            {
+                question.setTitle(questionDTO.getTitle());
+                question.setQuestion(questionDTO.getQuestion());
+                question.setModifier(questionDTO.getEmail());
+                questionRepository.save(question);
+
+            }
+            else
+            {
+                res += "Invalid data";
+            }
+
+        }
+        return res;
+
+    }
 }
