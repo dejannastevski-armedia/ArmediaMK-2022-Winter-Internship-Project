@@ -49,7 +49,6 @@ public class QuestionController
         String res = questionService.editQuestion(questionDTO);
         if (res == null || res.isEmpty())
         {
-            questionService.editQuestion(questionDTO);
             return ResponseEntity.ok("success");
         }
         else

@@ -121,8 +121,16 @@ public class QuestionServiceImpl implements QuestionService
     public String editQuestion(QuestionDTO questionDTO)
     {
         String res = "";
+        if (questionDTO.getQuestion() == null || questionDTO.getQuestion().isEmpty())
+        {
+            res += "Question is empty ";
+        }
+        if (questionDTO.getTitle() == null || questionDTO.getTitle().isEmpty())
+        {
+            res += "Title is empty ";
+        }
         Question question = questionRepository.getById(questionDTO.getQuestionId());
-        if (question != null)
+        if (res.isEmpty() && validateQuestion(questionDTO.getQuestion(), questionDTO.getTitle()).isEmpty())
         {
             question.setTitle(questionDTO.getTitle());
             question.setQuestion(questionDTO.getQuestion());

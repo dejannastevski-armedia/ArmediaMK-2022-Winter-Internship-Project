@@ -62,7 +62,7 @@ function editQuestion(id) {
             window.location.replace("http://localhost:8080/home");
         },
         error: function (e) {
-            document.getElementById("errorMessage").innerHTML = e.responseText;
+            document.getElementById("#editError-" + id).innerText = e.responseText;
         }
     });
 }
