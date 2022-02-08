@@ -44,3 +44,25 @@ function deleteQuestion(id) {
         }
     });
 }
+
+function editQuestion(id) {
+    var questionDTO = {};
+    var question1 = "#question-" + id;
+    var title1 = "#title-" + id;
+    questionDTO.question = document.getElementById(question1).value;
+    questionDTO.title = document.getElementById(title1).value;
+    questionDTO.email = JSON.parse(sessionStorage.getItem("user")).email;
+    questionDTO.questionId = id;
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/question/edit-question",
+        data: JSON.stringify(questionDTO),
+        success: function (data) {
+            window.location.replace("http://localhost:8080/home");
+        },
+        error: function (e) {
+            document.getElementById("#editError-" + id).innerText = e.responseText;
+        }
+    });
+}

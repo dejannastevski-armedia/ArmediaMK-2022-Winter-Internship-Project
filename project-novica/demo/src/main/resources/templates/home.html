@@ -60,6 +60,7 @@
         </div>
     </div>
 </div>
+
 <table class="table">
     <thead class="thead-dark">
     <tr>
@@ -69,6 +70,7 @@
         <th scope="col">Date Created</th>
         <th scope="col">Answer</th>
         <th scope="col">Delete</th>
+        <th scope="col">Edit</th>
     </tr>
     </thead>
     <tbody>
@@ -85,6 +87,67 @@
         </td>
         <td>
             <button th:onclick="'javascript:deleteQuestion(\'' + ${q.id} + '\');'">Delete</button>
+        </td>
+        <td>
+            <div th:id="|myModal-${q.id}|" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Question Form</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <p>Id:
+                                    <span th:text="${q.id}"></span>
+                                </p>
+                            </div>
+
+                            <div class="form-group">
+                                <p>Crator:
+                                    <span th:text="${q.creator}"></span>
+                                </p>
+                            </div>
+
+                            <div class="form-group">
+                                <p>Email:
+                                    <span th:text="${q.creator}"></span>
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                <label for="title" class="text-info">Title:</label><br>
+                                <textarea type="text" name="title" cols="20" rows="5"
+                                          th:attr="id='#title-'+${q.id}"
+                                          class="form-control" th:text="${q.title}"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="question" class="text-info">Question:</label><br>
+                                <textarea type="text" name="question" cols="40" rows="5"
+                                          th:attr="id='#question-'+${q.id}"
+                                          class="form-control" th:text="${q.question}"></textarea>
+                            </div>
+                            <div class="form-group row ">
+                                <div class="col-12 text-danger" th:attr="id='#editError-'+${q.id}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button th:onclick="'javascript:editQuestion(\'' + ${q.id} +'\');'">
+                                Confirm
+                            </button>
+                            <button type="button" style="border: 1px solid black" class="btn btn-default"
+                                    data-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="editButton" data-toggle="modal"
+                    th:attr="data-target='#myModal-'+${q.id}">Edit Question
+            </button>
+
         </td>
     </tr>
     </tbody>

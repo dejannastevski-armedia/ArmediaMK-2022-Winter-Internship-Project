@@ -116,4 +116,31 @@ public class QuestionServiceImpl implements QuestionService
             throw new IllegalAccessException("You are not creator of that question");
         }
     }
+
+    @Override
+    public String editQuestion(QuestionDTO questionDTO)
+    {
+        String res = "";
+        if (questionDTO.getQuestion() == null || questionDTO.getQuestion().isEmpty())
+        {
+            res += "Question is empty ";
+        }
+        if (questionDTO.getTitle() == null || questionDTO.getTitle().isEmpty())
+        {
+            res += "Title is empty ";
+        }
+        Question question = questionRepository.getById(questionDTO.getQuestionId());
+        if (res.isEmpty() && validateQuestion(questionDTO.getQuestion(), questionDTO.getTitle()).isEmpty())
+        {
+            question.setTitle(questionDTO.getTitle());
+            question.setQuestion(questionDTO.getQuestion());
+            question.setModifier(questionDTO.getEmail());
+            questionRepository.save(question);
+        }
+        else
+        {
+            res += "Invalid data";
+        }
+        return res;
+    }
 }
