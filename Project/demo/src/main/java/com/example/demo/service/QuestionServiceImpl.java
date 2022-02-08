@@ -117,6 +117,7 @@ public class QuestionServiceImpl implements QuestionService
             {
                 question.setTitle(questionDTO.getTitle());
                 question.setQuestion(questionDTO.getQuestion());
+                question.setModifier(questionDTO.getEmail());
                 questionRepository.save(question);
 
             }
