@@ -1,7 +1,9 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.model.exceptions.UserValidationException;
+import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.util.PasswordHashing;
@@ -22,6 +24,9 @@ public class AuthenticationServiceImpl implements AuthenticationService
 
     @Autowired
     private PasswordHashing passwordHashing;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public boolean checkUserName(String userName)
@@ -124,7 +129,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
-    public List<String> register(String email, String password, String userName, Integer age)
+    public List<String> register(String email, String password, String userName, Integer age, String role)
     {
         List<String> lista = new ArrayList<>();
         if (!checkUserName(userName))
@@ -152,7 +157,8 @@ public class AuthenticationServiceImpl implements AuthenticationService
         if (lista.size() == 0)
         {
             String encodedPassword = passwordHashing.encoder().encode(password);
-            User user = new User(email, encodedPassword, userName, age);
+            Role role1 = roleRepository.getById(Long.parseLong(role));
+            User user = new User(email, encodedPassword, userName, age, role1);
             this.userRepository.save(user);
         }
         return lista;

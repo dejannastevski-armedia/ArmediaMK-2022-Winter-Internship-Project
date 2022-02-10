@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.model.exceptions.UserValidationException;
 import com.example.demo.repository.QuestionRepository;
+import com.example.demo.repository.RoleRepository;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.QuestionService;
 import com.example.demo.util.PasswordHashing;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller()
 @RequestMapping("/auth")
@@ -38,6 +41,9 @@ public class AuthenticationController
     @Autowired
     QuestionRepository questionRepository;
 
+    @Autowired
+    RoleRepository roleRepository;
+
     @GetMapping("")
     public String viewHomePage(Model model)
     {
@@ -49,7 +55,8 @@ public class AuthenticationController
     public String showRegistrationForm(Model model)
     {
         model.addAttribute("user", new User());
-
+        List<Role> roles = roleRepository.findAll();
+        model.addAttribute("roles", roles);
         return "signup_form";
     }
 
@@ -64,10 +71,11 @@ public class AuthenticationController
     public String registerUser(@RequestParam String email,
             @RequestParam String password,
             @RequestParam String userName,
-            @RequestParam(defaultValue = "21") Integer age,
+            @RequestParam Integer age,
+            @RequestParam String role,
             Model model)
     {
-        ArrayList<String> res = (ArrayList<String>) authenticationService.register(email, password, userName, age);
+        ArrayList<String> res = (ArrayList<String>) authenticationService.register(email, password, userName, age, role);
         if (res.isEmpty())
         {
             return "redirect:/auth/login";

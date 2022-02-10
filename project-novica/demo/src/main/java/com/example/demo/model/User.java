@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,6 +39,10 @@ public class User
     @OneToMany(mappedBy = "user")
     @OnDelete(action = OnDeleteAction.CASCADE)
     List<UserAnswer> userAnswerList;
+
+    @ManyToOne
+    @JoinColumn(name = "role_role_id")
+    private Role role;
 
     public User()
     {
@@ -70,6 +76,15 @@ public class User
         this.email = email;
         this.password = password;
         this.userName = userName;
+    }
+
+    public User(String email, String password, String userName, Integer age, Role role)
+    {
+        this.email = email;
+        this.password = password;
+        this.userName = userName;
+        this.age = age;
+        this.role = role;
     }
 
     public Long getId()
@@ -117,8 +132,29 @@ public class User
         return age;
     }
 
+    public List<UserAnswer> getUserAnswerList()
+    {
+        return userAnswerList;
+    }
+
+    public void setUserAnswerList(List<UserAnswer> userAnswerList)
+    {
+        this.userAnswerList = userAnswerList;
+    }
+
+    public Role getRole()
+    {
+        return role;
+    }
+
+    public void setRole(Role role)
+    {
+        this.role = role;
+    }
+
     public void setAge(Integer age)
     {
         this.age = age;
     }
+
 }

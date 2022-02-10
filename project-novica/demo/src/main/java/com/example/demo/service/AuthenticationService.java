@@ -26,7 +26,7 @@ public interface AuthenticationService
 
     User login(String email, String password) throws UserValidationException;
 
-    List<String> register(String email, String password, String userName, Integer age);
+    List<String> register(String email, String password, String userName, Integer age, String role);
 
     boolean checkEmail(String email);
 }

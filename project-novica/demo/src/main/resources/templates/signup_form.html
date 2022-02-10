@@ -24,7 +24,7 @@
             <div class="form-group row">
                 <label class="col-4 col-form-label">E-mail: </label>
                 <div class="col-8">
-                    <input type="text" th:field="*{email}" class="form-control" />
+                    <input type="text" th:field="*{email}" class="form-control"/>
                 </div>
             </div>
 
@@ -39,7 +39,7 @@
                 <label class="col-4 col-form-label">Username: </label>
                 <div class="col-8">
                     <input type="text" th:field="*{userName}" class="form-control"
-                            minlength="1" maxlength="20"/>
+                           minlength="1" maxlength="20"/>
                 </div>
             </div>
 
@@ -49,6 +49,17 @@
                     <input type="text" th:field="*{age}" class="form-control"/>
                 </div>
             </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Role:</label>
+                <div class="col-8">
+                    <select class="form-control" th:field="${user.role}" id="role">
+                        <option th:each="roles : ${roles}" th:value="${roles.id}" th:text="${roles.name}"></option>
+                    </select>
+
+                </div>
+            </div>
+
             <div th:text="${error}">
 
             </div>
