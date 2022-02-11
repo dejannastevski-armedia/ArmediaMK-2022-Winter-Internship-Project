@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Questions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<a href="/auth/login">
+    <button class="btn btn-primary">Log Out</button>
+</a>
+<div>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <h1 style="text-align: center">List Users</h1>
+        <tr>
+            <th> ID</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="u: ${listUserWithRoleUser}">
+            <td th:text="${u.id}"></td>
+            <td th:text="${u.age}"></td>
+            <td th:text="${u.email}"></td>
+            <td th:text="${u.userName}"></td>
+            <td th:text="${u.role.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

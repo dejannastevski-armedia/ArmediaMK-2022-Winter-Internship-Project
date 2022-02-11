@@ -91,10 +91,16 @@ public class AuthenticationController
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<User> logIn(@RequestBody UserDTO userDTO) throws UserValidationException
-
     {
-        User res = authenticationService.login(userDTO.getEmail(), userDTO.getPassword());
+        User res = authenticationService.login(userDTO);
         return ResponseEntity.ok(res);
     }
 
+    @GetMapping("/admin")
+    public String listUserWithRoleUser(Model model)
+    {
+        List<User> listUserWithRoleUser = authenticationService.listAllUsersWithRoleUser();
+        model.addAttribute("listUserWithRoleUser", listUserWithRoleUser);
+        return "admin";
+    }
 }

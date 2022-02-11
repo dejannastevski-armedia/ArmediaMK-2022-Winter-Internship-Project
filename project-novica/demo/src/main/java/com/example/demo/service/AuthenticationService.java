@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.UserDTO;
 import com.example.demo.model.User;
 import com.example.demo.model.exceptions.UserValidationException;
 
@@ -24,9 +25,11 @@ public interface AuthenticationService
 
     void deleteUserById(Long id);
 
-    User login(String email, String password) throws UserValidationException;
+    User login(UserDTO userDTO) throws UserValidationException;
 
     List<String> register(String email, String password, String userName, Integer age, String role);
 
     boolean checkEmail(String email);
+
+    List<User> listAllUsersWithRoleUser();
 }
