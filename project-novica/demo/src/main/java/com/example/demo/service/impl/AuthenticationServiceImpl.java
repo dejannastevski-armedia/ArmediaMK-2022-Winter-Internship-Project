@@ -1,7 +1,10 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.UserDTO;
+import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.model.exceptions.UserValidationException;
+import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.util.PasswordHashing;
@@ -22,6 +25,9 @@ public class AuthenticationServiceImpl implements AuthenticationService
 
     @Autowired
     private PasswordHashing passwordHashing;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public boolean checkUserName(String userName)
@@ -97,17 +103,17 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
-    public User login(String email, String password) throws UserValidationException
+    public User login(UserDTO userDTO) throws UserValidationException
     {
-        if (email == null || email.isEmpty() || !checkEmail(email))
+        if (userDTO.getEmail() == null || userDTO.getEmail().isEmpty() || !checkEmail(userDTO.getEmail()))
         {
             throw new UserValidationException("Invalid Email");
         }
-        if (password == null || password.isEmpty() || !checkPassword(password))
+        if (userDTO.getPassword() == null || userDTO.getPassword().isEmpty() || !checkPassword(userDTO.getPassword()))
         {
             throw new UserValidationException("Invalid password");
         }
-        Optional<User> user = this.userRepository.findByEmail(email);
+        Optional<User> user = this.userRepository.findByEmail(userDTO.getEmail());
         if (!user.isPresent())
         {
             throw new UserValidationException("Invalid credentials");
@@ -115,7 +121,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
         else
         {
             String hashedPassword = user.get().getPassword();
-            if (!passwordHashing.encoder().matches(password, hashedPassword))
+            if (!passwordHashing.encoder().matches(userDTO.getPassword(), hashedPassword))
             {
                 throw new UserValidationException("Invalid credentials");
             }
@@ -124,7 +130,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
-    public List<String> register(String email, String password, String userName, Integer age)
+    public List<String> register(String email, String password, String userName, Integer age, String role)
     {
         List<String> lista = new ArrayList<>();
         if (!checkUserName(userName))
@@ -152,7 +158,8 @@ public class AuthenticationServiceImpl implements AuthenticationService
         if (lista.size() == 0)
         {
             String encodedPassword = passwordHashing.encoder().encode(password);
-            User user = new User(email, encodedPassword, userName, age);
+            Role role1 = roleRepository.getById(Long.parseLong(role));
+            User user = new User(email, encodedPassword, userName, age, role1);
             this.userRepository.save(user);
         }
         return lista;
@@ -167,5 +174,11 @@ public class AuthenticationServiceImpl implements AuthenticationService
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<User> listAllUsersWithRoleUser()
+    {
+        return userRepository.findAllByRoleUser();
     }
 }
