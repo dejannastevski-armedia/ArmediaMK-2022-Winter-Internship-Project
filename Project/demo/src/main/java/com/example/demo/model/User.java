@@ -38,6 +38,9 @@ public class User
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<UserAnswer> answersLikedByUser;
 
+    @Column(name = "role")
+    private String role;
+
     public User()
     {
     }
@@ -92,4 +95,11 @@ public class User
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

@@ -69,18 +69,29 @@ public class AuthenticationController
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<User> homePage(@RequestBody UserDTO userDTO) throws UserValidationException
+    public ResponseEntity<User> homePage(@RequestBody UserDTO userDTO, Model model)
+            throws UserValidationException
     {
         User u = authenticationService.validateUserForLogin(userDTO);
         return ResponseEntity.ok(u);
+
     }
 
     @GetMapping("/home")
     public String listQuestion(Model model)
     {
+
         List<Question> listQuestion = questionService.listAll();
         model.addAttribute("listQuestion", listQuestion);
         return "home";
+    }
+
+    @GetMapping("/admin")
+    public String findAllByRoleUser(Model model)
+    {
+        List<User> listUsersWithRoleUser = authenticationService.findAllByRoleUser();
+        model.addAttribute("listUsersWithRoleUser", listUsersWithRoleUser);
+        return "admin";
     }
 
 }

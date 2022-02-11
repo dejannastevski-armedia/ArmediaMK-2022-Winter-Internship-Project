@@ -6,6 +6,8 @@ import com.example.demo.model.User;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface AuthenticationService
 {
@@ -21,5 +23,7 @@ public interface AuthenticationService
     void saveUser(User user);
 
     User validateUserForLogin(UserDTO userDTO) throws UserValidationException;
+
+    List<User> findAllByRoleUser();
 
 }

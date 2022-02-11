@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -119,6 +120,13 @@ public class AuthenticationServiceImpl implements AuthenticationService
             }
         }
         return existing;
+
+    }
+
+    @Override
+    public List<User> findAllByRoleUser()
+    {
+        return useRepo.findAllByRoleUser();
 
     }
 
