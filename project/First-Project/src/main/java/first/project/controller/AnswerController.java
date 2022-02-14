@@ -2,6 +2,10 @@ package first.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +21,10 @@ import first.project.dto.AnswerDTO;
 import first.project.dto.UserAnswerStatusDTO;
 import first.project.exceptions.InvalidAnswerException;
 import first.project.model.Answer;
+import first.project.model.User;
 import first.project.model.UserAnswerStatus;
 import first.project.service.AnswerService;
+import first.project.service.AuthenticationService;
 import first.project.service.UserAnswerStatusService;
 
 @Controller
@@ -29,11 +35,22 @@ public class AnswerController
     private AnswerService answerService;
 
     @Autowired
+    private AuthenticationService authenticationService;
+
+    @Autowired
     private UserAnswerStatusService userAnswerStatusService;
 
     @GetMapping("/{userId}/view-answer/{answerId}")
-    public String ViewAnswer(@PathVariable String answerId, @PathVariable String userId, Model model)
+    public String ViewAnswer(@PathVariable String answerId, @PathVariable String userId, Model model, Authentication authentication)
     {
+        if (SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)
+        {
+            return "login";
+        }
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = authenticationService.findByEmail(userDetails.getUsername());
+        model.addAttribute("userEmail", user.getEmail());
+        model.addAttribute("userId", user.getId());
         model.addAttribute("id", answerId);
         ArrayList<Answer> answerList = answerService.getAllAnswerForQuestion(Integer.parseInt(answerId));
         ArrayList<UserAnswerStatus> userAnswerStatusArrayList = userAnswerStatusService.getAllByUserId(Integer.parseInt(userId));

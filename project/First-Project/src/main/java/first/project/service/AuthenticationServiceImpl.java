@@ -128,4 +128,10 @@ public class AuthenticationServiceImpl implements AuthenticationService
         }
         return u;
     }
+
+    @Override
+    public User findByEmail(String email)
+    {
+        return userRepo.findByEmail(email);
+    }
 }

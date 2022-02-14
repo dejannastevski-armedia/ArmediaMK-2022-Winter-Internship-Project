@@ -1,9 +1,8 @@
 $(document).ready(function () {
-    if (sessionStorage.getItem("loggedUser") == null) {
-        $("#userLogged").html("You are not logged in");
-    } else {
-        $("#userLogged").html("You are logged in as: " + sessionStorage.getItem("loggedUser"));
-    }
+    let userEmail=$("#userEmail").text();
+    let userId=$("#userId").text();
+    window.sessionStorage.setItem("loggedUser", userEmail);
+    window.sessionStorage.setItem("loggedUserId", userId);
 
     $("#logout").click(function () {
         sessionStorage.removeItem("loggedUser");

@@ -31,7 +31,7 @@
             float: left;
         }
 
-        li a {
+        li {
             display: block;
             color: white;
             text-align: center;
@@ -47,7 +47,7 @@
             text-decoration: none;
         }
 
-        li a:hover {
+        li:hover {
             background-color: #111;
         }
 
@@ -87,16 +87,18 @@
             background-color: burlywood;
         }
 
-        button:hover{
+        button:hover {
             background-color: lightgray;
         }
     </style>
 </head>
 <body>
+<span id="userId" style="display: none" th:text="${userId}"></span>
+<span id="userEmail" style="display: none" th:text="${userEmail}"></span>
 <ul>
     <li><a href="/home">Home</a></li>
-    <li id="logout" class="w3-right"><a href="/auth/login">Logout</a></li>
-    <li id="userLogged" class="w3-right"></li>
+    <li id="logout" class="w3-right"><a href="/auth/logout">Logout</a></li>
+    <li class="w3-right">You are logged in as: <span th:text="${userEmail}"></span></li>
 </ul>
 
 <div class="w3-container">
@@ -159,13 +161,15 @@
                 <td th:text="${question.creator}"></td>
                 <td class="CreatedDate" th:text="${question.createdDate}"></td>
                 <td style="text-align: center">
-                    <button th:onclick="'javascript:redirectToViewAnswer(' + ${question.id} + ');'" type="button">View
+                    <button th:onclick="'javascript:redirectToViewAnswer(' + ${userId} +','+ ${question.id} + ');'"
+                            type="button">View
                         Answers
                     </button>
                 </td>
                 <td style="text-align: center">
-                    <button th:onclick="'javascript:deleteQuestion(' + ${question.id} + ');'" type="button"><img src="/static/javascript/photos/deleteIcon.png" alt="DeleteIcon"
-                                                    height=50% width=50%></button>
+                    <button th:onclick="'javascript:deleteQuestion(' + ${question.id} + ');'" type="button"><img
+                            src="/static/javascript/photos/deleteIcon.png" alt="DeleteIcon"
+                            height=50% width=50%></button>
                 </td>
             </tr>
         </table>

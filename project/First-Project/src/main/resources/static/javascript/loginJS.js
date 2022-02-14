@@ -6,9 +6,9 @@ $(document).ready(function () {
         };
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/auth/login",
-            data: JSON.stringify(user),
-            contentType: "application/JSON",
+            url: "http://localhost:8080/auth/login-successful",
+            data: {email: user.email, password: user.password},
+            //contentType: "application/JSON",
             success: function (data) {
                 let obj = JSON.stringify(data);
                 window.sessionStorage.setItem("loggedUser", JSON.parse(obj).email);
