@@ -29,7 +29,8 @@ function downVote(id) {
         url: "/answer/down-vote/" + identifierDTO.answerID + "/" + identifierDTO.questionID,
         data: JSON.stringify(identifierDTO),
         success: function () {
-            window.location.replace("http://localhost:8080/answer/view-answer/" + identifierDTO.questionID)
+            window.location.replace("http://localhost:8080/answer/view-answer/" + identifierDTO.questionID);
+            alert("Dislike Pressed!");
         },
         error: function () {
 
@@ -48,7 +49,8 @@ function upVote(id) {
         url: "/answer/up-vote/" + identifierDTO.answerID + "/" + identifierDTO.questionID,
         data: JSON.stringify(identifierDTO),
         success: function () {
-            window.location.replace("http://localhost:8080/answer/view-answer/" + identifierDTO.questionID)
+            window.location.replace("http://localhost:8080/answer/view-answer/" + identifierDTO.questionID);
+            alert("Like Pressed!");
         },
         error: function () {
 

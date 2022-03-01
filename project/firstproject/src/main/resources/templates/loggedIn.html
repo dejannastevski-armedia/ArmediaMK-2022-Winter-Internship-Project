@@ -18,7 +18,7 @@
             <p class="nav-item" style="color: white" id="loggedInUser"></p>
         </div>
         <div class="navbar-nav">
-            <a href="/auth/login" class="nav-item nav-link" onclick="logOut()">Log Out</a>
+            <a th:href="@{/auth/logout}" class="nav-item nav-link" onclick="logOut()">Log Out</a>
         </div>
     </div>
 </nav>
