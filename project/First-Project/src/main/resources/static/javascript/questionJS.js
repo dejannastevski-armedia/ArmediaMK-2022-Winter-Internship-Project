@@ -1,9 +1,8 @@
 $(document).ready(function () {
-    if (sessionStorage.getItem("loggedUser") == null) {
-        $("#userLogged").html("You are not logged in");
-    } else {
-        $("#userLogged").html("You are logged in as: " + sessionStorage.getItem("loggedUser"));
-    }
+    let userEmail = $("#userEmail").text();
+    let userId = $("#userId").text();
+    window.sessionStorage.setItem("loggedUser", userEmail);
+    window.sessionStorage.setItem("loggedUserId", userId);
 
     $("#logout").click(function () {
         sessionStorage.removeItem("loggedUser");
@@ -52,8 +51,7 @@ $(document).ready(function () {
     });
 });
 
-function redirectToViewAnswer(questionId) {
-    let userId = sessionStorage.getItem("loggedUserId");
+function redirectToViewAnswer(userId,questionId) {
     window.location = window.location = "http://localhost:8080/answers/" + userId + "/view-answer/" + questionId;
 }
 

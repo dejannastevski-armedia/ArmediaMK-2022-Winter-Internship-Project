@@ -29,7 +29,7 @@
             float: left;
         }
 
-        li a {
+        li {
             display: block;
             color: white;
             text-align: center;
@@ -45,7 +45,7 @@
             text-decoration: none;
         }
 
-        li a:hover {
+        li:hover {
             background-color: #111;
         }
 
@@ -120,10 +120,12 @@
     </style>
 </head>
 <body>
+<span id="userId" style="display: none" th:text="${userId}"></span>
+<span id="userEmail" style="display: none" th:text="${userEmail}"></span>
 <ul>
     <li><a href="/home">Home</a></li>
-    <li id="logout" class="w3-right"><a href="/auth/login">Logout</a></li>
-    <li id="userLogged" class="w3-right">YO</li>
+    <li id="logout" class="w3-right"><a href="/auth/logout">Logout</a></li>
+    <li class="w3-right">You are logged in as: <span th:text="${userEmail}"></span></li>
 </ul>
 
 
