@@ -29,26 +29,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .authorizeRequests()
                 .antMatchers("/**")
                 .permitAll()
-
-                // .antMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().authenticated()
-
-                // .and()
-                // .formLogin()
-                // .loginPage("/auth/login")
-                // .loginProcessingUrl("/auth/login-successful")
-                // .usernameParameter("email").passwordParameter("password")
-                // .permitAll()
-
-                // .and()
-                // .logout()
-                // .logoutUrl("/auth/logout")
-                // .deleteCookies("JSESSIONID")
                 .and()
                 .csrf().disable().cors();
-        // .and()
-        // .logout().invalidateHttpSession(true)
-        // .clearAuthentication(true).permitAll();
     }
 
     @Override
