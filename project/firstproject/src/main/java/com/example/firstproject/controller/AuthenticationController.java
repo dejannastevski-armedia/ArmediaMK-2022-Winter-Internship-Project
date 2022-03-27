@@ -9,6 +9,11 @@ import com.example.firstproject.util.exceptions.UserValidationException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +31,9 @@ public class AuthenticationController
 {
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @GetMapping("/register/register-page")
     public String registerPage(Model model)
@@ -61,15 +69,32 @@ public class AuthenticationController
     @ResponseBody
     public ResponseEntity<User> loginUser(@RequestBody @NotNull UserLoginDTO userDTO) throws UserValidationException
     {
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(userDTO.getEmail(), userDTO.getPassword()));
         User user = authenticationService.loginUser(userDTO.getEmail(), userDTO.getPassword());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         return ResponseEntity.ok(user);
     }
 
     @GetMapping("/logged-in")
     public String loggedIn(Model model)
     {
-        List<Question> questionList = authenticationService.listAllQuestions();
-        model.addAttribute("listQuestions", questionList);
-        return "loggedIn";
+        if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken))
+        {
+            List<Question> questionList = authenticationService.listAllQuestions();
+            model.addAttribute("listQuestions", questionList);
+            return "loggedIn";
+        }
+        else
+        {
+            return "login";
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout()
+    {
+        SecurityContextHolder.getContext().setAuthentication(null);
+        return "login";
     }
 }

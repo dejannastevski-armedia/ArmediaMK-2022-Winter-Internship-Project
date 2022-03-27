@@ -8,6 +8,8 @@ import com.example.firstproject.services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +25,14 @@ public class QuestionController
 
     @RequestMapping(path = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> saveQuestion(@RequestBody QuestionDTO questionDTO)
+    public ResponseEntity<String> saveQuestion(@RequestBody QuestionDTO questionDTO, Authentication authentication)
     {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String name = userDetails.getUsername();
         String result = questionService.validateQuestion(questionDTO.getQuestion(), questionDTO.getTitle());
         if(result.length() == 0)
         {
-            Question question = questionService.createQuestion(questionDTO.getQuestion(), questionDTO.getTitle(), questionDTO.getEmail());
+            Question question = questionService.createQuestion(questionDTO.getQuestion(), questionDTO.getTitle(), name);
             questionService.saveQuestion(question);
             return ResponseEntity.status(HttpStatus.OK).body("");
         }

@@ -8,6 +8,8 @@ import com.example.firstproject.services.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,10 +31,17 @@ public class AnswerController
     @GetMapping("/view-answer/{id}")
     public String viewAnswer(@PathVariable Long id, Model model)
     {
-        model.addAttribute("questionId", id);
-        List<Answer> answerList = answerService.listAllAnswersByQuestion(id);
-        model.addAttribute("listAnswers", answerList);
-        return "viewAnswer";
+        if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken))
+        {
+            model.addAttribute("questionId", id);
+            List<Answer> answerList = answerService.listAllAnswersByQuestion(id);
+            model.addAttribute("listAnswers", answerList);
+            return "viewAnswer";
+        }
+        else
+        {
+            return "login";
+        }
     }
 
     @RequestMapping(path = "/save", method = RequestMethod.POST)
